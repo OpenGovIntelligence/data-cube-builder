@@ -1,0 +1,33 @@
+
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX OGI: <http://ogi.eu/ns#>
+PREFIX qb: <http://purl.org/linked-data/cube#> 
+
+CONSTRUCT{
+		?observation a qb:observation;
+				OGI:time ?time;
+				OGI:longitude ?longitude;
+				OGI:latitude ?latitude;
+				OGI:atmosphericPressure ?AtmosphericPressure;
+				OGI:windDirection ?WindDirection;
+				OGI:windSpeed ?WindSpeed;
+				OGI:gust ?Gust;
+				OGI:waveHeight ?WaveHeight;
+				OGI:wavePeriod ?WavePeriod;
+				OGI:meanWaveDirection ?MeanWaveDirection;
+				OGI:hmax ?Hmax;
+				OGI:airTemperature ?AirTemperature;
+				OGI:dewPoint ?DewPoint;
+				OGI:seaTemprature ?SeaTemprature;
+				OGI:salinty ?salinty;
+				OGI:relativeHumadity ?RelativeHumadity;
+				OGI:qC_Flag ?QC_Flag;
+				OGI:station_id ?station_id;
+				.
+	}
+#FROM <file:/home/mohade/datasets/tarql/IWBNetwork_d6c4_456c_1d8d.csv>
+WHERE {
+BIND (uri(CONCAT('http://ogi.eu/observations/',StrUUID())) AS ?observation)
+}
+
+				

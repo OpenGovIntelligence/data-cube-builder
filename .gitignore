@@ -1,0 +1,24 @@
+#Eclipse files
+*.DS_Store
+*.classpath
+*.project
+*.settings
+bin
+
+#logs
+
+
+#data preparation class till doing it
+src/Preparation.java
+
+#DATASETs
+data
+
+#libraries
+lib
+
+#output files (cubes/schemas/observations)
+output
+
+
+
