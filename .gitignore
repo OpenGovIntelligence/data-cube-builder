@@ -3,6 +3,8 @@
 *.classpath
 *.project
 *.settings
+*.class
+src/main/java/*.class
 bin
 
 #logs
@@ -12,13 +14,14 @@ bin
 src/Preparation.java
 
 #DATASETs
-data
+src/main/resources/data
+*.csv
 
 #libraries
-lib
+src/main/resources/lib
 
 #output files (cubes/schemas/observations)
-output
+src/main/resources/output
 
 
 

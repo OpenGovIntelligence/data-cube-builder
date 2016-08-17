@@ -1,4 +1,5 @@
-package ui;
+package main.java;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -437,8 +438,8 @@ public class TarqlFormulator {
 		 * location of the observations
 		 */
 		String runTarql = "sh " + workingDir
-				+ "/tarql-run/tarql/target/appassembler/bin/tarql  --"
-				+ serlization + " " + workingDir + "/tarql-queries/"
+				+ "/tarql/target/appassembler/bin/tarql  --"
+				+ serlization + " " + workingDir + "/src/main/resources/tarqlQueries/"
 				+ marineDatasetName + ".sparql " + CsvPath + " > " + CubePath
 				+ ".observations";
 
@@ -501,13 +502,16 @@ public class TarqlFormulator {
 
 		String result = "";
 		InputStream inputStream = null;
+		String WorkingDir=System.getProperty("user.dir");
 
 		try {
 
 			Properties prop = new Properties();
 			String propFileName = "config.properties";
-			inputStream = getClass().getClassLoader().getResourceAsStream(
+			inputStream =Thread.currentThread().getContextClassLoader().getResourceAsStream(
 					propFileName);
+//			inputStream = getClass().getClassLoader().getResourceAsStream(
+//					propFileName);
 
 			if (inputStream != null) {
 				prop.load(inputStream);
@@ -546,3 +550,6 @@ public class TarqlFormulator {
 /*
  * sudo kill -9 {PID of java}
  */
+
+
+

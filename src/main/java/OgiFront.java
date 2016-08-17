@@ -1,4 +1,5 @@
-package ui;
+package main.java;
+
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -17,8 +18,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JRadioButton;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.io.File;
 
 public class OgiFront extends JFrame {
 	private JPanel contentPane;
@@ -56,7 +59,8 @@ public class OgiFront extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-
+		System.out.println(new File("").getAbsolutePath());
+		System.out.println(System.getProperty("user.home"));
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -92,8 +96,9 @@ public class OgiFront extends JFrame {
 		JButton btnNewButton_1 = new JButton("Generate Cube");
 
 		txtbasediroutput = new JTextField();
-		workingDir = System.getProperty("user.dir");
-		txtbasediroutput.setText(workingDir + "/output/");
+//		workingDir = System.getProperty("user.dir");
+		workingDir=new File("").getAbsolutePath();
+		txtbasediroutput.setText(workingDir + "/src/main/resources/output/");
 
 		// btnNewButton_1.addMouseListener(new MouseAdapter() {
 		// @Override
@@ -136,8 +141,9 @@ public class OgiFront extends JFrame {
 				String cubeDestinatoin = txtbasediroutput.getText();
 				String numberofcolumns = "";
 
-				System.out.print(csvLocation + cubeDestinatoin
-						+ numberofcolumns + marineDatasetName + serialization);
+				System.out.print(csvLocation +"\n"+ cubeDestinatoin
+						+ numberofcolumns +"\n"+ marineDatasetName +"\n"+ serialization);
+				
 				tarqlformulator.tarqlExcution(csvLocation, cubeDestinatoin,
 						numberofcolumns, marineDatasetName, serialization);
 
