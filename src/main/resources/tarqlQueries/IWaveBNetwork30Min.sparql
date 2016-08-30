@@ -12,7 +12,7 @@ CONSTRUCT{
 				OGI:peakPeriod ?PeakPeriod;
 				OGI:peakDirection ?PeakDirection;
 				OGI:upcrossPeriod ?UpcrossPeriod;
-				OGI:significantWaveHeight ?SignificantWaveHeight;
+				OGI:significant_wave_height ?SignificantWaveHeight;
 				OGI:seaTemperature ?SeaTemperature;
 				OGI:hmax ?Hmax;
 				OGI:tHmax ?THmax;
