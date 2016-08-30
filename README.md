@@ -60,5 +60,5 @@ Usage: OGI EU [options]
 	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:. src/main/java/*.java
 	
 	
-	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/ main.java.OgiCommandLine -csv:/home/mohade/workspace/OGI1/src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:ntriples -cube:/home/mohade/workspace/OGI1/src/main/resources/output/newcube.nt
+	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/ main.java.OgiCommandLine -csv:/home/mohade/workspace/OGI1/src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:/home/mohade/workspace/OGI1/src/main/resources/output/newcube.ttl
 

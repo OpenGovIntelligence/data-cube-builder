@@ -1,6 +1,7 @@
 package main.java;
 
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import com.beust.jcommander.DynamicParameter;
 import com.beust.jcommander.JCommander;
@@ -10,6 +11,7 @@ import com.beust.jcommander.Parameters;
 @Parameters(separators = ":")
 public class OgiCommandLine {
 
+	private static final Logger LOGGER = Logger.getLogger(OgiCommandLine.class.getName());
 	public static JCommander Jcomm;
 	public static TarqlFormulator tarqlformulator;
 

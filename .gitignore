@@ -29,6 +29,6 @@ src/main/resources/output/*.*
 
 #tarql
 tarql/*
-
+/tarql
 
 
