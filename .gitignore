@@ -7,6 +7,10 @@
 src/main/java/*.class
 bin
 
+#test
+src/main/java/test.java
+
+
 #logs
 
 
