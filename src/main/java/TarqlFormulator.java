@@ -411,8 +411,8 @@ public class TarqlFormulator {
 	 * 
 	 * @author moh.adelrezk@gmail.com
 	 * */
-	public void tarqlExcution(String CsvPath, String CubePath,
-			String DimOrMeasures, String marineDatasetName, String serlization) {
+	public void tarqlExcution(String csvPath, String cubePath,
+			String dimOrMeasures, String marineDatasetName, String serlization) {
 		/**
 		 * String workingDir, used to relatively locate tarql and run tarql
 		 * queries
@@ -440,8 +440,9 @@ public class TarqlFormulator {
 		String runTarql = "sh " + workingDir
 				+ "/tarql/target/appassembler/bin/tarql  --"
 				+ serlization + " " + workingDir + "/src/main/resources/tarqlQueries/"
-				+ marineDatasetName + ".sparql " + CsvPath + " > " + CubePath
+				+ marineDatasetName + ".sparql " + csvPath + " > " + cubePath
 				+ ".observations";
+		System.out.println("Tarql query:\n"+runTarql);
 
 		// String permissions = "chmod 777 -R /home/mohade/datasets/out";
 		/**
@@ -463,22 +464,28 @@ public class TarqlFormulator {
 			 */
 			pr.waitFor();
 			// pr = rt.exec(test);
+			System.out.println("Waiting For Observation Capture!");
+
 		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			/**
 			 * Logging will be added
 			 **/
+			System.out.println("Warning: Somthing went wrong at Observation Capture!");
+
 			e.printStackTrace();
+
 		}
 
 		/**
 		 * creating the corresponding qbschema String
 		 * */
+		System.out.println("Creating Cube Schema!");
 		qbSchemaCreation(marineDatasetName);
 		/**
 		 * creating the corresponding .schema file
 		 * */
-		qbSchemaFileCreation(qbSchema, CubePath);
+		qbSchemaFileCreation(qbSchema, cubePath);
 		/**
 		 * releasing/flushing String qbSchema, to be used again in the same UI
 		 * session
@@ -488,7 +495,8 @@ public class TarqlFormulator {
 		 * Creating the corresponding RDF Cube file, by merging .schema file and
 		 * .observation file
 		 * */
-		mergingSchemaFileWithObservationFile(CubePath);
+		System.out.println("Creating Full Cube!");
+		mergingSchemaFileWithObservationFile(cubePath);
 
 	}
 

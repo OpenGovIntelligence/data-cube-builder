@@ -191,7 +191,7 @@ public class OgiFront extends JFrame {
 		contentPane.add(lblNewLabel);
 
 		lblNumberOfCo = new JLabel("Dimensions (separated by \",\")");
-		lblNumberOfCo.setBounds(96, 205, 225, 15);
+		lblNumberOfCo.setBounds(96, 237, 225, 15);
 		contentPane.add(lblNumberOfCo);
 
 		JLabel lblDataSetLocation = new JLabel("Data Set Location");
@@ -199,17 +199,17 @@ public class OgiFront extends JFrame {
 		contentPane.add(lblDataSetLocation);
 
 		textField = new JTextField();
-		textField.setBounds(236, 232, 195, 25);
+		textField.setBounds(236, 264, 195, 25);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		lblMeasuresmeasuremetricmeasuremetric = new JLabel(
 				"Measures(measure1;metric,measure2;metric)");
-		lblMeasuresmeasuremetricmeasuremetric.setBounds(96, 266, 344, 20);
+		lblMeasuresmeasuremetricmeasuremetric.setBounds(96, 298, 344, 20);
 		contentPane.add(lblMeasuresmeasuremetricmeasuremetric);
 
 		textField_2 = new JTextField();
-		textField_2.setBounds(236, 298, 195, 25);
+		textField_2.setBounds(236, 330, 195, 25);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 
@@ -251,7 +251,7 @@ public class OgiFront extends JFrame {
 		rdbtnNewRadioButton_5 = new JRadioButton("Other, upload your schema");
 		rdbtnNewRadioButton_5
 				.setToolTipText("http://erddap.marine.ie/erddap/info/index.html?page=1&itemsPerPage=1000");
-		rdbtnNewRadioButton_5.setBounds(22, 174, 218, 23);
+		rdbtnNewRadioButton_5.setBounds(22, 206, 218, 23);
 		contentPane.add(rdbtnNewRadioButton_5);
 
 		ButtonGroup bG = new ButtonGroup();
@@ -265,9 +265,13 @@ public class OgiFront extends JFrame {
 		contentPane.add(lblNewLabel_2);
 
 		textField_4 = new JTextField();
-		textField_4.setBounds(246, 178, 185, 19);
+		textField_4.setBounds(246, 210, 185, 19);
 		contentPane.add(textField_4);
 		textField_4.setColumns(10);
+		
+		JRadioButton rdbtnNewRadioButton_6 = new JRadioButton("IWaveBNetwork30Min");
+		rdbtnNewRadioButton_6.setBounds(21, 175, 195, 23);
+		contentPane.add(rdbtnNewRadioButton_6);
 
 	}
 }

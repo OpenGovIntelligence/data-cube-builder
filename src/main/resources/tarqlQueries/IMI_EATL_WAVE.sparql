@@ -1,7 +1,7 @@
-
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX OGI: <http://ogi.eu/ns#>
-PREFIX qb: <http://purl.org/linked-data/cube#> 
+PREFIX OGI: <http://ogi.eu/#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 CONSTRUCT{
 		?observation a qb:observation;

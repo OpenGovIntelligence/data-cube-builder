@@ -14,14 +14,17 @@ bin
 src/Preparation.java
 
 #DATASETs
-src/main/resources/data
+src/main/resources/data/*.*
 *.csv
 
 #libraries
-src/main/resources/lib
+src/main/resources/lib/*.*
 
 #output files (cubes/schemas/observations)
-src/main/resources/output
+src/main/resources/output/*.*
+
+#tarql
+tarql/*
 
 
 
