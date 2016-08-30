@@ -9,7 +9,7 @@ bin
 
 #test
 src/main/java/test.java
-
+test.java
 
 #logs
 
@@ -30,5 +30,5 @@ src/main/resources/output/*.*
 #tarql
 tarql/*
 /tarql
-
+tarql
 
