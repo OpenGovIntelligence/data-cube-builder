@@ -1,37 +1,53 @@
-# OGI tools
+# OGI tools "Linux syntax"
 
 ##Cloning 
 
-$git clone https://gitlab.insight-centre.org/egov/ogi-tools.git
+	$git clone https://gitlab.insight-centre.org/egov/ogi-tools.git ogi
+	//You may need to install git -> $sudo apt-get install git
+	$sudo chmod 777 -R ogi
+	
+	$cd ogi/
+	
+	$git checkout test
 
 ## Building
+	
+1- On the directory "ogi" do the following:
 
-Grant Permissions for the {base.dir} 
+   A- clone Tarql:
 
-1- On the directory "{base.dir}/tarql-run/tarql/" do the following:
-
-   A- Download Tarql:
-
-    $cd {base.dir}/tarql-run/tarql/
-    $git clone https://github.com/cygri/tarql
+    $git clone https://github.com/cygri/tarql tarql
     
    B- Build Tarql:
 
-    $mvn clean install -DskipTests
+	$cd tarql
+	 
+	$mvn clean install -DskipTests
+    //You may need to install mvn -> $sudo apt-get install maven
+    //You may need to install java -> $sudo apt-get install openjdk-7-jdk
     
-2- Run OGI UI:
+2- Download libraries
 
-	$cd {base.dir}
-	$javac src/main/java/*.java
+	$cd ogi/src/main/resources/lib/
+	
+	$wget http://search.maven.org/remotecontent?filepath=com/beust/jcommander/1.48/jcommander-1.48.jar -O jcommander-1.48.jar
+	
+
+3- Run OGI UI:
+
+	$cd {base.dir}/ogi
+	
+	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:. src/main/java/*.java	
+	
 	$java -cp src/ main.java.OgiFront
 
-3- Run OGI CMD "Linux syntax":
+3- Run OGI CMD:
 	
-	$cd {base.dir}
-	
+	$cd {base.dir}/ogi
+		
 	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:. src/main/java/*.java
 	
-	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/ main.java.OgiCommandLine [-option1:value1 -option2:value2]
+	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/ main.java.OgiCommandLine -help
 	
 Usage: OGI EU [options]  
   Options:
@@ -54,11 +70,17 @@ Usage: OGI EU [options]
 	
 ### example
 	
-	$cd {base.dir}
+	$cd {base.dir}/ogi/src/main/resources/
 	
+	$mkdir data output
+	
+	$cd {base.dir}/ogi/src/main/resources/data
+	
+	$wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=0B-DxlQVxO6pnNkZwY3k2ZE5NNFE' -O IWBNetwork.csv
+		
+	$cd {base.dir}/ogi/
 	
 	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:. src/main/java/*.java
 	
-	
-	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/ main.java.OgiCommandLine -csv:/home/mohade/workspace/OGI1/src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:/home/mohade/workspace/OGI1/src/main/resources/output/newcube.ttl
+	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/ main.java.OgiCommandLine -csv:/src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:/src/main/resources/output/newcube.ttl
 
