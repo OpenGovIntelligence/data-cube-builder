@@ -11,11 +11,12 @@ import com.beust.jcommander.Parameters;
 @Parameters(separators = ":")
 public class OgiCommandLine {
 
-	private static final Logger LOGGER = Logger.getLogger(OgiCommandLine.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(OgiCommandLine.class
+			.getName());
 	public static JCommander Jcomm;
 	public static TarqlFormulator tarqlformulator;
 
-	@Parameter(names = {"--help", "-help","-h"}, description = "Help",help = true)
+	@Parameter(names = { "--help", "-help", "-h" }, description = "Help", help = true)
 	private boolean help;
 	@Parameter(names = { "--csvPath", "-csv" }, description = "CSV input file Location and name")
 	String csvPath;
@@ -38,8 +39,15 @@ public class OgiCommandLine {
 		tarqlformulator = new TarqlFormulator();
 		Jcomm = new JCommander(cmd, args);
 		Jcomm.setProgramName("OGI EU");
+		try {
+			cmd.run();
+		} catch (Exception ex) {
+			Jcomm.usage();
 
-		cmd.run();
+			System.out.print("Error:" + ex.getMessage());
+
+		}
+
 	}
 
 	public void run() {
@@ -56,10 +64,10 @@ public class OgiCommandLine {
 					tarqlformulator.tarqlExcution(csvPath, cubePath,
 							dimOrMeasures, marineDatasetName, serialization);
 			} catch (Exception ex) {
-System.out.print("Wrong Parameters!");
+				System.out.print("Wrong Parameters!");
 			}
 
-			System.out.println("Check Cube output location:"+cubePath);
+			System.out.println("Check Cube output location:" + cubePath);
 		}
 	}
 }

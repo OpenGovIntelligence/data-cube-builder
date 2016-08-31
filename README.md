@@ -83,4 +83,16 @@ Usage: OGI EU [options]
 	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:. src/main/java/*.java
 	
 	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/ main.java.OgiCommandLine -csv:/src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:/src/main/resources/output/newcube.ttl
+	
+	
+#Fuseki
+	https://jstirnaman.wordpress.com/2013/10/11/installing-fuseki-with-jena-and-tdb-on-os-x/
+	just change the tar.gz locations to:
+	https://archive.apache.org/dist/jena/binaries/apache-jena-2.11.0.tar.gz
+	https://archive.apache.org/dist/jena/binaries/jena-fuseki-1.0.0-distribution.tar.gz
+	
+	$mkdir {user.dir}/jena-fuseki-1.0.0/Db
+	 ./fuseki-server --port=8080 --update --loc=Db /ds 
+	 
+	 
 
