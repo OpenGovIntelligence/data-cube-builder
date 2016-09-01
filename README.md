@@ -80,9 +80,9 @@ Usage: OGI EU [options]
 		
 	$cd {base.dir}/ogi/
 	
-	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:. src/main/java/*.java
+	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/main/resources/lib/*:. src/main/java/*.java
 	
-	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/ main.java.OgiCommandLine -csv:/src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:/src/main/resources/output/newcube.ttl
+	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/main/resources/lib/*:src/ main.java.OgiCommandLine -csv:src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:src/main/resources/output/newcube.ttl
 	
 	
 #Fuseki

@@ -44,7 +44,7 @@ public class OgiCommandLine {
 		} catch (Exception ex) {
 			Jcomm.usage();
 
-			System.out.print("Error:" + ex.getMessage());
+			System.out.println("Error:" + ex.getMessage());
 
 		}
 
@@ -64,7 +64,8 @@ public class OgiCommandLine {
 					tarqlformulator.tarqlExcution(csvPath, cubePath,
 							dimOrMeasures, marineDatasetName, serialization);
 			} catch (Exception ex) {
-				System.out.print("Wrong Parameters!");
+				Jcomm.usage();
+				System.out.println("Error:"+ex.getMessage());
 			}
 
 			System.out.println("Check Cube output location:" + cubePath);
