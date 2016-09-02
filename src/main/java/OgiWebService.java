@@ -17,7 +17,34 @@ public class OgiWebService {
 		// port(8080);
 		// host:4567/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&cube=outputFileAndLocation
 		//http://localhost:4567/cubeBuilderArgs?csv=src%2Fmain%2Fresources%2Fdata%2FIWaveBNetwork30Min.csv&schema=IWaveBNetwork30Min&serialization=turtle&cube=src%2Fmain%2Fresources%2Foutput%2Fwebservice.ttl
-		get("cubeBuilderArgs", "application/json", (request, response) -> {
+		get("cubeBuilderAPI/cubeBuilderArgs", "application/json", (request, response) -> {
+			csvPath = request.queryParams("csv");
+			marineDatasetName = request.queryParams("schema");
+			serialization = request.queryParams("serialization");
+			cubePath = request.queryParams("cube");
+
+			return run();
+		});
+		
+		get("cubeBuilderAPI/listCubes", "application/json", (request, response) -> {
+			csvPath = request.queryParams("csv");
+			marineDatasetName = request.queryParams("schema");
+			serialization = request.queryParams("serialization");
+			cubePath = request.queryParams("cube");
+
+			return run();
+		});
+		
+		get("cubeBuilderAPI/getJson", "application/json", (request, response) -> {
+			csvPath = request.queryParams("csv");
+			marineDatasetName = request.queryParams("schema");
+			serialization = request.queryParams("serialization");
+			cubePath = request.queryParams("cube");
+
+			return run();
+		});
+		
+		get("cubeBuilderAPI/runSparql", "application/json", (request, response) -> {
 			csvPath = request.queryParams("csv");
 			marineDatasetName = request.queryParams("schema");
 			serialization = request.queryParams("serialization");

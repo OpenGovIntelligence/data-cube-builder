@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>insight.egov.ogi</groupId>
+	<artifactId>ogi</artifactId>
+	<version>0.0.1</version>
+	<name>ogi-project</name>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>apache-jena-fuseki</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId> 
+			<version>1.1.2</version> </dependency> <dependency> <groupId>org.apache.httpcomponents</groupId> 
+			<artifactId>httpclient</artifactId> <version>4.0.1</version> </dependency> 
+			<dependency> <groupId>org.apache.httpcomponents</groupId> <artifactId>httpcore</artifactId> 
+			<version>4.1</version> </dependency> <dependency> <groupId>org.twitter4j</groupId> 
+			<artifactId>twitter4j-async</artifactId> <version>4.0.4</version> </dependency> 
+			<dependency> <groupId>org.twitter4j</groupId> <artifactId>twitter4j-core</artifactId> 
+			<version>4.0.4</version> </dependency> <dependency> <groupId>org.twitter4j</groupId> 
+			<artifactId>twitter4j-stream</artifactId> <version>4.0.4</version> </dependency> 
+			<dependency> <groupId>org.twitter4j</groupId> <artifactId>twitter4j-media-support</artifactId> 
+			<version>4.0.4</version> </dependency> <dependency> <groupId>org.twitter4j</groupId> 
+			<artifactId>twitter4j-examples</artifactId> <version>4.0.4</version> </dependency> 
+			<dependency> <groupId>net.sf.json-lib</groupId> <artifactId>json-lib</artifactId> 
+			<version>0.9</version> </dependency> <dependency> <groupId>commons-io</groupId> 
+			<artifactId>commons-io</artifactId> <version>2.4</version> </dependency> 
+			<dependency> <groupId>com.io7m.xom</groupId> <artifactId>xom</artifactId> 
+			<version>1.2.10</version> </dependency> <dependency> <groupId>net.sf.ezmorph</groupId> 
+			<artifactId>ezmorph</artifactId> <version>1.0.2</version> </dependency> <dependency> 
+			<groupId>commons-lang</groupId> <artifactId>commons-lang</artifactId> <version>2.6</version> 
+			</dependency> <dependency> <groupId>org.mongodb</groupId> <artifactId>mongo-java-driver</artifactId> 
+			<version>2.12.2</version> </dependency> <dependency> <groupId>commons-logging</groupId> 
+			<artifactId>commons-logging</artifactId> <version>1.1.1</version> </dependency> -->
+	</dependencies>
+	<build>
+		<plugins>
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId> 
+				<version>1.2.1</version> <configuration> <executable>java</executable> <mainClass>newswire2.NewsWire2</mainClass> 
+				<arguments> <argument>argument1</argument> </arguments> </configuration> 
+				</plugin> -->
+			<plugin>
+				<groupId>insight.egov.ogi</groupId>
+				<artifactId>ogi</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

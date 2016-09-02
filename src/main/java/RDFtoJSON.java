@@ -70,7 +70,7 @@ public class RDFtoJSON {
 
         Model model = ModelFactory.createDefaultModel() ;
         model.read(input, "", "TURTLE") ;
-//        System.out.println("Finished reading the input file"+);
+//     	System.out.println("Finished reading the input file"+);
         model.write(System.out);
         StmtIterator it = model.listStatements();
         Statement current = null;
@@ -114,7 +114,13 @@ public class RDFtoJSON {
         for ( HashMap<String, String> h : map.values()) {
             JSONObject entity = new JSONObject();
             for ( String predicate : h.keySet()) {
+            	/** checking NaN values*/
+            	if(!h.get(predicate).equals("NaN"))
                 entity.accumulate(predicate, h.get(predicate));
+            	else
+            		/** removing NaN values*/
+            		entity.accumulate(predicate, "0.0");
+
             }
             json.put(entity);
         }
