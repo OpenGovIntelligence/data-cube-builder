@@ -30,5 +30,7 @@ src/main/resources/output/*.*
 #tarql
 tarql/*
 /tarql
-tarql
+tarql/
 
+maven
+target/
