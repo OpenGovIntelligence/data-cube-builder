@@ -32,5 +32,5 @@ tarql/*
 /tarql
 tarql/
 
-maven
+#maven
 target/
