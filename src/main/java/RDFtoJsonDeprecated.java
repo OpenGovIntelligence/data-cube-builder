@@ -14,8 +14,11 @@ import java.util.HashMap;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
-
-public class RDFtoJSON {
+/**
+ * @deprecated
+ * 
+ * */
+public class RDFtoJsonDeprecated {
 
     private static ArrayList<String> prefixes;
     private static HashMap<String, HashMap<String, String>> map =
@@ -23,7 +26,7 @@ public class RDFtoJSON {
 
     public static void main(String[] args) throws IOException {
 
-        String filename = "/home/mohade/workspace/OGI1/src/main/resources/output/newcube2.ttl.observations" ;
+        String filename = "/home/mohade/workspace/OGI1/src/main/resources/output/last.ttl.observations" ;
 
         // "prefixes" to delete
         prefixes = new ArrayList<String>();

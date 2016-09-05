@@ -4,13 +4,8 @@
 *.project
 *.settings
 *.class
-*.java.bk
 src/main/java/*.class
 bin
-
-#test
-src/main/java/test.java
-test.java
 
 #logs
 
@@ -30,11 +25,6 @@ src/main/resources/output/*.*
 
 #tarql
 tarql/*
-/tarql
-tarql/
-
-#maven
-target/
 
 
-output.json
+
