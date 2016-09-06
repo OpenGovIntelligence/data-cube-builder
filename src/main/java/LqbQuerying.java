@@ -16,9 +16,7 @@ import org.json.JSONObject;
 
 public class LqbQuerying {
 
-	
-
-	public JSONArray LqbQueryingForVizJson(String sparqlQuery)
+	public JSONArray LqbQueryingForVizJson(String sparqlQuery, String fusekiPort)
 			throws IOException {
 		// public static void main(String[] args) throws IOException {
 		// String filename =
@@ -53,18 +51,53 @@ public class LqbQuerying {
 				+ "?observation OGI:meanWaveDirection ?meanWaveDirection.\n"
 				+ "?observation OGI:hmax ?hmax.\n"
 				+ "?observation OGI:airTemperature ?airTemperature.\n"
-				+ "?observation OGI:dewPoint ?dewPoint.\n" + "}\n"
+				+ "?observation OGI:dewPoint ?dewPoint.\n" 
+				+ "}\n"
 				+ "GROUP BY (?station_id) \n";
+
+		String queryCommand2 = "PREFIX OGI:  <http://ogi.eu/#> \n"
+				+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
+				+ "PREFIX qb:  <http://purl.org/linked-data/cube#> \n"
+				+ "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n"
+				+ "SELECT  \n"
+				+ "?station_id\n"
+				+ "?atmosphericPressure\n"
+				+ "?windDirection\n"
+				+ "?windSpeed\n"
+				+ "?gust\n"
+				+ "?waveHeight\n"
+				+ "?wavePeriod\n"
+				+ "?meanWaveDirection\n"
+				+ "?hmax\n"
+				+ "?airTemperature\n"
+				+ "?dewPoint\n"
+				+ "WHERE {\n"
+				+ "?observation a qb:observation.\n"
+				+ "?observation OGI:station_id ?station_id.\n"
+				+ "?observation OGI:atmosphericPressure ?atmosphericPressure.\n"
+				+ "?observation OGI:windDirection ?windDirection.\n"
+				+ "?observation OGI:windSpeed ?windSpeed.\n"
+				+ "?observation OGI:gust ?gust.\n"
+				+ "?observation OGI:waveHeight ?waveHeight.\n"
+				+ "?observation OGI:wavePeriod ?wavePeriod.\n"
+				+ "?observation OGI:meanWaveDirection ?meanWaveDirection.\n"
+				+ "?observation OGI:hmax ?hmax.\n"
+				+ "?observation OGI:airTemperature ?airTemperature.\n"
+				+ "?observation OGI:dewPoint ?dewPoint.\n" 
+				+ "}\n"
+//				+ "GROUP BY (?station_id) \n" 
+				+ "LIMIT  100";
 
 		System.out.println("Fuseki Request Thread started!");
 		System.out.println("query:" + queryCommand);
 
 		ResultSet results = queryServerWithDefaultGraph(
-				"http://localhost:8080/ds/query", queryCommand, "SELECT", "");
+				"http://localhost:"+fusekiPort+"/ds/query", queryCommand2, "SELECT", "");
 
 		return generateJSON(results);
 
 	}
+
 	public String LqbQueryingForRDFrow(String sparqlQuery) throws IOException {
 		return sparqlQuery;
 	};

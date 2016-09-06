@@ -37,6 +37,7 @@ On the directory "ogi" do the following:
 	
 	$mkdir {user.dir}/jena-fuseki-1.0.0/LinkedcubeSpace
 	$screen ./fuseki-server --port=8080 --update --loc=LinkedcubeSpace /ds 
+	$curl http://localhost:8080
 	 
 
 ## Download OGI Build Libraries (will be removed after maven is in action )
@@ -97,11 +98,11 @@ Usage: OGI EU [options]
 	$screen java -cp  src/main/resources/lib/*:src/main/resources/:src/ main.java.OgiWebService
 	
 	Available gates:
-	> http://localhost:4567/
+	> curl http://localhost:4567/
 	
-	> http://localhost:4567/cubeQueryingAPI/cubeQueryingArgs?sparql=queryToExecuteOverLinkedCubeSpace
+	> curl http://localhost:4567/cubeQueryingAPI/cubeQueryingArgs?sparql=queryToExecuteOverLinkedCubeSpace
 
-	> http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&cube=outputFileAndLocation
+	> curl http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&cube=outputFileAndLocation
 	
 ## Download example csv file
 	
@@ -112,7 +113,7 @@ Usage: OGI EU [options]
 	$cd {base.dir}/ogi/src/main/resources/data
 	
 	$wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=0B-DxlQVxO6pnNkZwY3k2ZE5NNFE' -O IWBNetwork.csv
-		
+		$wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=0B-DxlQVxO6pnVjluN1FQa09aams
 	$cd {base.dir}/ogi/
 	
 ### Build Linked Cube
@@ -133,5 +134,12 @@ Usage: OGI EU [options]
 	> http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/IWBNetwork.ttl
 	 
 ### Load Linked Cube to fuseki server
+	$cd {fuseki.dir}
+	$wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=0B-DxlQVxO6pnVjluN1FQa09aams'-O IWBNetwork.ttl
+	$./s-put http://localhost:8080/ds/data default IWBNetwork.ttl
 
+
+####
+in case java 8 not installed 
+http://www.tecmint.com/install-java-jdk-jre-in-linux/
 

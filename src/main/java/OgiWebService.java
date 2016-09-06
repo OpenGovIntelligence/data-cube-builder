@@ -11,6 +11,8 @@ public class OgiWebService {
 	static TarqlFormulator tarqlformulator;
 	static LqbQuerying lqbquerying;
 	static String SparqlQuery;
+	static String fusekiPort;
+
 
 	public static void main(String args[]) {
 
@@ -20,7 +22,7 @@ public class OgiWebService {
 		// port(8080);
 		// host:4567/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&cube=outputFileAndLocation
 		// http://localhost:4567/cubeBuilderArgs?csv=src%2Fmain%2Fresources%2Fdata%2FIWaveBNetwork30Min.csv&schema=IWaveBNetwork30Min&serialization=turtle&cube=src%2Fmain%2Fresources%2Foutput%2Fwebservice.ttl
-		// http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/last.ttl
+		// curl http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src%2Fmain%2Fresources%2Fdata%2FIWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src%2Fmain%2Fresources%2Foutput%2FIWBNetwork.ttl
 		get("/", "application/json", (request,
 				response) -> {
 
@@ -35,6 +37,7 @@ public class OgiWebService {
 			marineDatasetName = request.queryParams("schema");
 			serialization = request.queryParams("serialization");
 			cubePath = request.queryParams("cube");
+			fusekiPort=request.queryParams("fuseki");
 
 			return run();
 		});
@@ -44,8 +47,9 @@ public class OgiWebService {
 			response.header("Access-Control-Allow-Origin", "*");
 			response.header("Content-Type", "application/json");
 			SparqlQuery = request.queryParams("query");
-
-			return lqbquerying.LqbQueryingForVizJson(SparqlQuery);
+			fusekiPort=request.queryParams("fuseki");
+			
+			return lqbquerying.LqbQueryingForVizJson(SparqlQuery, fusekiPort);
 		});
 
 	}
