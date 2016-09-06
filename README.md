@@ -29,21 +29,26 @@ On the directory "ogi" do the following:
 ## Download and Run Fuseki Server
 
 #Fuseki
-	https://jstirnaman.wordpress.com/2013/10/11/installing-fuseki-with-jena-and-tdb-on-os-x/
-	just change the tar.gz locations to:
-	https://archive.apache.org/dist/jena/binaries/apache-jena-2.11.0.tar.gz
-	https://archive.apache.org/dist/jena/binaries/jena-fuseki-1.0.0-distribution.tar.gz
 	
-	$mkdir {user.dir}/jena-fuseki-1.0.0/Db
-	 ./fuseki-server --port=8080 --update --loc=Db /ds 
+	Use instructions at > https://jstirnaman.wordpress.com/2013/10/11/installing-fuseki-with-jena-and-tdb-on-os-x/
+	(just change the tar.gz locations to):
+	(1) https://archive.apache.org/dist/jena/binaries/apache-jena-2.11.0.tar.gz
+	(2) https://archive.apache.org/dist/jena/binaries/jena-fuseki-1.0.0-distribution.tar.gz
+	
+	$mkdir {user.dir}/jena-fuseki-1.0.0/LinkedcubeSpace
+	$screen ./fuseki-server --port=8080 --update --loc=LinkedcubeSpace /ds 
 	 
 
 ## Download OGI Build Libraries (will be removed after maven is in action )
 2- Download libraries
 
-	$cd ogi/src/main/resources/lib/
+	$cd ogi
 	
-	$wget http://search.maven.org/remotecontent?filepath=com/beust/jcommander/1.48/jcommander-1.48.jar -O jcommander-1.48.jar
+	$wget -i src/main/resources/lib/libs.txt  -P src/main/resources/lib/
+	 or
+	$wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=0B-DxlQVxO6pnZ0dxTzVqelladEE' -O src/main/resources/libs.zip
+	$cd src/main/resources/
+	$unzip libs.zip
 	
 ## OGI Desktop UI 
 
@@ -51,7 +56,7 @@ On the directory "ogi" do the following:
 
 	$cd {base.dir}/ogi
 	
-	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:. src/main/java/*.java	
+	$javac -cp src/main/resources/lib/*:src/main/resources/:. src/main/java/*.java	
 	
 	$java -cp src/ main.java.OgiFront
 
@@ -61,9 +66,9 @@ On the directory "ogi" do the following:
 	
 	$cd {base.dir}/ogi
 		
-	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:. src/main/java/*.java
+	$javac -cp src/main/resources/lib/*:src/main/resources/:. src/main/java/*.java
 	
-	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/ main.java.OgiCommandLine -help
+	$java -cp  src/main/resources/lib/*:src/main/resources/:src/ main.java.OgiCommandLine -help
 	
 Usage: OGI EU [options]  
   Options:
@@ -80,13 +85,25 @@ Usage: OGI EU [options]
        Data Set Schema Currently Supporting (IWaveBNetwork30Min, IMI_EATL_WAVE,
        IrishNationalTideGaugeNetwork and IWBNetwork)
     --serialization, -format
-       Output Cube RDF serlization format (turtle or ntriples)
+       Output Cube RDF serialization format (turtle or ntriples)
        Default: turtle
 
 ## OGI Web Service API
-
 	
-### example
+	$cd {base.dir}/ogi
+		
+	$javac -cp src/main/resources/lib/*:src/main/resources/:. src/main/java/*.java
+	
+	$screen java -cp  src/main/resources/lib/*:src/main/resources/:src/ main.java.OgiWebService
+	
+	Available gates:
+	> http://localhost:4567/
+	
+	> http://localhost:4567/cubeQueryingAPI/cubeQueryingArgs?sparql=queryToExecuteOverLinkedCubeSpace
+
+	> http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&cube=outputFileAndLocation
+	
+## Download example csv file
 	
 	$cd {base.dir}/ogi/src/main/resources/
 	
@@ -98,11 +115,21 @@ Usage: OGI EU [options]
 		
 	$cd {base.dir}/ogi/
 	
-	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/main/resources/lib/*:. src/main/java/*.java
+### Build Linked Cube
 	
-	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/main/resources/lib/*:src/ main.java.OgiCommandLine -csv:src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:src/main/resources/output/newcube.ttl
+	A- Using Command Line UI
+		$javac -cp src/main/resources/lib/*:src/main/resources/:src/main/resources/lib/*:. src/main/java/*.java
+		
+		$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/main/resources/lib/*:src/ main.java.OgiCommandLine -csv:src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:src/main/resources/output/IWBNetwork.ttl
 	
+	B- Using Web Service API
 	
-
+		$javac -cp src/main/resources/lib/*:src/main/resources/:src/main/resources/lib/*:. src/main/java/*.java
+		
+		$java -cp  src/main/resources/lib/*:src/main/resources/:src/ main.java.OgiWebService
+	
+	From web browser:
+	
+	> http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/IWBNetwork.ttl
 	 
 

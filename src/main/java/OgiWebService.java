@@ -21,6 +21,12 @@ public class OgiWebService {
 		// host:4567/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&cube=outputFileAndLocation
 		// http://localhost:4567/cubeBuilderArgs?csv=src%2Fmain%2Fresources%2Fdata%2FIWaveBNetwork30Min.csv&schema=IWaveBNetwork30Min&serialization=turtle&cube=src%2Fmain%2Fresources%2Foutput%2Fwebservice.ttl
 		// http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/last.ttl
+		get("/", "application/json", (request,
+				response) -> {
+
+			return "Welcome to OGI Webservice API! !";
+		});
+
 		get("cubeBuilderAPI/cubeBuilderArgs", "application/json", (request,
 				response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
