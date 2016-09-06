@@ -100,9 +100,9 @@ Usage: OGI EU [options]
 	Available gates:
 	> curl http://localhost:4567/
 	
-	> curl http://localhost:4567/cubeQueryingAPI/cubeQueryingArgs?sparql=queryToExecuteOverLinkedCubeSpace
+	> curl http://localhost:4567/cubeQueryingAPI/cubeQueryingArgs?sparql=queryToExecuteOverLinkedCubeSpace&fuseki=portNumberofFusekiserver
 
-	> curl http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&cube=outputFileAndLocation
+	> curl http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&cube=outputFileAndLocation&fuseki=portNumberofFusekiserver
 	
 ## Download example csv file
 	
@@ -131,7 +131,7 @@ Usage: OGI EU [options]
 	
 	From web browser:
 	
-	> http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/IWBNetwork.ttl
+	> http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/IWBNetwork.ttl&fuseki=8080
 	 
 ### Load Linked Cube to fuseki server
 	$cd {fuseki.dir}
