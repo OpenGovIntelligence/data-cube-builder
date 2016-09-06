@@ -5,6 +5,8 @@
 *.settings
 *.class
 *.java.bk
+*.zip
+*.*~
 src/main/java/*.class
 bin
 
