@@ -65,7 +65,7 @@ public class OgiCommandLine {
 							dimOrMeasures, marineDatasetName, serialization);
 			} catch (Exception ex) {
 				Jcomm.usage();
-				System.out.println("Error:"+ex.getMessage());
+				System.out.println("Error:" + ex.getMessage());
 			}
 
 			System.out.println("Check Cube output location:" + cubePath);

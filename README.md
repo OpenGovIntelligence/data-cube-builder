@@ -1,6 +1,6 @@
 # OGI tools "Linux syntax"
 
-##Cloning 
+##Cloning OGI tools
 
 	$git clone https://gitlab.insight-centre.org/egov/ogi-tools.git ogi
 	//You may need to install git -> $sudo apt-get install git
@@ -10,9 +10,9 @@
 	
 	$git checkout test
 
-## Building
+##Cloning and Build Tarql
 	
-1- On the directory "ogi" do the following:
+On the directory "ogi" do the following:
 
    A- clone Tarql:
 
@@ -25,13 +25,27 @@
 	$mvn clean install -DskipTests
     //You may need to install mvn -> $sudo apt-get install maven
     //You may need to install java -> $sudo apt-get install openjdk-7-jdk
-    
+
+## Download and Run Fuseki Server
+
+#Fuseki
+	https://jstirnaman.wordpress.com/2013/10/11/installing-fuseki-with-jena-and-tdb-on-os-x/
+	just change the tar.gz locations to:
+	https://archive.apache.org/dist/jena/binaries/apache-jena-2.11.0.tar.gz
+	https://archive.apache.org/dist/jena/binaries/jena-fuseki-1.0.0-distribution.tar.gz
+	
+	$mkdir {user.dir}/jena-fuseki-1.0.0/Db
+	 ./fuseki-server --port=8080 --update --loc=Db /ds 
+	 
+
+## Download OGI Build Libraries (will be removed after maven is in action )
 2- Download libraries
 
 	$cd ogi/src/main/resources/lib/
 	
 	$wget http://search.maven.org/remotecontent?filepath=com/beust/jcommander/1.48/jcommander-1.48.jar -O jcommander-1.48.jar
 	
+## OGI Desktop UI 
 
 3- Run OGI UI:
 
@@ -40,6 +54,8 @@
 	$javac -cp src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:. src/main/java/*.java	
 	
 	$java -cp src/ main.java.OgiFront
+
+## OGI Command Line UI 
 
 3- Run OGI CMD:
 	
@@ -67,6 +83,8 @@ Usage: OGI EU [options]
        Output Cube RDF serlization format (turtle or ntriples)
        Default: turtle
 
+## OGI Web Service API
+
 	
 ### example
 	
@@ -85,14 +103,6 @@ Usage: OGI EU [options]
 	$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/main/resources/lib/*:src/ main.java.OgiCommandLine -csv:src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:src/main/resources/output/newcube.ttl
 	
 	
-#Fuseki
-	https://jstirnaman.wordpress.com/2013/10/11/installing-fuseki-with-jena-and-tdb-on-os-x/
-	just change the tar.gz locations to:
-	https://archive.apache.org/dist/jena/binaries/apache-jena-2.11.0.tar.gz
-	https://archive.apache.org/dist/jena/binaries/jena-fuseki-1.0.0-distribution.tar.gz
-	
-	$mkdir {user.dir}/jena-fuseki-1.0.0/Db
-	 ./fuseki-server --port=8080 --update --loc=Db /ds 
-	 
+
 	 
 

@@ -16,9 +16,7 @@ import org.json.JSONObject;
 
 public class LqbQuerying {
 
-	public String LqbQueryingForRDFrow(String sparqlQuery) throws IOException {
-		return sparqlQuery;
-	};
+	
 
 	public JSONArray LqbQueryingForVizJson(String sparqlQuery)
 			throws IOException {
@@ -67,6 +65,9 @@ public class LqbQuerying {
 		return generateJSON(results);
 
 	}
+	public String LqbQueryingForRDFrow(String sparqlQuery) throws IOException {
+		return sparqlQuery;
+	};
 
 	private static JSONArray generateJSON(ResultSet results)
 			throws JSONException, IOException {

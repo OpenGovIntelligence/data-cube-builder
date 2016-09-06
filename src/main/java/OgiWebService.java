@@ -2,7 +2,6 @@ package main.java;
 
 import static spark.Spark.get;
 
-
 public class OgiWebService {
 	static String csvPath;
 	static String marineDatasetName;
@@ -13,7 +12,6 @@ public class OgiWebService {
 	static LqbQuerying lqbquerying;
 	static String SparqlQuery;
 
-
 	public static void main(String args[]) {
 
 		tarqlformulator = new TarqlFormulator();
@@ -21,11 +19,12 @@ public class OgiWebService {
 
 		// port(8080);
 		// host:4567/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&cube=outputFileAndLocation
-		//http://localhost:4567/cubeBuilderArgs?csv=src%2Fmain%2Fresources%2Fdata%2FIWaveBNetwork30Min.csv&schema=IWaveBNetwork30Min&serialization=turtle&cube=src%2Fmain%2Fresources%2Foutput%2Fwebservice.ttl
-//		http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/last.ttl
-		get("cubeBuilderAPI/cubeBuilderArgs", "application/json", (request, response) -> {
+		// http://localhost:4567/cubeBuilderArgs?csv=src%2Fmain%2Fresources%2Fdata%2FIWaveBNetwork30Min.csv&schema=IWaveBNetwork30Min&serialization=turtle&cube=src%2Fmain%2Fresources%2Foutput%2Fwebservice.ttl
+		// http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/last.ttl
+		get("cubeBuilderAPI/cubeBuilderArgs", "application/json", (request,
+				response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
-			response.header("Content-Type","application/json");
+			response.header("Content-Type", "application/json");
 			csvPath = request.queryParams("csv");
 			marineDatasetName = request.queryParams("schema");
 			serialization = request.queryParams("serialization");
@@ -33,16 +32,15 @@ public class OgiWebService {
 
 			return run();
 		});
-		
-		get("cubeQueryingAPI/cubeQueryingArgs", "application/json", (request, response) -> {
+
+		get("cubeQueryingAPI/cubeQueryingArgs", "application/json", (request,
+				response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
-			response.header("Content-Type","application/json");
+			response.header("Content-Type", "application/json");
 			SparqlQuery = request.queryParams("query");
 
-			return lqbquerying.LqbQueryingForVizJson (SparqlQuery);
+			return lqbquerying.LqbQueryingForVizJson(SparqlQuery);
 		});
-		
-		
 
 	}
 
@@ -59,7 +57,7 @@ public class OgiWebService {
 				return "Success: Cube Created check distination folder!";
 			}
 		} catch (Exception ex) {
-			return "Error: "+ex.getMessage();
+			return "Error: " + ex.getMessage();
 		}
 
 	}

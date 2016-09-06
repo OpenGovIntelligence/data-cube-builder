@@ -1,6 +1,5 @@
 package main.java;
 
-
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -96,8 +95,8 @@ public class OgiFront extends JFrame {
 		JButton btnNewButton_1 = new JButton("Generate Cube");
 
 		txtbasediroutput = new JTextField();
-//		workingDir = System.getProperty("user.dir");
-		workingDir=new File("").getAbsolutePath();
+		// workingDir = System.getProperty("user.dir");
+		workingDir = new File("").getAbsolutePath();
 		txtbasediroutput.setText(workingDir + "/src/main/resources/output/");
 
 		// btnNewButton_1.addMouseListener(new MouseAdapter() {
@@ -141,9 +140,10 @@ public class OgiFront extends JFrame {
 				String cubeDestinatoin = txtbasediroutput.getText();
 				String numberofcolumns = "";
 
-				System.out.print(csvLocation +"\n"+ cubeDestinatoin
-						+ numberofcolumns +"\n"+ marineDatasetName +"\n"+ serialization);
-				
+				System.out.print(csvLocation + "\n" + cubeDestinatoin
+						+ numberofcolumns + "\n" + marineDatasetName + "\n"
+						+ serialization);
+
 				tarqlformulator.tarqlExcution(csvLocation, cubeDestinatoin,
 						numberofcolumns, marineDatasetName, serialization);
 
@@ -268,8 +268,9 @@ public class OgiFront extends JFrame {
 		textField_4.setBounds(246, 210, 185, 19);
 		contentPane.add(textField_4);
 		textField_4.setColumns(10);
-		
-		JRadioButton rdbtnNewRadioButton_6 = new JRadioButton("IWaveBNetwork30Min");
+
+		JRadioButton rdbtnNewRadioButton_6 = new JRadioButton(
+				"IWaveBNetwork30Min");
 		rdbtnNewRadioButton_6.setBounds(21, 175, 195, 23);
 		contentPane.add(rdbtnNewRadioButton_6);
 
