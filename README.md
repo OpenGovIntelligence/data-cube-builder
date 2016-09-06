@@ -132,4 +132,6 @@ Usage: OGI EU [options]
 	
 	> http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/IWBNetwork.ttl
 	 
+### Load Linked Cube to fuseki server
+
 

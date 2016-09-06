@@ -60,7 +60,7 @@ public class LqbQuerying {
 		System.out.println("query:" + queryCommand);
 
 		ResultSet results = queryServerWithDefaultGraph(
-				"http://localhost:3030/ds/query", queryCommand, "SELECT", "");
+				"http://localhost:8080/ds/query", queryCommand, "SELECT", "");
 
 		return generateJSON(results);
 
