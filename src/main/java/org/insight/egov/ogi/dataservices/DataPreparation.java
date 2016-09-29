@@ -1,5 +1,8 @@
-package main.java;
-
+package org.insight.egov.ogi.dataservices;
+/**
+ * 
+ * @author moh.adelrezk@gmail.com
+ * */
 public class DataPreparation {
 	
 	

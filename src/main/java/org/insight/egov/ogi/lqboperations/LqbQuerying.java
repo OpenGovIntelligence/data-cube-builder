@@ -1,5 +1,7 @@
-package main.java;
-
+package org.insight.egov.ogi.lqboperations;
+/**
+@author moh.adelrezk@gmail.com
+*/
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
@@ -13,7 +15,12 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+/**
+FIXME: Error message saved and returned instead of json, will help debuging
+*/
+/**
+FIXME: ADD LIMIT as variable
+*/
 public class LqbQuerying {
 
 	public JSONArray LqbQueryingForVizJson(String sparqlQuery, String fusekiPort)

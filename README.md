@@ -90,6 +90,8 @@ Usage: OGI EU [options]
        Default: turtle
 
 ## OGI Web Service API
+
+3- Run OGI CMD:
 	
 	$cd {base.dir}/ogi
 		
@@ -113,7 +115,7 @@ Usage: OGI EU [options]
 	$cd {base.dir}/ogi/src/main/resources/data
 	
 	$wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=0B-DxlQVxO6pnNkZwY3k2ZE5NNFE' -O IWBNetwork.csv
-		$wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=0B-DxlQVxO6pnVjluN1FQa09aams
+
 	$cd {base.dir}/ogi/
 	
 ### Build Linked Cube
@@ -134,12 +136,15 @@ Usage: OGI EU [options]
 	> http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/IWBNetwork.ttl&fuseki=8080
 	 
 ### Load Linked Cube to fuseki server
+	
 	$cd {fuseki.dir}
+	
 	$wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=0B-DxlQVxO6pnVjluN1FQa09aams'-O IWBNetwork.ttl
+	
 	$./s-put http://localhost:8080/ds/data default IWBNetwork.ttl
 
 
 ####
-in case java 8 not installed 
+in case java 8 is not installed 
 http://www.tecmint.com/install-java-jdk-jre-in-linux/
 

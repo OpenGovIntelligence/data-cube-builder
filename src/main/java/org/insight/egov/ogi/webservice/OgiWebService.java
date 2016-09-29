@@ -1,7 +1,16 @@
-package main.java;
+package org.insight.egov.ogi.webservice;
 
 import static spark.Spark.get;
 
+import org.insight.egov.ogi.lqboperations.LqbQuerying;
+import org.insight.egov.ogi.tarqlservices.TarqlFormulator;
+/**
+ * 
+ * @author moh.adelrezk@gmail.com
+ * */
+/**
+FIXME: ADD LIMIT as variable
+*/
 public class OgiWebService {
 	static String csvPath;
 	static String marineDatasetName;

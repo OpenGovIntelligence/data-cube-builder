@@ -1,0 +1,64 @@
+PREFIX OGI:  <http://ogi.eu/#> 
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> 
+PREFIX qb:  <http://purl.org/linked-data/cube#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT  
+?station_id
+(count(?atmosphericPressure) AS ?Observations_Count)
+(sum(xsd:float(?atmosphericPressure))/count(?atmosphericPressure) AS ?Average_atmosphericPressure)
+(sum(xsd:float(?windDirection))/count(?windDirection) AS ?Average_windDirection)
+(sum(xsd:float(?windSpeed))/count(?windSpeed) AS ?Average_windSpeed)
+(sum(xsd:float(?gust))/count(?gust) AS ?Average_gust)
+(sum(xsd:float(?waveHeight))/count(?waveHeight) AS ?Average_waveHeight)
+(sum(xsd:float(?wavePeriod))/count(?wavePeriod) AS ?Average_wavePeriod)
+(sum(xsd:float(?meanWaveDirection))/count(?meanWaveDirection) AS ?Average_meanWaveDirection)
+(sum(xsd:float(?hmax))/count(?hmax) AS ?Average_hmax)
+(sum(xsd:float(?airTemperature))/count(?airTemperature) AS ?Average_airTemperature)
+(sum(xsd:float(?dewPoint))/count(?dewPoint) AS ?Average_dewPoint)
+WHERE {
+?observation a qb:observation.
+?observation OGI:station_id ?station_id.
+?observation OGI:atmosphericPressure ?atmosphericPressure.
+?observation OGI:windDirection ?windDirection.
+?observation OGI:windSpeed ?windSpeed.
+?observation OGI:gust ?gust.
+?observation OGI:waveHeight ?waveHeight.
+?observation OGI:wavePeriod ?wavePeriod.
+?observation OGI:meanWaveDirection ?meanWaveDirection.
+?observation OGI:hmax ?hmax.
+?observation OGI:airTemperature ?airTemperature.
+?observation OGI:dewPoint ?dewPoint.
+}
+GROUP BY (?station_id)
+
+PREFIX OGI:  <http://ogi.eu/#> 
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> 
+PREFIX qb:  <http://purl.org/linked-data/cube#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT  
+?station_id
+?atmosphericPressure
+?windDirection
+?windSpeed
+?gust
+?waveHeight
+?wavePeriod
+?meanWaveDirection
+?hmax
+?airTemperature
+?dewPoint
+WHERE {
+?observation a qb:observation.
+?observation OGI:station_id ?station_id.
+?observation OGI:atmosphericPressure ?atmosphericPressure.
+?observation OGI:windDirection ?windDirection.
+?observation OGI:windSpeed ?windSpeed.
+?observation OGI:gust ?gust.
+?observation OGI:waveHeight ?waveHeight.
+?observation OGI:wavePeriod ?wavePeriod.
+?observation OGI:meanWaveDirection ?meanWaveDirection.
+?observation OGI:hmax ?hmax.
+?observation OGI:airTemperature ?airTemperature.
+?observation OGI:dewPoint ?dewPoint.
+} 
+LIMIT  100

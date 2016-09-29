@@ -1,5 +1,8 @@
-package main.java;
-
+package org.insight.egov.ogi.lqboperations;
+/**
+ * 
+ * @author moh.adelrezk@gmail.com
+ * */
 public class LqbLoader {
 	
 	

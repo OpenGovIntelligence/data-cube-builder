@@ -1,4 +1,4 @@
-package main.java;
+package org.insight.egov.ogi.dataservices;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -16,7 +16,7 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 /**
  * @deprecated
- * 
+ * @author moh.adelrezk@gmail.com
  * */
 public class RDFtoJsonDeprecated {
 
@@ -129,6 +129,9 @@ public class RDFtoJsonDeprecated {
         }
 
         FileWriter output;
+/**
+        FIXME: Remove Local Dir
+**/
         output = new FileWriter("/home/mohade/workspace/OGI1/src/main/resources/output/output.json");
         output.write(json.toString(2));
         System.out.print(output);

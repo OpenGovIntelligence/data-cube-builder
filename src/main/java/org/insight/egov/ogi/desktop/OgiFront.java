@@ -1,4 +1,4 @@
-package main.java;
+package org.insight.egov.ogi.desktop;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -18,10 +18,15 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JRadioButton;
 
+import org.insight.egov.ogi.tarqlservices.TarqlFormulator;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-
+/**
+ * 
+ * @author moh.adelrezk@gmail.com
+ * */
 public class OgiFront extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtbasediroutput;

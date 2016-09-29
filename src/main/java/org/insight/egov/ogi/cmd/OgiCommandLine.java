@@ -1,13 +1,18 @@
-package main.java;
+package org.insight.egov.ogi.cmd;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
+
+import org.insight.egov.ogi.tarqlservices.TarqlFormulator;
 
 import com.beust.jcommander.DynamicParameter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-
+/**
+ * 
+ * @author moh.adelrezk@gmail.com
+ * */
 @Parameters(separators = ":")
 public class OgiCommandLine {
 

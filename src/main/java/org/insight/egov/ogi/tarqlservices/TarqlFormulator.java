@@ -1,4 +1,4 @@
-package main.java;
+package org.insight.egov.ogi.tarqlservices;
 
 
 import java.io.BufferedReader;
