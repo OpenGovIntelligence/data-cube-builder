@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>insight.egov.ogi</groupId>
-	<artifactId>ogi</artifactId>
+	<groupId>eu.opengov</groupId>
+	<artifactId>cubebuilder</artifactId>
 	<version>0.0.1</version>
 
 	<packaging>jar</packaging>
@@ -28,7 +28,8 @@
 				<version>1.2.1</version>
 				<configuration>
 					<executable>java</executable>
-					<mainClass>org.insight.egov.ogi.desktop.OgiFront</mainClass>
+					<mainClass>eu.opengov.cubebuilder.desktop.OgiFront</mainClass>
+					<!-- <mainClass>eu.opengov.cubebuilder.tarqlservices.TestTarqlAsLib</mainClass> -->
 				</configuration>
 			</plugin>
 		</plugins>
@@ -217,38 +218,88 @@
 			<artifactId>spark-core</artifactId>
 			<version>2.2</version>
 		</dependency>
-		<dependency>
+	<!--
+	<dependency>
 			<groupId>com.hp.hpl.jena</groupId>
 			<artifactId>iri</artifactId>
 			<version>0.5</version>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
 			<artifactId>icu4j</artifactId>
 			<version>3.6.1</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>com.hp.hpl.jena</groupId>
 			<artifactId>arq</artifactId>
 			<version>2.8.8</version>
 		</dependency>
-		<dependency>
-			<groupId>com.hp.hpl.jena</groupId>
-			<artifactId>jena</artifactId>
-			<version>2.6.4</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+	 -->
+		<!-- <dependency> <groupId>com.hp.hpl.jena</groupId> <artifactId>jena</artifactId> 
+			<version>2.6.4</version> <exclusions> <exclusion> <groupId>org.slf4j</groupId> 
+			<artifactId>slf4j-log4j12</artifactId> </exclusion> </exclusions> </dependency> -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20160810</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.deri.tarql</groupId>
+			<artifactId>tarql</artifactId>
+			<scope>system</scope>
+			<version>1.0a</version>
+			<systemPath>${project.basedir}/src/main/resources/lib/tarql-1.0a.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.deri.tarql</groupId>
+			<artifactId>tarql-doc</artifactId>
+			<scope>system</scope>
+			<version>1.0a</version>
+			<systemPath>${project.basedir}/src/main/resources/lib/tarql-1.0a-javadoc.jar</systemPath>
+		</dependency>
+		<!-- <dependency> <groupId>org.deri.tarql</groupId> <artifactId>tarql-sources</artifactId> 
+			<scope>system</scope> <version>1.0a</version> <systemPath>${project.basedir}/src/main/resources/lib/tarql-1.0a-sources.jar</systemPath> 
+			</dependency> -->
+		<!-- <dependency> <groupId>org.deri.tarql</groupId> <artifactId>tarql</artifactId> 
+			<scope>system</scope> <version>1.0a</version> <systemPath>${project.basedir}/src/main/resources/lib/tarql-1.0a-jar-with-dependencies.jar</systemPath> 
+			</dependency> -->
+		<dependency>
+			<groupId>org.openrdf</groupId>
+			<artifactId>openrdf-model</artifactId>
+			<version>1.2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jchardet</groupId>
+			<artifactId>jchardet</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-arq</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+	-->
+	<dependency>
+      <groupId>org.apache.jena</groupId>
+      <artifactId>jena-arq</artifactId>
+      <version>2.12.0</version>
+    </dependency>
+    
 	</dependencies>
 
 </project>

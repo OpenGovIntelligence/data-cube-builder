@@ -1,4 +1,4 @@
-package org.insight.egov.ogi.lqboperations;
+package eu.opengov.cubebuilder.lqboperations;
 /**
  * 
  * @author moh.adelrezk@gmail.com

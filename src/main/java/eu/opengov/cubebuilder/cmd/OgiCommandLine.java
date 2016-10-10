@@ -1,14 +1,14 @@
-package org.insight.egov.ogi.cmd;
+package eu.opengov.cubebuilder.cmd;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
-
-import org.insight.egov.ogi.tarqlservices.TarqlFormulator;
 
 import com.beust.jcommander.DynamicParameter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
+
+import eu.opengov.cubebuilder.tarqlservices.TarqlFormulator;
 /**
  * 
  * @author moh.adelrezk@gmail.com
@@ -23,15 +23,17 @@ public class OgiCommandLine {
 
 	@Parameter(names = { "--help", "-help", "-h" }, description = "Help", help = true)
 	private boolean help;
-	@Parameter(names = { "--csvPath", "-csv" }, description = "CSV input file Location and name")
-	String csvPath;
+	@Parameter(names = { "--csvFilePath", "-csv" }, description = "CSV input file Location and name")
+	String csvFilePath;
 	@Parameter(names = { "--marineDatasetName", "-schema" }, description = "Data Set Schema Currently Supporting (IWaveBNetwork30Min, IMI_EATL_WAVE, IrishNationalTideGaugeNetwork and IWBNetwork)")
 	String marineDatasetName;// Data Set schema
 	@Parameter(names = { "--serialization", "-format" }, description = "Output Cube RDF serlization format (turtle or ntriples)")
 	String serialization = "turtle";// space if ttl
-	@Parameter(names = { "--cubePath", "-cube" }, description = "Cube output file Location and name")
-	String cubePath;
-	@Parameter(names = { "--dimOrMeasures", "-l" }, description = "Not Available at this stage")
+	@Parameter(names = { "--qbPath", "-qb" }, description = "Cube output file Location and name")
+	String qbPath;
+	@Parameter(names = { "--qbFileName", "-qbN" }, description = "Cube output file Location and name")
+	String qbFileName;
+	@Parameter(names = { "--dimOrMeasures", "-l" }, description = "Customized Dim and Measures are Not Available at this stage")
 	String dimOrMeasures;
 
 	// @DynamicParameter(names = "-D", description =
@@ -63,17 +65,19 @@ public class OgiCommandLine {
 
 			try {
 				if (serialization.equalsIgnoreCase("turtle"))
-					tarqlformulator.tarqlExcution(csvPath, cubePath,
-							dimOrMeasures, marineDatasetName, " ");
+					tarqlformulator.tarqlAsLibraryExecution( csvFilePath,  qbPath,
+							 qbFileName,  dimOrMeasures,  marineDatasetName,
+							 serialization);
 				else
-					tarqlformulator.tarqlExcution(csvPath, cubePath,
-							dimOrMeasures, marineDatasetName, serialization);
+					tarqlformulator.tarqlAsLibraryExecution( csvFilePath,  qbPath,
+							 qbFileName,  dimOrMeasures,  marineDatasetName,
+							 serialization);
 			} catch (Exception ex) {
 				Jcomm.usage();
 				System.out.println("Error:" + ex.getMessage());
 			}
 
-			System.out.println("Check Cube output location:" + cubePath);
+			System.out.println("Check Cube output location:" + qbPath+qbFileName);
 		}
 	}
 }

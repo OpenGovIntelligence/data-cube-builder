@@ -1,4 +1,4 @@
-package org.insight.egov.ogi.dataservices;
+package eu.opengov.cubebuilder.dataservices;
 /**
  * 
  * @author moh.adelrezk@gmail.com
@@ -13,10 +13,6 @@ public class DataPreparation {
 		/**
 		http://stackoverflow.com/questions/3935791/find-and-replace-words-lines-in-a-file
 		**/
-		
-		
-		
-	
 
 	}
 	/** find NaN values inside the Data Stream and replace it with 0.0*/

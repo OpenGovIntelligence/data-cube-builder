@@ -11,14 +11,14 @@ src/main/java/*.class
 bin
 
 #test
-src/main/java/test.java
+src/main/java/eu/opengov/cubebuilder/testing/test.java
 test.java
-
+notes.txt
 #logs
 
 
 #data preparation class till doing it
-src/Preparation.java
+src/main/java/eu/opengov/cubebuilder/dataservices/DataPreparation.java
 
 #DATASETs
 src/main/resources/data/*.*

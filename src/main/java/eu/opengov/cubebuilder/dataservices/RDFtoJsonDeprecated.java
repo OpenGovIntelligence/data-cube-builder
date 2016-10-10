@@ -1,4 +1,4 @@
-package org.insight.egov.ogi.dataservices;
+package eu.opengov.cubebuilder.dataservices;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -26,7 +26,7 @@ public class RDFtoJsonDeprecated {
 
     public static void main(String[] args) throws IOException {
 
-        String filename = "/home/mohade/workspace/OGI1/src/main/resources/output/last.ttl.observations" ;
+        String filename = System.getProperty("user.dir")+"/src/main/resources/output/last.ttl.observations" ;
 
         // "prefixes" to delete
         prefixes = new ArrayList<String>();
@@ -132,7 +132,7 @@ public class RDFtoJsonDeprecated {
 /**
         FIXME: Remove Local Dir
 **/
-        output = new FileWriter("/home/mohade/workspace/OGI1/src/main/resources/output/output.json");
+        output = new FileWriter(System.getProperty("user.dir")+"/src/main/resources/output/output.json");
         output.write(json.toString(2));
         System.out.print(output);
         output.flush();

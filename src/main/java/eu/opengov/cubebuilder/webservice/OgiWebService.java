@@ -1,9 +1,8 @@
-package org.insight.egov.ogi.webservice;
+package eu.opengov.cubebuilder.webservice;
 
 import static spark.Spark.get;
-
-import org.insight.egov.ogi.lqboperations.LqbQuerying;
-import org.insight.egov.ogi.tarqlservices.TarqlFormulator;
+import eu.opengov.cubebuilder.lqboperations.LqbQuerying;
+import eu.opengov.cubebuilder.tarqlservices.TarqlFormulator;
 /**
  * 
  * @author moh.adelrezk@gmail.com
@@ -12,10 +11,11 @@ import org.insight.egov.ogi.tarqlservices.TarqlFormulator;
 FIXME: ADD LIMIT as variable
 */
 public class OgiWebService {
-	static String csvPath;
+	static String csvFilePath;
 	static String marineDatasetName;
 	static String serialization;
-	static String cubePath;
+	static String qbPath;
+	static String qbFileName;
 	static String dimOrMeasures;
 	static TarqlFormulator tarqlformulator;
 	static LqbQuerying lqbquerying;
@@ -42,10 +42,12 @@ public class OgiWebService {
 				response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
 			response.header("Content-Type", "application/json");
-			csvPath = request.queryParams("csv");
+			csvFilePath = request.queryParams("csv");
+			
 			marineDatasetName = request.queryParams("schema");
 			serialization = request.queryParams("serialization");
-			cubePath = request.queryParams("cube");
+			qbPath = request.queryParams("cube");
+			qbFileName=request.queryParams("qbName");
 			fusekiPort=request.queryParams("fuseki");
 
 			return run();
@@ -67,12 +69,14 @@ public class OgiWebService {
 
 		try {
 			if (serialization.equalsIgnoreCase("turtle")) {
-				tarqlformulator.tarqlExcution(csvPath, cubePath, dimOrMeasures,
-						marineDatasetName, " ");
+				tarqlformulator.tarqlAsLibraryExecution( csvFilePath,  qbPath,
+						 qbFileName,  dimOrMeasures,  marineDatasetName,
+						 serialization);
 				return "Success: Cube Created check distination folder!";
 			} else {
-				tarqlformulator.tarqlExcution(csvPath, cubePath, dimOrMeasures,
-						marineDatasetName, serialization);
+				tarqlformulator.tarqlAsLibraryExecution( csvFilePath,  qbPath,
+						 qbFileName,  dimOrMeasures,  marineDatasetName,
+						 serialization);
 				return "Success: Cube Created check distination folder!";
 			}
 		} catch (Exception ex) {

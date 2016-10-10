@@ -18,7 +18,7 @@ CONSTRUCT{
 				OGI:qC_Flag ?QC_Flag;
 				.
 	}
-#FROM <file:/home/mohade/datasets/tarql/IWBNetwork_d6c4_456c_1d8d.csv>
+#FROM <file:/datasets/tarql/IWBNetwork_d6c4_456c_1d8d.csv>
 WHERE {
 BIND (uri(CONCAT('http://ogi.eu/observations/',StrUUID())) AS ?observation)
 }

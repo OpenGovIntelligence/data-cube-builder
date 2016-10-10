@@ -1,4 +1,4 @@
-package org.insight.egov.ogi.desktop;
+package eu.opengov.cubebuilder.desktop;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -18,11 +18,13 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JRadioButton;
 
-import org.insight.egov.ogi.tarqlservices.TarqlFormulator;
+import eu.opengov.cubebuilder.tarqlservices.TarqlFormulator;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.io.IOException;
+
 /**
  * 
  * @author moh.adelrezk@gmail.com
@@ -53,18 +55,25 @@ public class OgiFront extends JFrame {
 	private JRadioButton rdbtnNewRadioButton_2;
 	private JRadioButton rdbtnNewRadioButton_3;
 	private JRadioButton rdbtnNewRadioButton_4;
+	private JRadioButton rdbtnNewRadioButton_6;
 	private JLabel lblNewLabel_2;
 	private JRadioButton rdbtnNewRadioButton_5;
 	private JTextField textField_4;
 	private String marineDatasetName;
 	private String serialization;
+	private JTextField textField_3;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		System.out.println(new File("").getAbsolutePath());
-		System.out.println(System.getProperty("user.home"));
+		// remove after testing phases
+		System.out.println("new File(\"\").getAbsolutePath()" + "==>"
+				+ new File("").getAbsolutePath());
+		System.out.println("System.getProperty('user.home')" + "==>"
+				+ System.getProperty("user.home"));
+		System.out.println("System.getProperty('user.dir')" + "==>"
+				+ System.getProperty("user.dir"));
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -89,7 +98,7 @@ public class OgiFront extends JFrame {
 
 		tarqlformulator = new TarqlFormulator();
 		marineDatasetName = "embty";
-		serialization = "embty";
+		serialization = "turtle";
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 600);
 		contentPane = new JPanel();
@@ -124,13 +133,17 @@ public class OgiFront extends JFrame {
 					marineDatasetName = rdbtnNewRadioButton_4.getText();
 
 				}
+				if (rdbtnNewRadioButton_6.isSelected()) {
+					marineDatasetName = rdbtnNewRadioButton_6.getText();
+
+				}
 				if (rdbtnNewRadioButton_5.isSelected()) {
 					marineDatasetName = "other";
 
 				}
 				/* Getting choosed RDF Serialization Format */
 				if (rdbtnNewRadioButton.isSelected()) {
-					serialization = " ";/*
+					serialization = "turtle";/*
 										 * because this is the default
 										 * serialization output of tarql
 										 */
@@ -141,21 +154,29 @@ public class OgiFront extends JFrame {
 
 				}
 
-				String csvLocation = textField_1.getText();
-				String cubeDestinatoin = txtbasediroutput.getText();
+				String csvFilePath = textField_1.getText();
+				String qbPath = txtbasediroutput.getText();
+				String qbFileName = textField_3.getText();// make an input
+															// stages for that
 				String numberofcolumns = "";
 
-				System.out.print(csvLocation + "\n" + cubeDestinatoin
+				System.out.print(csvFilePath + "\n" + qbPath + qbFileName
 						+ numberofcolumns + "\n" + marineDatasetName + "\n"
 						+ serialization);
 
-				tarqlformulator.tarqlExcution(csvLocation, cubeDestinatoin,
-						numberofcolumns, marineDatasetName, serialization);
+				try {
+					tarqlformulator.tarqlAsLibraryExecution(csvFilePath,
+							qbPath, qbFileName, "dimOrMeasures",
+							marineDatasetName, serialization);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 				JOptionPane.showMessageDialog(null,
 						"Transformation is in process check Cube destination folder!"
-								+ "\r\n " + "Source:" + csvLocation + "\r\n "
-								+ "Destination:" + cubeDestinatoin);
+								+ "\r\n " + "Source:" + csvFilePath + "\r\n "
+								+ "Destination:" + qbPath + qbFileName);
 
 			}
 		});
@@ -163,6 +184,10 @@ public class OgiFront extends JFrame {
 		contentPane.add(btnNewButton_1);
 
 		btnExit = new JButton("Clear");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnExit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -171,11 +196,10 @@ public class OgiFront extends JFrame {
 				textField_2.setText("");
 				txtbasediroutput.setText("");
 				textField_4.setText("");
-
-			}
+			}//
 		});
 
-		btnExit.setBounds(13, 535, 117, 25);
+		btnExit.setBounds(13, 537, 117, 20);
 		contentPane.add(btnExit);
 
 		btnExit_1 = new JButton("Next");
@@ -186,13 +210,14 @@ public class OgiFront extends JFrame {
 		textField_1.setBounds(153, 33, 274, 25);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
+		textField_1.setText(workingDir + "/src/main/resources/data/");
 
-		txtbasediroutput.setBounds(156, 501, 275, 25);
+		txtbasediroutput.setBounds(156, 476, 275, 25);
 		contentPane.add(txtbasediroutput);
 		txtbasediroutput.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("Cube Destination");
-		lblNewLabel.setBounds(13, 503, 136, 20);
+		lblNewLabel.setBounds(13, 478, 136, 20);
 		contentPane.add(lblNewLabel);
 
 		lblNumberOfCo = new JLabel("Dimensions (separated by \",\")");
@@ -219,15 +244,15 @@ public class OgiFront extends JFrame {
 		textField_2.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("RDF Serlization");
-		lblNewLabel_1.setBounds(13, 479, 117, 15);
+		lblNewLabel_1.setBounds(13, 454, 117, 15);
 		contentPane.add(lblNewLabel_1);
 
 		rdbtnNewRadioButton = new JRadioButton("Turtle");
-		rdbtnNewRadioButton.setBounds(149, 475, 74, 23);
+		rdbtnNewRadioButton.setBounds(149, 450, 74, 23);
 		contentPane.add(rdbtnNewRadioButton);
 
 		rdbtnNewRadioButton_1 = new JRadioButton("Ntriples");
-		rdbtnNewRadioButton_1.setBounds(246, 475, 149, 20);
+		rdbtnNewRadioButton_1.setBounds(246, 450, 149, 20);
 		contentPane.add(rdbtnNewRadioButton_1);
 
 		ButtonGroup bG1 = new ButtonGroup();
@@ -252,6 +277,11 @@ public class OgiFront extends JFrame {
 				.setToolTipText("http://erddap.marine.ie/erddap/griddap/IMI_EATL_WAVE.html");
 		rdbtnNewRadioButton_4.setBounds(22, 147, 264, 23);
 		contentPane.add(rdbtnNewRadioButton_4);
+		
+		rdbtnNewRadioButton_6 = new JRadioButton(
+				"IWaveBNetwork30Min");
+		rdbtnNewRadioButton_6.setBounds(21, 175, 195, 23);
+		contentPane.add(rdbtnNewRadioButton_6);
 
 		rdbtnNewRadioButton_5 = new JRadioButton("Other, upload your schema");
 		rdbtnNewRadioButton_5
@@ -264,6 +294,7 @@ public class OgiFront extends JFrame {
 		bG.add(rdbtnNewRadioButton_3);
 		bG.add(rdbtnNewRadioButton_4);
 		bG.add(rdbtnNewRadioButton_5);
+		bG.add(rdbtnNewRadioButton_6);
 
 		lblNewLabel_2 = new JLabel("Choose data schema");
 		lblNewLabel_2.setBounds(13, 70, 210, 15);
@@ -274,10 +305,16 @@ public class OgiFront extends JFrame {
 		contentPane.add(textField_4);
 		textField_4.setColumns(10);
 
-		JRadioButton rdbtnNewRadioButton_6 = new JRadioButton(
-				"IWaveBNetwork30Min");
-		rdbtnNewRadioButton_6.setBounds(21, 175, 195, 23);
-		contentPane.add(rdbtnNewRadioButton_6);
+		
+
+		JLabel lblNewLabel_3 = new JLabel("qb Name");
+		lblNewLabel_3.setBounds(13, 510, 70, 15);
+		contentPane.add(lblNewLabel_3);
+
+		textField_3 = new JTextField();
+		textField_3.setBounds(155, 504, 114, 19);
+		contentPane.add(textField_3);
+		textField_3.setColumns(10);
 
 	}
 }

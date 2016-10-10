@@ -1,17 +1,35 @@
-package org.insight.egov.ogi.tarqlservices;
-
+package eu.opengov.cubebuilder.tarqlservices;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.StringReader;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+
+import org.apache.commons.lang.StringUtils;
+import org.deri.tarql.CSVOptions;
+import org.deri.tarql.StreamingRDFWriter;
+import org.deri.tarql.TarqlParser;
+import org.deri.tarql.TarqlQuery;
+import org.deri.tarql.TarqlQueryExecution;
+import org.deri.tarql.TarqlQueryExecutionFactory;
+import org.deri.tarql.tarql;
+import org.openrdf.model.Statement;
+import org.openrdf.model.ValueFactory;
+import org.openrdf.model.impl.ValueFactoryImpl;
+
+import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.graph.Triple;
 
 /**
  * Tarql query formulation, and RDF Cube Schema building functions.
@@ -35,7 +53,7 @@ public class TarqlFormulator {
 	// public static void main(String[] args) {
 	//
 	// TarqlFormulator t=new TarqlFormulator();
-	// String CubePath= "/home/mohade/datasets/out/test66.nt";
+	// String CubePath= "~/datasets/out/test66.nt";
 	// String marineDatasetName= "IWBNetwork";
 	//
 	// t.prefixFormulation(marineDatasetName);
@@ -48,7 +66,7 @@ public class TarqlFormulator {
 	// t.qbSchemaAppending(t.qbSchema, CubePath);
 
 	// tarqlExcution();
-	// t.mergingSchemaFileWithObservationFile("/home/mohade/workspace/OGI1/output/ds3.ttl");
+	// t.mergingSchemaFileWithObservationFile("~/workspace/OGI1/output/ds3.ttl");
 	// }
 
 	/**
@@ -253,13 +271,15 @@ public class TarqlFormulator {
 	 *
 	 * @author moh.adelrezk@gmail.com
 	 */
-	void qbSchemaFileCreation(String qbSchema, String CubePath) {
+	void qbSchemaFileCreation(String qbPath, String qbFileName) {
 		/**
 		 * PrintWriter schemaFile, is the file where the schema will be stored,
 		 * "CubePath example:{base.dir}/output/datasetname.ttl",
 		 * "final file name and path example:{base.dir}/output/datasetname.ttl.schema"
 		 */
-		try (PrintWriter schemaFile = new PrintWriter(CubePath + ".schema")) {
+
+		try (PrintWriter schemaFile = new PrintWriter(qbPath + qbFileName
+				+ ".schema")) {
 			/**
 			 * Printing String qbSchema value to the new schema file
 			 */
@@ -282,24 +302,24 @@ public class TarqlFormulator {
 	 * 
 	 * @author moh.adelrezk@gmail.com
 	 */
-	void mergingSchemaFileWithObservationFile(String CubePath) {
+	void mergingSchemaFileWithObservationFile(String qbPath, String qbFileName) {
 		/**
 		 * String MergedFilePath, the final corresponding dataset's RDF Cube
 		 * path and file name "example: {base.dir}/output/datasetname.ttl"
 		 */
-		String MergedFilePath = CubePath;
+		String MergedFilePath = qbPath + qbFileName;
 		/**
 		 * String schemaFilePath, the corresponding dataset's RDF Cube schema
 		 * path and file name
 		 * "example: {base.dir}/output/datasetname.ttl.schema"
 		 */
-		String schemaFilePath = CubePath + ".schema";
+		String schemaFilePath = qbPath + qbFileName + ".schema";
 		/**
 		 * String ObservationFilePath, the corresponding dataset's RDF Cube
 		 * observations path and file name
 		 * "example: {base.dir}/output/datasetname.ttl.observations"
 		 */
-		String ObservationFilePath = CubePath + ".observations";
+		String ObservationFilePath = qbPath + qbFileName + ".observations";
 		// ".nt" and ".ttl" should revisit and make it non static
 
 		/**
@@ -369,11 +389,11 @@ public class TarqlFormulator {
 	 * 
 	 * @author moh.adelrezk@gmail.com
 	 * */
-	void observationsCapture(List<String> Dimensions, List<String> Measures,
-			List<String> Metrics/* For schema only */) {
+	void CustomizedobservationsCapture(List<String> Dimensions,
+			List<String> Measures, List<String> Metrics/* For schema only */) {
 		/**
-		 * This part of code will be used when the user supply its schema, dim,
-		 * and measures but not for the fixed part
+		 * This part of code will be used when the user supply his cutomized
+		 * schema, dim, and measures but not for the fixed part
 		 */
 		String observTarqlString1 = "?observation a qb:observation;";
 		String observTarqlString = "?observation a qb:observation;"
@@ -411,8 +431,161 @@ public class TarqlFormulator {
 	 * 
 	 * @author moh.adelrezk@gmail.com
 	 * */
-	public void tarqlExcution(String csvPath, String cubePath,
-			String dimOrMeasures, String marineDatasetName, String serlization) {
+
+	public void tarqlAsLibraryExecution(String csvFilePath, String qbPath,
+			String qbFileName, String dimOrMeasures, String marineDatasetName,
+			String serialization) throws IOException {
+
+		/**
+		 * String workingDir, used to relatively locate tarql and run tarql
+		 * queries
+		 *
+		 * */
+		String workingDir = System.getProperty("user.dir");
+
+		CSVOptions options = new CSVOptions();
+		String delimiter = "";
+		String encoding = "";
+		String escapeChar = "";
+		String quoteChar = "";
+		String headerRow = "";
+
+		// Delimiter
+		if (StringUtils.isNotBlank(delimiter)) {
+			if (delimiter.equals("tab")) {
+				options.setDelimiter('\t');
+			} else {
+				options.setDelimiter(delimiter.charAt(0));
+			}
+		}
+
+		// Encoding
+		if (StringUtils.isNotBlank(encoding)
+				&& (!encoding.equals("Autodetect"))) {
+			options.setEncoding(encoding);
+		}
+
+		// Escape Char
+		if (StringUtils.isNotBlank(escapeChar) && (!encoding.equals("None"))) {
+			options.setEscapeChar(escapeChar.charAt(0));
+		}
+
+		// Quote Char
+		if (StringUtils.isNotBlank(quoteChar)) {
+			options.setQuoteChar(quoteChar.charAt(0));
+		}
+
+		// Header Row (default TRUE)
+		if (StringUtils.isNotBlank(headerRow) && headerRow.equals("no")) {
+			options.setColumnNamesInFirstRow(false);
+		}
+		/*
+		 * Tarql execution stages
+		 */
+
+		TarqlQuery tq = new TarqlParser(new StringReader(
+				getPropValues(marineDatasetName + "_Query")), null).getResult();
+
+		TarqlQueryExecution ex = TarqlQueryExecutionFactory.create(tq,
+				csvFilePath, options);
+//		TarqlQueryExecution ex = TarqlQueryExecutionFactory.
+		Iterator<Triple> triples = ex.execTriples();
+
+		ValueFactory factory = new ValueFactoryImpl();
+
+		/**
+		 * Printing String observation value to the new observations
+		 * file
+		 */
+		try (OutputStream File = new FileOutputStream(qbPath + qbFileName
+				+ ".observations")) {
+
+			while (triples.hasNext()) {
+					StreamingRDFWriter writer = new StreamingRDFWriter(File, triples);
+					if (serialization.equalsIgnoreCase("ntriples")) {
+						writer.writeNTriples();
+					} else {
+						writer.writeTurtle(
+								tq.getPrologue().getBaseURI(),
+								tq.getPrologue().getPrefixMapping());
+					}
+
+		
+
+			}
+			System.out.println("Waiting For Observation Capture!");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			/**
+			 * Logging will be added
+			 **/
+			System.out
+					.println("Warning: Somthing went wrong at Observation Capture!");
+
+			e.printStackTrace();
+		}
+		/**
+		 * creating the corresponding qbschema String
+		 * */
+		System.out.println("Creating Cube Schema!");
+		qbSchemaCreation(marineDatasetName);
+		/**
+		 * creating the corresponding .schema file
+		 * */
+		qbSchemaFileCreation(qbPath, qbFileName);
+		/**
+		 * releasing/flushing String qbSchema, to be used again in the same UI
+		 * session
+		 * */
+		qbSchema = "";
+		/**
+		 * Creating the corresponding RDF Cube file, by merging .schema file and
+		 * .observation file
+		 * */
+		System.out.println("Creating Full Cube!");
+		mergingSchemaFileWithObservationFile(qbPath, qbFileName);
+
+	}
+
+	/**
+	 * This function/method in used to Retrieve Properties values (mainly
+	 * datasets' RDF cube schema components)
+	 * 
+	 * @author moh.adelrezk@gmail.com
+	 * */
+	public String getPropValues(String propertyName) throws IOException {
+
+		String result = "";
+		InputStream inputStream = null;
+		String WorkingDir = System.getProperty("user.dir");
+
+		try {
+
+			Properties prop = new Properties();
+			String propFileName = "config.properties";
+			inputStream = Thread.currentThread().getContextClassLoader()
+					.getResourceAsStream(propFileName);
+
+			if (inputStream != null) {
+				prop.load(inputStream);
+			} else {
+				throw new FileNotFoundException("property file '"
+						+ propFileName + "' not found in the classpath");
+			}
+			result = prop.getProperty(propertyName);
+
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+		} finally {
+			inputStream.close();
+		}
+		return result;
+
+	}
+
+	public void tarqlExecution_bak(String csvFilePath, String qbPath,
+			String qbFileName, String dimOrMeasures, String marineDatasetName,
+			String serialization) {
 		/**
 		 * String workingDir, used to relatively locate tarql and run tarql
 		 * queries
@@ -425,7 +598,7 @@ public class TarqlFormulator {
 		 */
 		Runtime rt = Runtime.getRuntime();
 		// String runTarql =
-		// "sh /home/mohade/workspace/tarql/target/appassembler/bin/tarql  --ntriples /home/mohade/datasets/tarql/test5.sparql /home/mohade/datasets/tarql/IWBNetwork_ab94_01cb_752f.csv > /home/mohade/datasets/out/out5.nt";
+		// "sh ~/workspace/tarql/target/appassembler/bin/tarql  --ntriples ~/datasets/tarql/test5.sparql ~/datasets/tarql/IWBNetwork_ab94_01cb_752f.csv > ~/datasets/out/out5.nt";
 		/**
 		 * String runTarql, building and storing command line tarql query. "sh"
 		 * ==>> to enable command line through java. workingDir+
@@ -438,20 +611,20 @@ public class TarqlFormulator {
 		 * location of the observations
 		 */
 		String runTarql = "sh " + workingDir
-				+ "/tarql/target/appassembler/bin/tarql  --"
-				+ serlization + " " + workingDir + "/src/main/resources/tarqlQueries/"
-				+ marineDatasetName + ".sparql " + csvPath + " > " + cubePath
-				+ ".observations";
-		System.out.println("Tarql query:\n"+runTarql);
+				+ "/tarql/target/appassembler/bin/tarql  --" + serialization
+				+ " " + workingDir + "/src/main/resources/tarqlQueries/"
+				+ marineDatasetName + ".sparql " + csvFilePath + " > " + qbPath
+				+ qbFileName + ".observations";
+		System.out.println("Tarql query:\n" + runTarql);
 
-		// String permissions = "chmod 777 -R /home/mohade/datasets/out";
+		// String permissions = "chmod 777 -R ~/datasets/out";
 		/**
 		 * String whole[], storing the tarql query in an array with bash and -c
 		 * to be passed to a process
 		 */
 		String whole[] = new String[] { "bash", "-c", runTarql };
 
-		// String test = "cat /home/mohade/datasets/out > text.txt";
+		// String test = "cat ~/datasets/out > text.txt";
 		try {
 			/**
 			 * Process pr , runnnig the command line tarql query in a parallel
@@ -471,7 +644,8 @@ public class TarqlFormulator {
 			/**
 			 * Logging will be added
 			 **/
-			System.out.println("Warning: Somthing went wrong at Observation Capture!");
+			System.out
+					.println("Warning: Somthing went wrong at Observation Capture!");
 
 			e.printStackTrace();
 
@@ -485,7 +659,7 @@ public class TarqlFormulator {
 		/**
 		 * creating the corresponding .schema file
 		 * */
-		qbSchemaFileCreation(qbSchema, cubePath);
+		qbSchemaFileCreation(qbPath, qbFileName);
 		/**
 		 * releasing/flushing String qbSchema, to be used again in the same UI
 		 * session
@@ -496,68 +670,7 @@ public class TarqlFormulator {
 		 * .observation file
 		 * */
 		System.out.println("Creating Full Cube!");
-		mergingSchemaFileWithObservationFile(cubePath);
-
-	}
-
-	/**
-	 * This function/method in used to Retrieve Properties values (mainly
-	 * datasets' RDF cube schema components)
-	 * 
-	 * @author moh.adelrezk@gmail.com
-	 * */
-	public String getPropValues(String propertyName) throws IOException {
-
-		String result = "";
-		InputStream inputStream = null;
-		String WorkingDir=System.getProperty("user.dir");
-
-		try {
-
-			Properties prop = new Properties();
-			String propFileName = "config.properties";
-			inputStream =Thread.currentThread().getContextClassLoader().getResourceAsStream(
-					propFileName);
-//			inputStream = getClass().getClassLoader().getResourceAsStream(
-//					propFileName);
-
-			if (inputStream != null) {
-				prop.load(inputStream);
-			} else {
-				throw new FileNotFoundException("property file '"
-						+ propFileName + "' not found in the classpath");
-			}
-			result = prop.getProperty(propertyName);
-
-		} catch (Exception e) {
-			System.out.println("Exception: " + e);
-		} finally {
-			inputStream.close();
-		}
-		return result;
+		mergingSchemaFileWithObservationFile(qbPath, qbFileName);
 
 	}
 }
-/* /home/mohade/workspace/OGI1/data/IWBNetwork_9792_1ea4_7393.csv */
-/*
- * $ mkdir ./DB $ ./fuseki-server --update --loc=DB /ds
- */
-
-/*
- * $ ./fuseki-server --update --mem /ds
- */
-
-/*
- * http://localhost:3030/
- */
-/*
- * open fuseki-server with an editor you'll find the line
- * JVM_ARGS=${JVM_ARGS:--Xmx1200M} modify it to JVM_ARGS=${JVM_ARGS:--Xmx2048M}
- */
-
-/*
- * sudo kill -9 {PID of java}
- */
-
-
-
