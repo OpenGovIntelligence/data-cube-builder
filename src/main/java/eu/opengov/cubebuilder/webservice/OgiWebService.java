@@ -21,6 +21,7 @@ public class OgiWebService {
 	static LqbQuerying lqbquerying;
 	static String SparqlQuery;
 	static String fusekiPort;
+	static String limit;
 
 
 	public static void main(String args[]) {
@@ -37,7 +38,9 @@ public class OgiWebService {
 
 			return "Welcome to OGI Webservice API! !";
 		});
-
+		/*
+		 * (1) Building Linked Cubes
+		 * */
 		get("cubeBuilderAPI/cubeBuilderArgs", "application/json", (request,
 				response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
@@ -52,18 +55,56 @@ public class OgiWebService {
 
 			return run();
 		});
-
+		/*
+		 * (2) Send Sparql Query over Linked Cubes
+		 * */
 		get("cubeQueryingAPI/cubeQueryingArgs", "application/json", (request,
 				response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
 			response.header("Content-Type", "application/json");
+			
 			SparqlQuery = request.queryParams("query");
 			fusekiPort=request.queryParams("fuseki");
+			limit=request.queryParams("limit");
 			
-			return lqbquerying.LqbQueryingForVizJson(SparqlQuery, fusekiPort);
+			return lqbquerying.LqbQueryingForVizJson(SparqlQuery, fusekiPort, limit);
 		});
 
+	
+		/*
+		 * (3) List available Linked Cubes
+		 * */
+		get("cubeQueryingAPI/listLqbs", "application/json", (request,
+				response) -> {
+			response.header("Access-Control-Allow-Origin", "*");
+			response.header("Content-Type", "application/json");
+			
+			fusekiPort=request.queryParams("fuseki");
+			limit=request.queryParams("limit");
+			
+			return lqbquerying.LqbQueryingForLqbSpaces(fusekiPort,limit);
+		});
+
+	
+		/*
+		 * (4) Retrieve Data of certain Linked Cube
+		 * */
+		get("cubeQueryingAPI/listdataofLqb", "application/json", (request,
+				response) -> {
+			response.header("Access-Control-Allow-Origin", "*");
+			response.header("Content-Type", "application/json");
+			
+			marineDatasetName=request.queryParams("lqb");
+			fusekiPort=request.queryParams("fuseki");
+			limit=request.queryParams("limit");
+			
+			return lqbquerying.LqbQueryingForLqbSpaces(fusekiPort,limit);
+		});
+	
 	}
+	
+	
+	
 
 	public static String run() {
 

@@ -23,7 +23,7 @@ FIXME: ADD LIMIT as variable
 */
 public class LqbQuerying {
 
-	public JSONArray LqbQueryingForVizJson(String sparqlQuery, String fusekiPort)
+	public JSONArray LqbQueryingForVizJson(String sparqlQuery, String fusekiPort, String limit)
 			throws IOException {
 		// public static void main(String[] args) throws IOException {
 		// String filename =
@@ -92,7 +92,7 @@ public class LqbQuerying {
 				+ "?observation OGI:dewPoint ?dewPoint.\n" 
 				+ "}\n"
 //				+ "GROUP BY (?station_id) \n" 
-				+ "LIMIT  100";
+				+ "LIMIT"+limit;
 
 		System.out.println("Fuseki Request Thread started!");
 		System.out.println("query:" + LqbQueryingForVizJson_queryCommand);
@@ -103,45 +103,28 @@ public class LqbQuerying {
 		return generateJSON(results);
 
 	}
-	public JSONArray LqbQueryingForLqbSpaces(String sparqlQuery, String fusekiPort, String limit)
+	public JSONArray LqbQueryingForLqbSpaces(String fusekiPort, String limit)
 			throws IOException {
 		// public static void main(String[] args) throws IOException {
 		// String filename =
 		// "/src/main/resources/output/newcube2.ttl.observations"
 		// ;
-		String LqbQueryingForLqbSpaces_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
-				+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
-				+ "PREFIX qb:  <http://purl.org/linked-data/cube#> \n"
-				+ "PREFIX dct:      <http://purl.org/dc/terms/> \n" 
+		String LqbQueryingForLqbSpaces_queryCommand = "PREFIX qb:  <http://purl.org/linked-data/cube#>  \n"
+				+ "PREFIX OGI:  <http://ogi.eu/#> \n"
+				+ "PREFIX dct:      <http://purl.org/dc/terms/> \n"
 				+ "PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#> \n"
-				+ "SELECT  \n"
-				+ "?dataset ?title  ?label ?comment ?description ?publisher \n"
-				+ "(count(?atmosphericPressure) AS ?Observations_Count)\n"
-				+ "(sum(xsd:float(?atmosphericPressure))/count(?atmosphericPressure) AS ?Average_atmosphericPressure)\n"
-				+ "(sum(xsd:float(?windDirection))/count(?windDirection) AS ?Average_windDirection)\n"
-				+ "(sum(xsd:float(?windSpeed))/count(?windSpeed) AS ?Average_windSpeed)\n"
-				+ "(sum(xsd:float(?gust))/count(?gust) AS ?Average_gust)\n"
-				+ "(sum(xsd:float(?waveHeight))/count(?waveHeight) AS ?Average_waveHeight)\n"
-				+ "(sum(xsd:float(?wavePeriod))/count(?wavePeriod) AS ?Average_wavePeriod)\n"
-				+ "(sum(xsd:float(?meanWaveDirection))/count(?meanWaveDirection) AS ?Average_meanWaveDirection)\n"
-				+ "(sum(xsd:float(?hmax))/count(?hmax) AS ?Average_hmax)\n"
-				+ "(sum(xsd:float(?airTemperature))/count(?airTemperature) AS ?Average_airTemperature)\n"
-				+ "(sum(xsd:float(?dewPoint))/count(?dewPoint) AS ?Average_dewPoint)\n"
-				+ "WHERE {\n"
-				+ "?observation a qb:observation.\n"
-				+ "?observation OGI:station_id ?station_id.\n"
-				+ "?observation OGI:atmosphericPressure ?atmosphericPressure.\n"
-				+ "?observation OGI:windDirection ?windDirection.\n"
-				+ "?observation OGI:windSpeed ?windSpeed.\n"
-				+ "?observation OGI:gust ?gust.\n"
-				+ "?observation OGI:waveHeight ?waveHeight.\n"
-				+ "?observation OGI:wavePeriod ?wavePeriod.\n"
-				+ "?observation OGI:meanWaveDirection ?meanWaveDirection.\n"
-				+ "?observation OGI:hmax ?hmax.\n"
-				+ "?observation OGI:airTemperature ?airTemperature.\n"
-				+ "?observation OGI:dewPoint ?dewPoint.\n" 
-				+ "}\n"
-//				+ "GROUP BY (?station_id) \n";
+				+ "SELECT ?dataset ?title  ?label ?comment   ?description ?publisher ?issued ?label \n"
+				+ "WHERE \n"
+				+ "{\n"
+				+ "?dataset a qb:DataSet.\n"
+				+ "?dataset dct:title ?title.\n"
+				+ "?dataset rdfs:label  ?label.\n"
+				+ "?dataset rdfs:comment    ?comment.\n"
+				+ "?dataset dct:description ?description.\n"
+				+ "?dataset dct:publisher   ?publisher.\n"
+				+ "?dataset dct:issued ?issued.\n"
+				+ "?dataset rdfs:label ?label.\n"
+				+ "} \n"
 				+ "LIMIT  "+limit;
 		
 
@@ -150,6 +133,40 @@ public class LqbQuerying {
 
 		ResultSet results = queryServerWithDefaultGraph(
 				"http://localhost:"+fusekiPort+"/ds/query", LqbQueryingForLqbSpaces_queryCommand, "SELECT", "");
+
+		return generateJSON(results);
+
+	}
+	public JSONArray LqbQueryingForLqbData(String marineDatasetName, String fusekiPort, String limit)
+			throws IOException {
+		// public static void main(String[] args) throws IOException {
+		// String filename =
+		// "/src/main/resources/output/newcube2.ttl.observations"
+		// ;
+		String LqbQueryingForLqbData_queryCommand = "PREFIX qb:  <http://purl.org/linked-data/cube#>  \n"
+				+ "PREFIX OGI:  <http://ogi.eu/#> \n"
+				+ "PREFIX dct:      <http://purl.org/dc/terms/> \n"
+				+ "PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#> \n"
+				+ "SELECT ?dataset ?title  ?label ?comment   ?description ?publisher ?issued ?label \n"
+				+ "WHERE \n"
+				+ "{\n"
+				+ "?dataset a qb:DataSet.\n"
+				+ "?dataset dct:title ?title.\n"
+				+ "?dataset rdfs:label  ?label.\n"
+				+ "?dataset rdfs:comment    ?comment.\n"
+				+ "?dataset dct:description ?description.\n"
+				+ "?dataset dct:publisher   ?publisher.\n"
+				+ "?dataset dct:issued ?issued.\n"
+				+ "?dataset rdfs:label ?label.\n"
+				+ "} \n"
+				+ "LIMIT  "+limit;
+		
+
+		System.out.println("Fuseki Request Thread started!");
+		System.out.println("query:\n" + LqbQueryingForLqbData_queryCommand);
+
+		ResultSet results = queryServerWithDefaultGraph(
+				"http://localhost:"+fusekiPort+"/ds/query", LqbQueryingForLqbData_queryCommand, "SELECT", "");
 
 		return generateJSON(results);
 

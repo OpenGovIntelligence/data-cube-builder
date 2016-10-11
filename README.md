@@ -10,22 +10,6 @@
 	
 	$git checkout test
 
-##Cloning and Build Tarql
-	
-On the directory "ogi" do the following:
-
-   A- clone Tarql:
-
-    $git clone https://github.com/cygri/tarql tarql
-    
-   B- Build Tarql:
-
-	$cd tarql
-	 
-	$mvn clean install -DskipTests
-    //You may need to install mvn -> $sudo apt-get install maven
-    //You may need to install java -> $sudo apt-get install openjdk-7-jdk
-
 ## Download and Run Fuseki Server
 
 #Fuseki
@@ -38,38 +22,46 @@ On the directory "ogi" do the following:
 	$mkdir {user.dir}/jena-fuseki-1.0.0/LinkedcubeSpace
 	$screen ./fuseki-server --port=8080 --update --loc=LinkedcubeSpace /ds 
 	$curl http://localhost:8080
+	
+## Download tarql service as library
+
+	$cd {base.dir}/ogi/src/main/resources/lib/
+
+	$wget --no-check-certificate 'https://github.com/opencube-toolkit/tarql-component/raw/master/lib/extensions/tarql-1.0a.jar' -O tarql-1.0a.jar
+
+	 $wget --no-check-certificate 'https://github.com/opencube-toolkit/tarql-component/raw/master/lib/extensions/tarql-1.0a-javadoc.jar' -O tarql-1.0a-javadoc.jar
 	 
-
-## Download OGI Build Libraries (will be removed after maven is in action )
-2- Download libraries
-
-	$cd ogi
-	
-	$wget -i src/main/resources/lib/libs.txt  -P src/main/resources/lib/
-	 or
-	$wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=0B-DxlQVxO6pnZ0dxTzVqelladEE' -O src/main/resources/libs.zip
-	$cd src/main/resources/
-	$unzip libs.zip
-	
 ## OGI Desktop UI 
 
 3- Run OGI UI:
 
+	$nano {base.dir}/ogi/pom.xml
+	
+	change: 
+	<mainClass>eu.opengov.cubebuilder.webservice.OgiWebService</mainClass>		
+	
+	to: 
+	<mainClass>eu.opengov.cubebuilder.desktop.OgiFront</mainClass>	
+	
 	$cd {base.dir}/ogi
 	
-	$javac -cp src/main/resources/lib/*:src/main/resources/:. src/main/java/*.java	
-	
-	$java -cp src/ main.java.OgiFront
+	$mvn exec:java
 
 ## OGI Command Line UI 
 
 3- Run OGI CMD:
 	
-	$cd {base.dir}/ogi
-		
-	$javac -cp src/main/resources/lib/*:src/main/resources/:. src/main/java/*.java
+	$nano {base.dir}/ogi/pom.xml
 	
-	$java -cp  src/main/resources/lib/*:src/main/resources/:src/ main.java.OgiCommandLine -help
+	change: 
+	<mainClass>eu.opengov.cubebuilder.webservice.OgiWebService</mainClass>		
+	
+	to: 
+	<mainClass>eu.opengov.cubebuilder.cmd.OgiCommandLine</mainClass>	
+	
+	$cd {base.dir}/ogi
+	
+	$mvn exec:java
 	
 Usage: OGI EU [options]  
   Options:
@@ -94,10 +86,8 @@ Usage: OGI EU [options]
 3- Run OGI CMD:
 	
 	$cd {base.dir}/ogi
-		
-	$javac -cp src/main/resources/lib/*:src/main/resources/:. src/main/java/*.java
 	
-	$screen java -cp  src/main/resources/lib/*:src/main/resources/:src/ main.java.OgiWebService
+	$screen mvn exec:java
 	
 	Available gates:
 	> curl http://localhost:4567/
@@ -120,16 +110,13 @@ Usage: OGI EU [options]
 	
 ### Build Linked Cube
 	
-	A- Using Command Line UI
-		$javac -cp src/main/resources/lib/*:src/main/resources/:src/main/resources/lib/*:. src/main/java/*.java
+	A- Using Command Line UI (review!)
 		
-		$java -cp  src/main/resources/lib/jcommander-1.48.jar:src/main/resources/:src/main/resources/lib/*:src/ main.java.OgiCommandLine -csv:src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:src/main/resources/output/IWBNetwork.ttl
+		$mvn exec:java -Dexec.args="-csv:src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:src/main/resources/output/IWBNetwork.ttl"
 	
 	B- Using Web Service API
 	
-		$javac -cp src/main/resources/lib/*:src/main/resources/:src/main/resources/lib/*:. src/main/java/*.java
-		
-		$java -cp  src/main/resources/lib/*:src/main/resources/:src/ main.java.OgiWebService
+		$mvn exec:java
 	
 	From web browser:
 	
