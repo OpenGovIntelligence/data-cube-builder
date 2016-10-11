@@ -9,9 +9,10 @@
 *.*~
 src/main/java/*.class
 bin
+bin/
 
 #test
-src/main/java/eu/opengov/cubebuilder/testing/test.java
+src/main/java/eu/opengov/*/test.java
 test.java
 notes.txt
 #logs
@@ -22,23 +23,42 @@ src/main/java/eu/opengov/cubebuilder/dataservices/DataPreparation.java
 
 #DATASETs
 src/main/resources/data/*.*
+src/main/resources/data
+src/main/resources/data/
+
 *.csv
 
 #libraries
 src/main/resources/lib/*.*
+src/main/resources/lib
+src/main/resources/lib/
+
 
 #output files (cubes/schemas/observations)
 src/main/resources/output/*.*
+src/main/resources/output
+src/main/resources/output/
+
+#tarql queries
+src/main/resources/tarqlQueries/*.*
+src/main/resources/tarqlQueries
+src/main/resources/tarqlQueries/
 
 #tarql
 tarql/*
 /tarql
 tarql/
+tarql
 
 #maven
 target/
+target
+src/test/
+src/test
 
 #other
 output.json
 src/main/resources/*.txt
 *.bk
+src/main/resources/libs.txt
+src/main/resources/queries.txt
