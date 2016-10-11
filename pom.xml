@@ -28,8 +28,9 @@
 				<version>1.2.1</version>
 				<configuration>
 					<executable>java</executable>
-					<mainClass>eu.opengov.cubebuilder.desktop.OgiFront</mainClass>
-					<!-- <mainClass>eu.opengov.cubebuilder.tarqlservices.TestTarqlAsLib</mainClass> -->
+					<!-- <mainClass>eu.opengov.cubebuilder.desktop.OgiFront</mainClass>
+				 -->
+<mainClass>eu.opengov.cubebuilder.webservice.OgiWebService</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
