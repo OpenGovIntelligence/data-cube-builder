@@ -1,14 +1,13 @@
 package eu.opengov.cubebuilder.cmd;
 
-import java.util.HashMap;
 import java.util.logging.Logger;
 
-import com.beust.jcommander.DynamicParameter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import eu.opengov.cubebuilder.tarqlservices.TarqlFormulator;
+
 /**
  * 
  * @author moh.adelrezk@gmail.com
@@ -65,19 +64,20 @@ public class OgiCommandLine {
 
 			try {
 				if (serialization.equalsIgnoreCase("turtle"))
-					tarqlformulator.tarqlAsLibraryExecution( csvFilePath,  qbPath,
-							 qbFileName,  dimOrMeasures,  marineDatasetName,
-							 serialization);
+					tarqlformulator.tarqlAsLibraryExecution(csvFilePath,
+							qbPath, qbFileName, dimOrMeasures,
+							marineDatasetName, serialization);
 				else
-					tarqlformulator.tarqlAsLibraryExecution( csvFilePath,  qbPath,
-							 qbFileName,  dimOrMeasures,  marineDatasetName,
-							 serialization);
+					tarqlformulator.tarqlAsLibraryExecution(csvFilePath,
+							qbPath, qbFileName, dimOrMeasures,
+							marineDatasetName, serialization);
 			} catch (Exception ex) {
 				Jcomm.usage();
 				System.out.println("Error:" + ex.getMessage());
 			}
 
-			System.out.println("Check Cube output location:" + qbPath+qbFileName);
+			System.out.println("Check Cube output location:" + qbPath
+					+ qbFileName);
 		}
 	}
 }

@@ -2,7 +2,6 @@ package eu.opengov.cubebuilder.tarqlservices;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -23,12 +22,10 @@ import org.deri.tarql.TarqlParser;
 import org.deri.tarql.TarqlQuery;
 import org.deri.tarql.TarqlQueryExecution;
 import org.deri.tarql.TarqlQueryExecutionFactory;
-import org.deri.tarql.tarql;
-import org.openrdf.model.Statement;
+
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
 
-import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.graph.Triple;
 
 /**
@@ -46,30 +43,6 @@ public class TarqlFormulator {
 	String qbSchema = "";
 
 	/**
-	 * main method used only for testing functions/methods, rather than running
-	 * the whole thing
-	 */
-
-	// public static void main(String[] args) {
-	//
-	// TarqlFormulator t=new TarqlFormulator();
-	// String CubePath= "~/datasets/out/test66.nt";
-	// String marineDatasetName= "IWBNetwork";
-	//
-	// t.prefixFormulation(marineDatasetName);
-	// t.dataSetFormulation(marineDatasetName);
-	// t.dataStructureFormulation(marineDatasetName);
-	// t.dimensionsFormulation(marineDatasetName);
-	// t.measuresFormulation(marineDatasetName);
-	// t.slicesFormulation(marineDatasetName);
-	// System.out.println(t.qbSchema);
-	// t.qbSchemaAppending(t.qbSchema, CubePath);
-
-	// tarqlExcution();
-	// t.mergingSchemaFileWithObservationFile("~/workspace/OGI1/output/ds3.ttl");
-	// }
-
-	/**
 	 * This function/method in used for creating the "dataset's" corresponding
 	 * RDF cube schema "prefixes", and appending it the qbSchema String
 	 *
@@ -78,29 +51,20 @@ public class TarqlFormulator {
 
 	void prefixFormulation(String marineDatasetName) {
 		try {
-			/**
-			 * String prefixTarqlString, is temporary storing the retrieved
-			 * property value "Prefixes"
-			 **/
-			// String prefixTarqlString = getPropValues(marineDatasetName
-			// + "_Prefixes");
+
 			/**
 			 * String prefixTarqlString, is temporary storing the retrieved
 			 * property value "Prefixes"
 			 **/
 			String prefixTarqlStringFORTESTING = getPropValues("IWBNetwork_Prefixes");
-			// System.out.println(prefixTarqlString);
 			/**
 			 * Adding String prefixTarqlString value to the String qbSchema
 			 **/
 			qbSchema += prefixTarqlStringFORTESTING;
-			// System.out.println(qbSchema);
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			/**
-			 * Logging will be added
-			 **/
-			e.printStackTrace();
+
+			System.out.println(e.getMessage());
 		}
 
 	}
@@ -123,13 +87,9 @@ public class TarqlFormulator {
 			 * Adding String prefixTarqlString value to the String qbSchema
 			 **/
 			qbSchema += dataSetTarqlString;
-			// System.out.println(qbSchema);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			/**
-			 * Logging will be added
-			 **/
-			e.printStackTrace();
+
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -153,13 +113,9 @@ public class TarqlFormulator {
 			 * qbSchema
 			 **/
 			qbSchema += dataStructureTarqlString;
-			// System.out.println(qbSchema);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			/**
-			 * Logging will be added
-			 **/
-			e.printStackTrace();
+
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -182,13 +138,9 @@ public class TarqlFormulator {
 			 * Adding String dimensionsTarqlString value to the String qbSchema
 			 **/
 			qbSchema += dimensionsTarqlString;
-			// System.out.println(qbSchema);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			/**
-			 * Logging will be added
-			 **/
-			e.printStackTrace();
+
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -211,13 +163,9 @@ public class TarqlFormulator {
 			 * Adding String measuresTarqlString value to the String qbSchema
 			 **/
 			qbSchema += measuresTarqlString;
-			// System.out.println(qbSchema);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			/**
-			 * Logging will be added
-			 **/
-			e.printStackTrace();
+
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -242,11 +190,8 @@ public class TarqlFormulator {
 			qbSchema += slicesTarqlString;
 			// System.out.println(qbSchema);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			/**
-			 * Logging will be added
-			 **/
-			e.printStackTrace();
+
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -285,11 +230,8 @@ public class TarqlFormulator {
 			 */
 			schemaFile.println(qbSchema);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			/**
-			 * Logging will be added
-			 **/
-			e.printStackTrace();
+
+			System.out.println(e.getMessage());
 		}
 
 	}
@@ -344,32 +286,29 @@ public class TarqlFormulator {
 				merged.write("\n");
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 
 		} finally {
 			if (merged != null)
 				try {
 					merged.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 			if (schema != null)
 				try {
 					schema.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
-			if (observations != null)
-				try {
-					observations.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		}
 
+		}
+		if (observations != null)
+			try {
+				observations.close();
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
 	}
 
 	/**
@@ -395,7 +334,6 @@ public class TarqlFormulator {
 		 * This part of code will be used when the user supply his cutomized
 		 * schema, dim, and measures but not for the fixed part
 		 */
-		String observTarqlString1 = "?observation a qb:observation;";
 		String observTarqlString = "?observation a qb:observation;"
 				+ "obs:time ?time;"
 				+ "obs:longitude ?longitude"
@@ -441,7 +379,7 @@ public class TarqlFormulator {
 		 * queries
 		 *
 		 * */
-		String workingDir = System.getProperty("user.dir");
+		// String workingDir = System.getProperty("user.dir");
 
 		CSVOptions options = new CSVOptions();
 		String delimiter = "";
@@ -488,41 +426,38 @@ public class TarqlFormulator {
 
 		TarqlQueryExecution ex = TarqlQueryExecutionFactory.create(tq,
 				csvFilePath, options);
-//		TarqlQueryExecution ex = TarqlQueryExecutionFactory.
+		// TarqlQueryExecution ex = TarqlQueryExecutionFactory.
 		Iterator<Triple> triples = ex.execTriples();
 
 		ValueFactory factory = new ValueFactoryImpl();
 
 		/**
-		 * Printing String observation value to the new observations
-		 * file
+		 * Printing String observation value to the new observations file
 		 */
 		try (OutputStream File = new FileOutputStream(qbPath + qbFileName
 				+ ".observations")) {
 
 			while (triples.hasNext()) {
-					StreamingRDFWriter writer = new StreamingRDFWriter(File, triples);
-					if (serialization.equalsIgnoreCase("ntriples")) {
-						writer.writeNTriples();
-					} else {
-						writer.writeTurtle(
-								tq.getPrologue().getBaseURI(),
-								tq.getPrologue().getPrefixMapping());
-					}
-
-		
+				StreamingRDFWriter writer = new StreamingRDFWriter(File,
+						triples);
+				if (serialization.equalsIgnoreCase("ntriples")) {
+					writer.writeNTriples();
+				} else {
+					writer.writeTurtle(tq.getPrologue().getBaseURI(), tq
+							.getPrologue().getPrefixMapping());
+				}
 
 			}
 			System.out.println("Waiting For Observation Capture!");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			/**
 			 * Logging will be added
 			 **/
 			System.out
-					.println("Warning: Somthing went wrong at Observation Capture!");
+					.println("Warning: Somthing went wrong at Observation Capture Stage!");
+			System.out.println(e.getMessage());
 
-			e.printStackTrace();
 		}
 		/**
 		 * creating the corresponding qbschema String
@@ -557,7 +492,7 @@ public class TarqlFormulator {
 
 		String result = "";
 		InputStream inputStream = null;
-		String WorkingDir = System.getProperty("user.dir");
+		// String WorkingDir = System.getProperty("user.dir");
 
 		try {
 
@@ -640,14 +575,11 @@ public class TarqlFormulator {
 			System.out.println("Waiting For Observation Capture!");
 
 		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			/**
-			 * Logging will be added
-			 **/
+			
 			System.out
 					.println("Warning: Somthing went wrong at Observation Capture!");
 
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 
 		}
 

@@ -38,5 +38,7 @@ tarql/
 #maven
 target/
 
-
+#other
 output.json
+src/main/resources/*.txt
+*.bk

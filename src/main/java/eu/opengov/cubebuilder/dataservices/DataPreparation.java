@@ -3,6 +3,7 @@ package eu.opengov.cubebuilder.dataservices;
  * 
  * @author moh.adelrezk@gmail.com
  * */
+//TODO:Will be needed for data pre-processing 
 public class DataPreparation {
 	
 	
@@ -10,9 +11,7 @@ public class DataPreparation {
 
 	void removeNaNFromCSV (String datasetSourceFileCSV){
 		
-		/**
-		http://stackoverflow.com/questions/3935791/find-and-replace-words-lines-in-a-file
-		**/
+		//this is done at the rdf to json phase in the webservice and lq-querying modules
 
 	}
 	/** find NaN values inside the Data Stream and replace it with 0.0*/

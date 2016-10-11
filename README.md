@@ -11,8 +11,6 @@
 	$git checkout test
 
 ## Download and Run Fuseki Server
-
-#Fuseki
 	
 	Use instructions at > https://jstirnaman.wordpress.com/2013/10/11/installing-fuseki-with-jena-and-tdb-on-os-x/
 	(just change the tar.gz locations to):
@@ -33,7 +31,7 @@
 	 
 ## OGI Desktop UI 
 
-3- Run OGI UI:
+1- Run OGI UI:
 
 	$nano {base.dir}/ogi/pom.xml
 	
@@ -49,7 +47,7 @@
 
 ## OGI Command Line UI 
 
-3- Run OGI CMD:
+2- Run OGI CMD:
 	
 	$nano {base.dir}/ogi/pom.xml
 	
@@ -83,19 +81,35 @@ Usage: OGI EU [options]
 
 ## OGI Web Service API
 
-3- Run OGI CMD:
+3- Run OGI Web Service API:
 	
 	$cd {base.dir}/ogi
 	
 	$screen mvn exec:java
 	
-	Available gates:
-	> curl http://localhost:4567/
-	
-	> curl http://localhost:4567/cubeQueryingAPI/cubeQueryingArgs?sparql=queryToExecuteOverLinkedCubeSpace&fuseki=portNumberofFusekiserver
+##Available gates:
 
-	> curl http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&cube=outputFileAndLocation&fuseki=portNumberofFusekiserver
+	> curl http://localhost:4567/
+
+###cube builder:
+	> curl http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&qbPath=outputFileLocation&qbName=outputFileName&fuseki=portNumberofFusekiserver
+
+###listing available cubes
+	> curl http://localhost:4567/cubeQueryingAPI/listLqbs?limit=numberOfRetrievedRecords&fuseki=portNumberofFusekiserver
+
+###listing available cubes
+	> curl http://localhost:4567/cubeQueryingAPI/listLqbs?limit=numberOfRetrievedRecords&fuseki=portNumberofFusekiserver
+
+###retrieve cube metadata 
+	> curl http://localhost:4567/cubeQueryingAPI/LqbMeta?lqb=marineInstituteDatasetId&fuseki=portNumberofFusekiserver
 	
+###retrieve data of certain cube	
+	>curl http://localhost:4567/cubeQueryingAPI/listdataofLqb?lqb=marineInstituteDatasetId&fuseki=portNumberofFusekiserver&limit=numberOfRetrievedRecords
+
+###sparql endpoint	
+	>curl http://localhost:4567/cubeQueryingAPI/cubeQueryingArgs?query=sparqlQueryToExecuteAgainstLinkedCubeSpace&fuseki=portNumberofFusekiserver
+	
+
 ## Download example csv file
 	
 	$cd {base.dir}/ogi/src/main/resources/
@@ -130,8 +144,6 @@ Usage: OGI EU [options]
 	
 	$./s-put http://localhost:8080/ds/data default IWBNetwork.ttl
 
-
-####
-in case java 8 is not installed 
+#### in case java 8 is not installed 
 http://www.tecmint.com/install-java-jdk-jre-in-linux/
 
