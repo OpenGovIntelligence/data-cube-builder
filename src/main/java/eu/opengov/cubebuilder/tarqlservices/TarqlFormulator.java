@@ -575,7 +575,7 @@ public class TarqlFormulator {
 			System.out.println("Waiting For Observation Capture!");
 
 		} catch (IOException | InterruptedException e) {
-			
+
 			System.out
 					.println("Warning: Somthing went wrong at Observation Capture!");
 

@@ -77,7 +77,7 @@ public class OgiWebService {
 					// limit=request.queryParams("limit");
 					// System.out.println(marineDatasetName+" ******** "+fusekiPort);
 
-				return lqbquerying.LqbQueryingForMetaData(marineDatasetName,
+				return lqbquerying.LqbQueryingForDimAndMeasures(marineDatasetName,
 						fusekiPort);
 			});
 		/*

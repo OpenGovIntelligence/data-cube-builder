@@ -19,17 +19,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public class LqbQuerying {
 
 	/*
 	 * (1) List available Linked Cubes
-	 * */
+	 */
 	public JSONArray LqbQueryingForLqbSpaces(String fusekiPort, String limit)
 			throws IOException {
-		String LqbQueryingForLqbSpaces_queryCommand="Error at LqbQueryingForLqbSpaces function!";
-		
-		 LqbQueryingForLqbSpaces_queryCommand = "PREFIX qb:  <http://purl.org/linked-data/cube#>  \n"
+		String LqbQueryingForLqbSpaces_queryCommand = "Error at LqbQueryingForLqbSpaces function!";
+
+		LqbQueryingForLqbSpaces_queryCommand = "PREFIX qb:  <http://purl.org/linked-data/cube#>  \n"
 				+ "PREFIX OGI:  <http://ogi.eu/#> \n"
 				+ "PREFIX dct:      <http://purl.org/dc/terms/> \n"
 				+ "PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#> \n"
@@ -43,97 +42,109 @@ public class LqbQuerying {
 				+ "?dataset dct:description ?description.\n"
 				+ "?dataset dct:publisher   ?publisher.\n"
 				+ "?dataset dct:issued ?issued.\n"
-				+ "?dataset rdfs:label ?label.\n"
-				+ "} \n"
-				+ "LIMIT  " + limit;
+				+ "?dataset rdfs:label ?label.\n" + "} \n" + "LIMIT  " + limit;
 
 		return LqbExecuteQuery(LqbQueryingForLqbSpaces_queryCommand, fusekiPort);
 
 	}
+
 	/*
 	 * (2) List Linked Cube metadata
-	 * */
-	public JSONArray LqbQueryingForMetaData(String marineDatasetName,
+	 */
+	public JSONArray LqbQueryingForDimAndMeasures(String marineDatasetName,
 			String fusekiPort) throws IOException {
-		
-		String LqbQueryingForMetaData_queryCommand ="Error at LqbQueryingForMetaData function!";
 
-		
+		String LqbQueryingForMetaData_queryCommand = "Error at LqbQueryingForMetaData function!";
+
 		LqbQueryingForMetaData_queryCommand = "PREFIX qb:  <http://purl.org/linked-data/cube#> \n"
 				+ "PREFIX OGI:  <http://ogi.eu/#> \n"
 				+ "PREFIX dct:      <http://purl.org/dc/terms/> \n"
 				+ "PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#> \n"
-				+ "SELECT  ?metadatatype ?metadatavalue \n"
+				+ "SELECT  ?type ?name \n"
 				+ "WHERE{  \n"
-				+ "OGI:"+marineDatasetName+"_dsd qb:component [?metadatatype ?metadatavalue]. \n"
+				+ "OGI:"
+				+ marineDatasetName
+				+ "_dsd qb:component [?type ?name]. \n"
 				+ "} \n";
-
-
+		/*
+		 * String
+		 * getCubeDimensions_query="PREFIX qb: <http://purl.org/linked-data/cube#>"
+		 * + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+		 * "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>" +
+		 * "select  distinct ?res ?label where {" +
+		 * "<http://ogi.eu/#"+marineDatasetName+"_ds> qb:structure ?dsd." +
+		 * "?dsd qb:component  ?cs." + "?cs qb:dimension ?res." +
+		 * "OPTIONAL{?res skos:prefLabel|rdfs:label ?label.}}";
+		 */
 		return LqbExecuteQuery(LqbQueryingForMetaData_queryCommand, fusekiPort);
-
 
 	}
 
 	/*
 	 * (3) Retrieve Data of certain Linked Cube
-	 * */
+	 */
 	public JSONArray LqbQueryingForLqbData(String marineDatasetName,
 			String fusekiPort, String limit) throws IOException {
 
-		String LqbQueryingForLqbData_queryCommand ="embty";
-		
+		String LqbQueryingForLqbData_queryCommand = "embty";
 
 		if (marineDatasetName.equalsIgnoreCase("IWBNetwork")) {
 
-			 LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
+			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
 					+ "PREFIX qb:  <http://purl.org/linked-data/cube#> \n"
 					+ "SELECT  \n"
 					+ "?station_id\n"
-					+ "?atmosphericPressure\n"
-					+ "?windDirection\n"
-					+ "?windSpeed\n"
-					+ "?gust\n"
-					+ "?waveHeight\n"
-					+ "?wavePeriod\n"
-					+ "?meanWaveDirection\n"
-					+ "?hmax\n"
-					+ "?airTemperature\n"
-					+ "?dewPoint\n"
+					+ "?AtmosphericPressure\n"
+					+ "?WindDirection\n"
+					+ "?WindSpeed\n"
+					+ "?Gust\n"
+					+ "?WaveHeight\n"
+					+ "?WavePeriod\n"
+					+ "?MeanWaveDirection\n"
+					+ "?Hmax\n"
+					+ "?AirTemperature\n"
+					+ "?DewPoint\n"
+					+ "?SeaTemperature\n"
+					+ "?salinity\n"
+					+ "?RelativeHumidity\n"
 					+ "?time\n"
 					+ "?longitude\n"
 					+ "?latitude\n"
-					+ "?qC_Flag \n"
+					+ "?QC_Flag \n"
 					+ "WHERE {\n"
-					+ "?observation a qb:observation.\n"
+					+ "?observation a qb:Observation.\n"
 					+ "?observation OGI:station_id ?station_id.\n"
-					+ "?observation OGI:atmosphericPressure ?atmosphericPressure.\n"
-					+ "?observation OGI:windDirection ?windDirection.\n"
-					+ "?observation OGI:windSpeed ?windSpeed.\n"
-					+ "?observation OGI:gust ?gust.\n"
-					+ "?observation OGI:waveHeight ?waveHeight.\n"
-					+ "?observation OGI:wavePeriod ?wavePeriod.\n"
-					+ "?observation OGI:meanWaveDirection ?meanWaveDirection.\n"
-					+ "?observation OGI:hmax ?hmax.\n"
-					+ "?observation OGI:airTemperature ?airTemperature.\n"
-					+ "?observation OGI:dewPoint ?dewPoint.\n"
+					+ "?observation OGI:atmosphericPressure ?AtmosphericPressure.\n"
+					+ "?observation OGI:windDirection ?WindDirection.\n"
+					+ "?observation OGI:windSpeed ?WindSpeed.\n"
+					+ "?observation OGI:gust ?Gust.\n"
+					+ "?observation OGI:waveHeight ?WaveHeight.\n"
+					+ "?observation OGI:wavePeriod ?WavePeriod.\n"
+					+ "?observation OGI:meanWaveDirection ?MeanWaveDirection.\n"
+					+ "?observation OGI:hmax ?Hmax.\n"
+					+ "?observation OGI:airTemperature ?AirTemperature.\n"
+					+ "?observation OGI:dewPoint ?DewPoint.\n"
+					+ "?observation OGI:seaTemperature ?SeaTemperature.\n"
+					+ "?observation OGI:salinity ?salinity.\n"
+					+ "?observation OGI:relativeHumidity ?RelativeHumidity.\n"
 					+ "?observation OGI:time ?time.\n"
 					+ "?observation OGI:longitude ?longitude.\n"
 					+ "?observation OGI:latitude ?latitude.\n"
-					+ "?observation OGI:qC_Flag ?qC_Flag.\n"
-					+ "?observation qb:dataSet OGI:IWBNetwork-ds.\n" + "}\n"
+					+ "?observation OGI:qC_Flag ?QC_Flag.\n"
+					+ "?observation qb:dataSet OGI:IWBNetwork_ds.\n" + "}\n"
 					// + "GROUP BY (?station_id) \n"
 					+ "LIMIT" + limit;
 
 		}
 		if (marineDatasetName.equalsIgnoreCase("IWaveBNetwork30Min")) {
 
-			 LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
+			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
 					+ "PREFIX qb:  <http://purl.org/linked-data/cube#> \n"
 					+ "SELECT  \n"
 					+ "?time\n"
-					+ "?longitude\n"
+					+ "longitude\n"
 					+ "?latitude\n"
 					+ "?station_id\n"
 					+ "?PeakPeriod\n"
@@ -163,7 +174,7 @@ public class LqbQuerying {
 					+ "?observation OGI:peakPeriod ?PeakPeriod.\n"
 					+ "?observation OGI:peakDirection ?PeakDirection.\n"
 					+ "?observation OGI:upcrossPeriod ?UpcrossPeriod.\n"
-					+ "?observation OGI:significant_wave_height ?SignificantWaveHeight.\n"
+					+ "?observation OGI:significantWaveHeight ?SignificantWaveHeight.\n"
 					+ "?observation OGI:seaTemperature ?SeaTemperature.\n"
 					+ "?observation OGI:hmax ?Hmax.\n"
 					+ "?observation OGI:tHmax ?THmax.\n"
@@ -178,73 +189,71 @@ public class LqbQuerying {
 					+ "?observation OGI:tHmax_qc ?THmax_qc.\n"
 					+ "?observation OGI:meanCurDirTo_qc ?MeanCurDirTo_qc.\n"
 					+ "?observation OGI:meanCurSpeed_qc ?MeanCurSpeed_qc.\n"
-					+ "?observation qb:dataSet OGI:IWaveBNetwork30Min-ds.\n" + "}\n"
+					+ "?observation qb:dataSet OGI:IWaveBNetwork30Min_ds.\n"
+					+ "}\n"
 					// + "GROUP BY (?station_id) \n"
 					+ "LIMIT" + limit;
 
 		}
 		if (marineDatasetName.equalsIgnoreCase("IrishNatoinalTideGaugeNetwork")) {
-		
-			 LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
+
+			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
 					+ "PREFIX qb:  <http://purl.org/linked-data/cube#> \n"
 					+ "SELECT  \n"
-					+ "?time \n"
-					+ "?station_id \n"
-					+ "?longitude \n"
-					+ "?latitude \n"
-					+ "?altitude \n"
-					+ "?Water_Level \n"
-					+ "?Water_Level_LAT \n"
-					+ "?Water_Level_OD_Malin \n"
-					+ "?QC_Flag \n"
+					+ "?longitude\n"
+					+ "?latitude\n"
+					+ "?altitude\n"
+					+ "?time\n"
+					+ "?station_id\n"
+					+ "?Water_Level\n"
+					+ "?Water_Level_LAT\n"
+					+ "?Water_Level_OD_Malin\n"
+					+ "?QC_Flag\n"
 					+ "WHERE {\n"
 					+ "?observation a qb:observation.\n"
-					+ "?observation OGI:time ?time.\n"
-					+ "?observation OGI:station_id ?station_id.\n"
-					+ "?observation OGI:longitude ?longitude.\n"
-					+ "?observation OGI:latitude ?latitude.\n"
-					+ "?observation OGI:altitude ?altitude.\n"
-					+ "?observation OGI:water_Level ?Water_Level.\n"
-					+ "?observation OGI:water_Level_LAT ?Water_Level_LAT.\n"
-					+ "?observation OGI:water_Level_OD_Malin ?Water_Level_OD_Malin.\n"
-					+ "?observation OGI:qC_Flag ?QC_Flag.\n"
-					+ "?observation qb:dataSet OGI:IrishNatoinalTideGaugeNetwork-ds.\n" + "}\n"
+					+ "?observation OGI:longitude ?longitude\n"
+					+ "?observation OGI:latitude ?latitude\n"
+					+ "?observation OGI:altitude ?altitude\n"
+					+ "?observation OGI:time ?time\n"
+					+ "?observation OGI:station_id ?station_id\n"
+					+ "?observation OGI:water_Level ?Water_Level\n"
+					+ "?observation OGI:water_Level_LAT ?Water_Level_LAT\n"
+					+ "?observation OGI:water_Level_OD_Malin ?Water_Level_OD_Malin\n"
+					+ "?observation OGI:qC_Flag ?QC_Flag\n"
+					+ "?observation qb:dataSet OGI:IrishNatoinalTideGaugeNetwork_ds.\n"
+					+ "}\n"
 					// + "GROUP BY (?station_id) \n"
 					+ "LIMIT" + limit;
 
 		}
 		if (marineDatasetName.equalsIgnoreCase("IMI_EATL_WAVE")) {
 
-			 LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
-						+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
-						+ "PREFIX qb:  <http://purl.org/linked-data/cube#> \n"
-						+ "SELECT  \n"
-						+ "?time \n"
-						+ "?longitude \n"
-						+ "?latitude \n"
-						+ "?significant_wave_height \n"
-						+ "?swell_wave_height \n"
-						+ "?mean_wave_direction \n"
-						+ "?mean_wave_period \n"
-						+ "?QC_Flag \n"
-						+ "WHERE {\n"
-						+ "?observation a qb:observation.\n"
-						+ "?observation OGI:time ?time.\n"
-						+ "?observation OGI:longitude ?longitude.\n"
-						+ "?observation OGI:latitude ?latitude.\n"
-						+ "?observation OGI:significant_wave_height ?significant_wave_height.\n"
-						+ "?observation OGI:swell_wave_height ?swell_wave_height.\n"
-						+ "?observation OGI:mean_wave_direction ?mean_wave_direction.\n"
-						+ "?observation OGI:mean_wave_period ?mean_wave_period.\n"
-						+ "?observation qb:dataSet OGI:IMI_EATL_WAVE-ds.\n" + "}\n"
-						// + "GROUP BY (?station_id) \n"
-						+ "LIMIT" + limit;
+			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
+					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
+					+ "PREFIX qb:  <http://purl.org/linked-data/cube#> \n"
+					+ "SELECT  \n"
+					+ "?time\n"
+					+ "?longitude\n"
+					+ "?latitude\n"
+					+ "?significant_wave_height\n"
+					+ "?swell_wave_height\n"
+					+ "?mean_wave_direction\n"
+					+ "?mean_wave_period\n"
+					+ "WHERE {\n"
+					+ "?observation a qb:observation.\n"
+					+ "?observation OGI:time ?time.\n"
+					+ "?observation OGI:longitude ?longitude.\n"
+					+ "?observation OGI:latitude ?latitude.\n"
+					+ "?observation OGI:significant_wave_height ?significant_wave_height.\n"
+					+ "?observation OGI:swell_wave_height ?swell_wave_height.\n"
+					+ "?observation OGI:mean_wave_direction ?mean_wave_direction.\n"
+					+ "?observation OGI:mean_wave_period ?mean_wave_period.\n"
+					+ "?observation qb:dataSet OGI:IMI_EATL_WAVE_ds.\n" + "}\n"
+					// + "GROUP BY (?station_id) \n"
+					+ "LIMIT" + limit;
 
-			
 		}
-		
-		
 
 		return LqbExecuteQuery(LqbQueryingForLqbData_queryCommand, fusekiPort);
 
@@ -252,10 +261,10 @@ public class LqbQuerying {
 
 	/*
 	 * (4) Send Sparql Query over Linked Cubes
-	 * */
+	 */
 	public JSONArray LqbQuerying(String sparqlQuery, String fusekiPort)
 			throws IOException {
-		
+
 		String queryCommand = sparqlQuery;
 
 		System.out.println("Fuseki Request Thread started!");
@@ -270,36 +279,34 @@ public class LqbQuerying {
 
 	public JSONArray LqbExecuteQuery(String sparqlQuery, String fusekiPort)
 			throws IOException {
-		
+
 		String Lqb_queryCommand = "embty";
-		Lqb_queryCommand=sparqlQuery;
-		
+		Lqb_queryCommand = sparqlQuery;
+
 		ResultSet results = null;
 		JSONArray errorMessage = new JSONArray(
 				"[ {\"errorMessage\": \"Somthing went wrong at query execution!\"} ]");
-		
-		if (!Lqb_queryCommand.equalsIgnoreCase("embty")&!Lqb_queryCommand.equalsIgnoreCase("Error at LqbQueryingForLqbSpaces function!")&!Lqb_queryCommand.equalsIgnoreCase("Error at LqbQueryingForMetaData function!")) {
+
+		if (!Lqb_queryCommand.equalsIgnoreCase("embty")
+				& !Lqb_queryCommand
+						.equalsIgnoreCase("Error at LqbQueryingForLqbSpaces function!")
+				& !Lqb_queryCommand
+						.equalsIgnoreCase("Error at LqbQueryingForMetaData function!")) {
 			System.out.println("Fuseki Request Thread started!");
 			System.out.println("query:\n" + Lqb_queryCommand);
 
 			results = queryServerWithDefaultGraph("http://localhost:"
-					+ fusekiPort + "/ds/query",
-					Lqb_queryCommand, "SELECT", "");
+					+ fusekiPort + "/ds/query", Lqb_queryCommand, "SELECT", "");
 		}
-		
-		if (results == null){
+
+		if (results == null) {
 			System.out.println(errorMessage);
 			return errorMessage;
-		}
-		else{
+		} else {
 			System.out.println(results.toString());
 			return generateJSON(results);
 		}
 	}
-
-	
-
-	
 
 	private static JSONArray generateJSON(ResultSet results)
 			throws JSONException, IOException {
@@ -337,7 +344,8 @@ public class LqbQuerying {
 				if (jtempreadLevel2.get("value").equals("NaN")) {
 					jtempwrite.accumulate(key, "0.0");
 				} else {
-					jtempwrite.accumulate(key, removePrefix(jtempreadLevel2.get("value").toString()));
+					jtempwrite.accumulate(key, removePrefix(jtempreadLevel2
+							.get("value").toString()));
 				}
 			}
 			finalJsonArrayForPivotTable.put(jtempwrite);
@@ -371,21 +379,21 @@ public class LqbQuerying {
 		}
 		return null;
 	}
-	
+
 	private static String removePrefix(String dirty) {
-	    /* "prefixes" to delete*/
-        ArrayList<String> prefixes = new ArrayList<String>();
-//        prefixes.add("http://quixey.com/app/2600430904/t/");
-//        prefixes.add("http://quixey.com/app/2600430904/p/");
-        prefixes.add("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-        prefixes.add("http://purl.org/linked-data/sdmx/2009/metadata#");
-        prefixes.add("https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#");
-        prefixes.add("http://www.w3.org/2003/01/geo/wgs84_pos#");
-        prefixes.add("http://purl.org/linked-data/sdmx/2009/dimension#");
-        prefixes.add("http://ogi.eu/observation/a#");
-        prefixes.add("http://purl.org/linked-data/sdmx/2009/subject#");
-        prefixes.add("http://purl.org/dc/terms/");
-		prefixes.add("http://ogi.eu/observations/");
+		/* "prefixes" to delete */
+		ArrayList<String> prefixes = new ArrayList<String>();
+		// prefixes.add("http://quixey.com/app/2600430904/t/");
+		// prefixes.add("http://quixey.com/app/2600430904/p/");
+		prefixes.add("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		prefixes.add("http://purl.org/linked-data/sdmx/2009/metadata#");
+		prefixes.add("https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#");
+		prefixes.add("http://www.w3.org/2003/01/geo/wgs84_pos#");
+		prefixes.add("http://purl.org/linked-data/sdmx/2009/dimension#");
+		prefixes.add("http://ogi.eu/observation/a#");
+		prefixes.add("http://purl.org/linked-data/sdmx/2009/subject#");
+		prefixes.add("http://purl.org/dc/terms/");
+//		prefixes.add("http://ogi.eu/observations/");
 		prefixes.add("http://www.w3.org/2004/02/skos/core#");
 		prefixes.add("http://vocab.nerc.ac.uk/collection/P07/current/");
 		prefixes.add("http://www.w3.org/ns/org#");
@@ -399,19 +407,19 @@ public class LqbQuerying {
 		prefixes.add("http://purl.org/linked-data/sdmx/2009/code#");
 		prefixes.add("http://www.opengis.net/def/naming-system/EPSG/0/");
 		prefixes.add("http://www.w3.org/2000/01/rdf-schema#");
-        prefixes.add("http://ogi.eu/#");
-        prefixes.add("http://rdfs.org/ns/void#");
-        prefixes.add("http://purl.org/twc/ontologies/cmo.owl#");
-        prefixes.add("http://www.w3.org/2006/time#");
-        prefixes.add("http://www.w3.org/2002/07/owl#");
-        prefixes.add("http://purl.org/linked-data/cube#");
-        prefixes.add("http://www.w3.org/ns/ssn/");
-        prefixes.add("http://xmlns.com/foaf/0.1/");
-        prefixes.add("http://vocab.datex.org/terms#");
-        for (String s : prefixes)
-            if (dirty.startsWith(s))
-                return dirty.replace(s, "");
-        return dirty;
-    }
+		prefixes.add("http://ogi.eu/#");
+		prefixes.add("http://rdfs.org/ns/void#");
+		prefixes.add("http://purl.org/twc/ontologies/cmo.owl#");
+		prefixes.add("http://www.w3.org/2006/time#");
+		prefixes.add("http://www.w3.org/2002/07/owl#");
+		prefixes.add("http://purl.org/linked-data/cube#");
+		prefixes.add("http://www.w3.org/ns/ssn/");
+		prefixes.add("http://xmlns.com/foaf/0.1/");
+		prefixes.add("http://vocab.datex.org/terms#");
+		for (String s : prefixes)
+			if (dirty.startsWith(s))
+				return dirty.replace(s, "");
+		return dirty;
+	}
 
 }
