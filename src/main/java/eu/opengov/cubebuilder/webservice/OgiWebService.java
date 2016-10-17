@@ -93,7 +93,7 @@ public class OgiWebService {
 			fusekiPort = request.queryParams("fuseki");
 			limit = request.queryParams("limit");
 
-			return lqbquerying.LqbQueryingForLqbData(marineDatasetName,
+			return lqbquerying.LqbQueryingForLqbData(marineDatasetURI,
 					fusekiPort, limit);
 		});
 

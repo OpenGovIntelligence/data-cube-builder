@@ -63,9 +63,10 @@ public class LqbQuerying {
 				+ "SELECT  ?type ?name \n"
 				+ "WHERE{  \n"
 //				+ "OGI:"
-				+ marineDatasetURI
+				+ "<"+marineDatasetURI+">"
 //				+ "_dsd "
-				+ " qb:component [?type ?name]. \n"
+				+ "qb:structure ?dsd. \n"
+				+ "?dsd qb:component [?type ?name]. \n"
 				+ "} \n";
 		/*
 		 * String
@@ -88,8 +89,8 @@ public class LqbQuerying {
 			String fusekiPort, String limit) throws IOException {
 
 		String LqbQueryingForLqbData_queryCommand = "embty";
-
-		if (marineDatasetURI.equalsIgnoreCase("<http://ogi.eu/#IWBNetwork_ds>")) {
+System.out.print(marineDatasetURI);
+		if (marineDatasetURI.equalsIgnoreCase("http://ogi.eu/#IWBNetwork_ds")) {
 
 			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
@@ -138,7 +139,7 @@ public class LqbQuerying {
 					+ "LIMIT" + limit;
 
 		}
-		if (marineDatasetURI.equalsIgnoreCase("<http://ogi.eu/#IWaveBNetwork30Min_ds>")) {
+		if (marineDatasetURI.equalsIgnoreCase("http://ogi.eu/#IWaveBNetwork30Min_ds")) {
 
 			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
@@ -196,7 +197,7 @@ public class LqbQuerying {
 					+ "LIMIT" + limit;
 
 		}
-		if (marineDatasetURI.equalsIgnoreCase("<http://ogi.eu/#IrishNatoinalTideGaugeNetwork_ds>")) {
+		if (marineDatasetURI.equalsIgnoreCase("http://ogi.eu/#IrishNatoinalTideGaugeNetwork_ds")) {
 
 			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
@@ -228,7 +229,7 @@ public class LqbQuerying {
 					+ "LIMIT" + limit;
 
 		}
-		if (marineDatasetURI.equalsIgnoreCase("<http://ogi.eu/#IMI_EATL_WAVE_ds>")) {
+		if (marineDatasetURI.equalsIgnoreCase("http://ogi.eu/#IMI_EATL_WAVE_ds")) {
 
 			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
