@@ -25,7 +25,7 @@
 	
 	$mkdir {user.dir}/jena-fuseki-1.0.0/LinkedcubeSpace
 	
-	$screen ./fuseki-server --port=8080 --update --loc=LinkedcubeSpace /ds 
+	$sudo screen -S cubeserver ./fuseki-server --port=8080 --update --loc=LinkedcubeSpace /ds 
 	
 	$curl http://localhost:8080
 	
@@ -93,7 +93,7 @@
 	
 	$cd {base.dir}/ogi
 	
-	$screen mvn exec:java
+	$sudo screen -S cubebuilder mvn exec:java
 	
 ## Available gates:
 
@@ -105,14 +105,11 @@
 ### listing available cubes
 	> curl http://localhost:4567/cubeQueryingAPI/listLqbs?limit=numberOfRetrievedRecords&fuseki=portNumberofFusekiserver
 
-### listing available cubes
-	> curl http://localhost:4567/cubeQueryingAPI/listLqbs?limit=numberOfRetrievedRecords&fuseki=portNumberofFusekiserver
-
 ### retrieve cube metadata 
-	> curl http://localhost:4567/cubeQueryingAPI/LqbMeta?lqb=marineInstituteDatasetId&fuseki=portNumberofFusekiserver
+	> curl http://localhost:4567/cubeQueryingAPI/LqbMeta?dsuri=marineInstituteDatasetURI&fuseki=portNumberofFusekiserver
 	
 ### retrieve data of certain cube	
-	>curl http://localhost:4567/cubeQueryingAPI/listdataofLqb?lqb=marineInstituteDatasetId&fuseki=portNumberofFusekiserver&limit=numberOfRetrievedRecords
+	>curl http://localhost:4567/cubeQueryingAPI/listdataofLqb?dsuri=marineInstituteDatasetURI&fuseki=portNumberofFusekiserver&limit=numberOfRetrievedRecords
 
 ### sparql endpoint	
 	>curl http://localhost:4567/cubeQueryingAPI/cubeQueryingArgs?query=sparqlQueryToExecuteAgainstLinkedCubeSpace&fuseki=portNumberofFusekiserver
@@ -153,7 +150,7 @@
 	
 	$./s-put http://localhost:8080/ds/data default IWBNetwork.ttl
 
-### Use
+
 
 
 #### in case java 8 is not installed 

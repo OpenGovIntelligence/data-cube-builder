@@ -18,7 +18,7 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+//TODO: Fuseki server location in config.prop file (http://localhost:port?/ds/query)
 public class LqbQuerying {
 
 	/*
@@ -51,7 +51,7 @@ public class LqbQuerying {
 	/*
 	 * (2) List Linked Cube metadata
 	 */
-	public JSONArray LqbQueryingForDimAndMeasures(String marineDatasetName,
+	public JSONArray LqbQueryingForDimAndMeasures(String marineDatasetURI,
 			String fusekiPort) throws IOException {
 
 		String LqbQueryingForMetaData_queryCommand = "Error at LqbQueryingForMetaData function!";
@@ -62,9 +62,10 @@ public class LqbQuerying {
 				+ "PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#> \n"
 				+ "SELECT  ?type ?name \n"
 				+ "WHERE{  \n"
-				+ "OGI:"
-				+ marineDatasetName
-				+ "_dsd qb:component [?type ?name]. \n"
+//				+ "OGI:"
+				+ marineDatasetURI
+//				+ "_dsd "
+				+ " qb:component [?type ?name]. \n"
 				+ "} \n";
 		/*
 		 * String
@@ -83,12 +84,12 @@ public class LqbQuerying {
 	/*
 	 * (3) Retrieve Data of certain Linked Cube
 	 */
-	public JSONArray LqbQueryingForLqbData(String marineDatasetName,
+	public JSONArray LqbQueryingForLqbData(String marineDatasetURI,
 			String fusekiPort, String limit) throws IOException {
 
 		String LqbQueryingForLqbData_queryCommand = "embty";
 
-		if (marineDatasetName.equalsIgnoreCase("IWBNetwork")) {
+		if (marineDatasetURI.equalsIgnoreCase("<http://ogi.eu/#IWBNetwork_ds>")) {
 
 			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
@@ -137,7 +138,7 @@ public class LqbQuerying {
 					+ "LIMIT" + limit;
 
 		}
-		if (marineDatasetName.equalsIgnoreCase("IWaveBNetwork30Min")) {
+		if (marineDatasetURI.equalsIgnoreCase("<http://ogi.eu/#IWaveBNetwork30Min_ds>")) {
 
 			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
@@ -195,7 +196,7 @@ public class LqbQuerying {
 					+ "LIMIT" + limit;
 
 		}
-		if (marineDatasetName.equalsIgnoreCase("IrishNatoinalTideGaugeNetwork")) {
+		if (marineDatasetURI.equalsIgnoreCase("<http://ogi.eu/#IrishNatoinalTideGaugeNetwork_ds>")) {
 
 			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
@@ -227,7 +228,7 @@ public class LqbQuerying {
 					+ "LIMIT" + limit;
 
 		}
-		if (marineDatasetName.equalsIgnoreCase("IMI_EATL_WAVE")) {
+		if (marineDatasetURI.equalsIgnoreCase("<http://ogi.eu/#IMI_EATL_WAVE_ds>")) {
 
 			LqbQueryingForLqbData_queryCommand = "PREFIX OGI:  <http://ogi.eu/#> \n"
 					+ "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"
@@ -315,7 +316,7 @@ public class LqbQuerying {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
 		ResultSetFormatter.outputAsJSON(outputStream, results);
-
+System.out.print(outputStream.toString());
 		// and turn that into a String
 		String stringOfjsonOfFusekiResultTemporaryStage = new String(
 				outputStream.toByteArray());
@@ -344,8 +345,10 @@ public class LqbQuerying {
 				if (jtempreadLevel2.get("value").equals("NaN")) {
 					jtempwrite.accumulate(key, "0.0");
 				} else {
-					jtempwrite.accumulate(key, removePrefix(jtempreadLevel2
-							.get("value").toString()));
+//					jtempwrite.accumulate(key, removePrefix(jtempreadLevel2
+//							.get("value").toString()));
+					jtempwrite.accumulate(key, jtempreadLevel2
+							.get("value").toString());
 				}
 			}
 			finalJsonArrayForPivotTable.put(jtempwrite);

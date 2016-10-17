@@ -12,6 +12,7 @@ import eu.opengov.cubebuilder.tarqlservices.TarqlFormulator;
 public class OgiWebService {
 	static String csvFilePath;
 	static String marineDatasetName;
+	static String marineDatasetURI;
 	static String serialization;
 	static String qbPath;
 	static String qbFileName;
@@ -72,12 +73,12 @@ public class OgiWebService {
 					response.header("Access-Control-Allow-Origin", "*");
 					response.header("Content-Type", "application/json");
 
-					marineDatasetName = request.queryParams("lqb");
+					marineDatasetURI = request.queryParams("dsuri");
 					fusekiPort = request.queryParams("fuseki");
 					// limit=request.queryParams("limit");
 					// System.out.println(marineDatasetName+" ******** "+fusekiPort);
 
-				return lqbquerying.LqbQueryingForDimAndMeasures(marineDatasetName,
+				return lqbquerying.LqbQueryingForDimAndMeasures(marineDatasetURI,
 						fusekiPort);
 			});
 		/*
@@ -88,7 +89,7 @@ public class OgiWebService {
 			response.header("Access-Control-Allow-Origin", "*");
 			response.header("Content-Type", "application/json");
 
-			marineDatasetName = request.queryParams("lqb");
+			marineDatasetURI = request.queryParams("dsuri");
 			fusekiPort = request.queryParams("fuseki");
 			limit = request.queryParams("limit");
 
