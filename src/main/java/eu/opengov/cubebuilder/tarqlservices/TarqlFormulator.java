@@ -22,11 +22,12 @@ import org.deri.tarql.TarqlParser;
 import org.deri.tarql.TarqlQuery;
 import org.deri.tarql.TarqlQueryExecution;
 import org.deri.tarql.TarqlQueryExecutionFactory;
-
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
 
 import com.hp.hpl.jena.graph.Triple;
+
+import eu.opengov.cubebuilder.util.PropertyReader;
 
 /**
  * Tarql query formulation, and RDF Cube Schema building functions.
@@ -41,6 +42,7 @@ public class TarqlFormulator {
 	 * "exampledatasetname.ttl.schema".
 	 * */
 	String qbSchema = "";
+	PropertyReader pr=new PropertyReader();
 
 	/**
 	 * This function/method in used for creating the "dataset's" corresponding
@@ -56,7 +58,7 @@ public class TarqlFormulator {
 			 * String prefixTarqlString, is temporary storing the retrieved
 			 * property value "Prefixes"
 			 **/
-			String prefixTarqlStringFORTESTING = getPropValues("IWBNetwork_Prefixes");
+			String prefixTarqlStringFORTESTING = pr.getPropValues("IWBNetwork_Prefixes");
 			/**
 			 * Adding String prefixTarqlString value to the String qbSchema
 			 **/
@@ -81,7 +83,7 @@ public class TarqlFormulator {
 			 * String dataSetTarqlString, is temporary storing the retrieved
 			 * property value "Dataset"
 			 **/
-			String dataSetTarqlString = getPropValues(marineDatasetName
+			String dataSetTarqlString = pr.getPropValues(marineDatasetName
 					+ "_Dataset");
 			/**
 			 * Adding String prefixTarqlString value to the String qbSchema
@@ -106,7 +108,7 @@ public class TarqlFormulator {
 			 * String dataStructureTarqlString, is temporary storing the
 			 * retrieved property value "Data_Structure_Definitions"
 			 **/
-			String dataStructureTarqlString = getPropValues(marineDatasetName
+			String dataStructureTarqlString = pr.getPropValues(marineDatasetName
 					+ "_Data_Structure_Definitions");
 			/**
 			 * Adding String dataStructureTarqlString value to the String
@@ -132,7 +134,7 @@ public class TarqlFormulator {
 			 * String dimensionsTarqlString, is temporary storing the retrieved
 			 * property value "Dimensions"
 			 **/
-			String dimensionsTarqlString = getPropValues(marineDatasetName
+			String dimensionsTarqlString = pr.getPropValues(marineDatasetName
 					+ "_Dimensions");
 			/**
 			 * Adding String dimensionsTarqlString value to the String qbSchema
@@ -157,7 +159,7 @@ public class TarqlFormulator {
 			 * String measuresTarqlString, is temporary storing the retrieved
 			 * property value "Measures"
 			 **/
-			String measuresTarqlString = getPropValues(marineDatasetName
+			String measuresTarqlString = pr.getPropValues(marineDatasetName
 					+ "_Measures");
 			/**
 			 * Adding String measuresTarqlString value to the String qbSchema
@@ -182,7 +184,7 @@ public class TarqlFormulator {
 			 * String slicesTarqlString, is temporary storing the retrieved
 			 * property value "Slices"
 			 **/
-			String slicesTarqlString = getPropValues(marineDatasetName
+			String slicesTarqlString = pr.getPropValues(marineDatasetName
 					+ "_Slices");
 			/**
 			 * Adding String slicesTarqlString value to the String qbSchema
@@ -422,7 +424,7 @@ public class TarqlFormulator {
 		 */
 
 		TarqlQuery tq = new TarqlParser(new StringReader(
-				getPropValues(marineDatasetName + "_Query")), null).getResult();
+				pr.getPropValues(marineDatasetName + "_Query")), null).getResult();
 
 		TarqlQueryExecution ex = TarqlQueryExecutionFactory.create(tq,
 				csvFilePath, options);
@@ -482,41 +484,7 @@ public class TarqlFormulator {
 
 	}
 
-	/**
-	 * This function/method in used to Retrieve Properties values (mainly
-	 * datasets' RDF cube schema components)
-	 * 
-	 * @author moh.adelrezk@gmail.com
-	 * */
-	public String getPropValues(String propertyName) throws IOException {
-
-		String result = "";
-		InputStream inputStream = null;
-		// String WorkingDir = System.getProperty("user.dir");
-
-		try {
-
-			Properties prop = new Properties();
-			String propFileName = "config.properties";
-			inputStream = Thread.currentThread().getContextClassLoader()
-					.getResourceAsStream(propFileName);
-
-			if (inputStream != null) {
-				prop.load(inputStream);
-			} else {
-				throw new FileNotFoundException("property file '"
-						+ propFileName + "' not found in the classpath");
-			}
-			result = prop.getProperty(propertyName);
-
-		} catch (Exception e) {
-			System.out.println("Exception: " + e);
-		} finally {
-			inputStream.close();
-		}
-		return result;
-
-	}
+	
 
 	public void tarqlExecution_bak(String csvFilePath, String qbPath,
 			String qbFileName, String dimOrMeasures, String marineDatasetName,

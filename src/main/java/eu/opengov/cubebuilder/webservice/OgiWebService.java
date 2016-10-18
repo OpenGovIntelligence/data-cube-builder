@@ -20,7 +20,7 @@ public class OgiWebService {
 	static TarqlFormulator tarqlformulator;
 	static LqbQuerying lqbquerying;
 	static String SparqlQuery;
-	static String fusekiPort;
+//	static String fusekiPort;
 	static String limit;
 
 	public static void main(String args[]) {
@@ -45,7 +45,7 @@ public class OgiWebService {
 			serialization = request.queryParams("serialization");
 			qbPath = request.queryParams("qbPath");
 			qbFileName = request.queryParams("qbName");
-			fusekiPort = request.queryParams("fuseki");
+//			fusekiPort = request.queryParams("fuseki");
 
 			return run();
 		});
@@ -58,10 +58,10 @@ public class OgiWebService {
 					response.header("Access-Control-Allow-Origin", "*");
 					response.header("Content-Type", "application/json");
 
-					fusekiPort = request.queryParams("fuseki");
+//					fusekiPort = request.queryParams("fuseki");
 					limit = request.queryParams("limit");
 
-					return lqbquerying.LqbQueryingForLqbSpaces(fusekiPort,
+					return lqbquerying.LqbQueryingForLqbSpaces(
 							limit);
 				});
 
@@ -74,12 +74,11 @@ public class OgiWebService {
 					response.header("Content-Type", "application/json");
 
 					marineDatasetURI = request.queryParams("dsuri");
-					fusekiPort = request.queryParams("fuseki");
+//					fusekiPort = request.queryParams("fuseki");
 					// limit=request.queryParams("limit");
-					// System.out.println(marineDatasetName+" ******** "+fusekiPort);
+					 System.out.println(marineDatasetURI);
 
-				return lqbquerying.LqbQueryingForDimAndMeasures(marineDatasetURI,
-						fusekiPort);
+				return lqbquerying.LqbQueryingForDimAndMeasures(request.queryParams("dsuri"));
 			});
 		/*
 		 * (3) Retrieve Data of certain Linked Cube
@@ -90,11 +89,11 @@ public class OgiWebService {
 			response.header("Content-Type", "application/json");
 
 			marineDatasetURI = request.queryParams("dsuri");
-			fusekiPort = request.queryParams("fuseki");
+//			fusekiPort = request.queryParams("fuseki");
 			limit = request.queryParams("limit");
 
 			return lqbquerying.LqbQueryingForLqbData(marineDatasetURI,
-					fusekiPort, limit);
+					limit);
 		});
 
 		/*
@@ -106,10 +105,10 @@ public class OgiWebService {
 			response.header("Content-Type", "application/json");
 
 			SparqlQuery = request.queryParams("query");
-			fusekiPort = request.queryParams("fuseki");
+//			fusekiPort = request.queryParams("fuseki");
 			// limit=request.queryParams("limit");
 
-				return lqbquerying.LqbQuerying(SparqlQuery, fusekiPort);
+				return lqbquerying.LqbQuerying(SparqlQuery);
 			});
 
 	}

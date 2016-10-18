@@ -10,6 +10,8 @@ import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
 
+import eu.opengov.cubebuilder.util.PropertyReader;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,10 +23,13 @@ import org.json.JSONObject;
 //TODO: Fuseki server location in config.prop file (http://localhost:port?/ds/query)
 public class LqbQuerying {
 
+	PropertyReader pr=new PropertyReader();
+	
+	
 	/*
 	 * (1) List available Linked Cubes
 	 */
-	public JSONArray LqbQueryingForLqbSpaces(String fusekiPort, String limit)
+	public JSONArray LqbQueryingForLqbSpaces(String limit)
 			throws IOException {
 		String LqbQueryingForLqbSpaces_queryCommand = "Error at LqbQueryingForLqbSpaces function!";
 
@@ -44,15 +49,14 @@ public class LqbQuerying {
 				+ "?dataset dct:issued ?issued.\n"
 				+ "?dataset rdfs:label ?label.\n" + "} \n" + "LIMIT  " + limit;
 
-		return LqbExecuteQuery(LqbQueryingForLqbSpaces_queryCommand, fusekiPort);
+		return LqbExecuteQuery(LqbQueryingForLqbSpaces_queryCommand);
 
 	}
 
 	/*
 	 * (2) List Linked Cube metadata
 	 */
-	public JSONArray LqbQueryingForDimAndMeasures(String marineDatasetURI,
-			String fusekiPort) throws IOException {
+	public JSONArray LqbQueryingForDimAndMeasures(String marineDatasetURI) throws IOException {
 
 		String LqbQueryingForMetaData_queryCommand = "Error at LqbQueryingForMetaData function!";
 
@@ -78,7 +82,7 @@ public class LqbQuerying {
 		 * "?dsd qb:component  ?cs." + "?cs qb:dimension ?res." +
 		 * "OPTIONAL{?res skos:prefLabel|rdfs:label ?label.}}";
 		 */
-		return LqbExecuteQuery(LqbQueryingForMetaData_queryCommand, fusekiPort);
+		return LqbExecuteQuery(LqbQueryingForMetaData_queryCommand);
 
 	}
 
@@ -86,7 +90,7 @@ public class LqbQuerying {
 	 * (3) Retrieve Data of certain Linked Cube
 	 */
 	public JSONArray LqbQueryingForLqbData(String marineDatasetURI,
-			String fusekiPort, String limit) throws IOException {
+			 String limit) throws IOException {
 
 		String LqbQueryingForLqbData_queryCommand = "embty";
 System.out.print(marineDatasetURI);
@@ -257,31 +261,31 @@ System.out.print(marineDatasetURI);
 
 		}
 
-		return LqbExecuteQuery(LqbQueryingForLqbData_queryCommand, fusekiPort);
+		return LqbExecuteQuery(LqbQueryingForLqbData_queryCommand);
 
 	}
 
 	/*
 	 * (4) Send Sparql Query over Linked Cubes
 	 */
-	public JSONArray LqbQuerying(String sparqlQuery, String fusekiPort)
+	public JSONArray LqbQuerying(String sparqlQuery)
 			throws IOException {
 
 		String queryCommand = sparqlQuery;
-
+		String fusekiPort=pr.getPropValues("fusekiPort");
 		System.out.println("Fuseki Request Thread started!");
 		System.out.println("query:" + queryCommand);
 
-		ResultSet results = queryServerWithDefaultGraph("http://localhost:"
-				+ fusekiPort + "/ds/query", queryCommand, "SELECT", "");
+		ResultSet results = queryServerWithDefaultGraph(fusekiPort + "/ds/query", queryCommand, "SELECT", "");
 
 		return generateJSON(results);
 
 	}
 
-	public JSONArray LqbExecuteQuery(String sparqlQuery, String fusekiPort)
+	public JSONArray LqbExecuteQuery(String sparqlQuery)
 			throws IOException {
 
+		String fusekiPort=pr.getPropValues("fusekiPort");
 		String Lqb_queryCommand = "embty";
 		Lqb_queryCommand = sparqlQuery;
 
@@ -297,8 +301,7 @@ System.out.print(marineDatasetURI);
 			System.out.println("Fuseki Request Thread started!");
 			System.out.println("query:\n" + Lqb_queryCommand);
 
-			results = queryServerWithDefaultGraph("http://localhost:"
-					+ fusekiPort + "/ds/query", Lqb_queryCommand, "SELECT", "");
+			results = queryServerWithDefaultGraph(fusekiPort + "/ds/query", Lqb_queryCommand, "SELECT", "");
 		}
 
 		if (results == null) {
