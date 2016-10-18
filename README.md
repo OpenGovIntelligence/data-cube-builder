@@ -29,6 +29,10 @@
 	
 	$curl http://localhost:8080
 	
+	$cd ogi/src/main/resources/
+	
+	$nano config.properties (add fuseki port of your choice)
+	
 ## Download tarql service as library
 
 	$cd {base.dir}/ogi/src/main/resources/lib/
@@ -100,19 +104,19 @@
 	> curl http://localhost:4567/
 
 ### cube builder:
-	> curl http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&qbPath=outputFileLocation&qbName=outputFileName&fuseki=portNumberofFusekiserver
+	> curl http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=inputFileNameAndLocation&schema=marineInstituteDatasetId&serialization=turtle&qbPath=outputFileLocation&qbName=outputFileName
 
 ### listing available cubes
-	> curl http://localhost:4567/cubeQueryingAPI/listLqbs?limit=numberOfRetrievedRecords&fuseki=portNumberofFusekiserver
+	> curl http://localhost:4567/cubeQueryingAPI/listLqbs?limit=numberOfRetrievedRecords
 
 ### retrieve cube metadata 
-	> curl http://localhost:4567/cubeQueryingAPI/LqbMeta?dsuri=marineInstituteDatasetURI&fuseki=portNumberofFusekiserver
+	> curl http://localhost:4567/cubeQueryingAPI/LqbMeta?dsuri=marineInstituteDatasetURI
 	
 ### retrieve data of certain cube	
-	>curl http://localhost:4567/cubeQueryingAPI/listdataofLqb?dsuri=marineInstituteDatasetURI&fuseki=portNumberofFusekiserver&limit=numberOfRetrievedRecords
+	>curl http://localhost:4567/cubeQueryingAPI/listdataofLqb?dsuri=marineInstituteDatasetURI&limit=numberOfRetrievedRecords
 
 ### sparql endpoint	
-	>curl http://localhost:4567/cubeQueryingAPI/cubeQueryingArgs?query=sparqlQueryToExecuteAgainstLinkedCubeSpace&fuseki=portNumberofFusekiserver
+	>curl http://localhost:4567/cubeQueryingAPI/cubeQueryingArgs?query=sparqlQueryToExecuteAgainstLinkedCubeSpace
 	
 # Examples:
 
