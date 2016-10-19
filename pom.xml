@@ -30,7 +30,7 @@
 					<executable>java</executable>
 					<!-- <mainClass>eu.opengov.cubebuilder.desktop.OgiFront</mainClass>
 				 -->
-<mainClass>eu.opengov.cubebuilder.webservice.OgiWebService</mainClass>
+<mainClass>eu.opengov.cubebuilder.cmd.OgiCommandLine</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

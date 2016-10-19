@@ -64,8 +64,9 @@ public class OgiFront extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String []args) {
 		// TODO remove after testing phases
+		
 		System.out.println("new File(\"\").getAbsolutePath()" + "==>"
 				+ new File("").getAbsolutePath());
 		System.out.println("System.getProperty('user.home')" + "==>"
@@ -73,6 +74,7 @@ public class OgiFront extends JFrame {
 		System.out.println("System.getProperty('user.dir')" + "==>"
 				+ System.getProperty("user.dir"));
 		EventQueue.invokeLater(new Runnable() {
+			
 			public void run() {
 				try {
 					OgiFront frame = new OgiFront();

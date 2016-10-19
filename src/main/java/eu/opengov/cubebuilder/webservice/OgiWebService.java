@@ -23,7 +23,7 @@ public class OgiWebService {
 //	static String fusekiPort;
 	static String limit;
 
-	public static void main(String args[]) {
+	public static void main(String [] args) {
 
 		tarqlformulator = new TarqlFormulator();
 		lqbquerying = new LqbQuerying();
@@ -72,11 +72,14 @@ public class OgiWebService {
 				(request, response) -> {
 					response.header("Access-Control-Allow-Origin", "*");
 					response.header("Content-Type", "application/json");
+//					String url = request.splat()[0];
+					String url= request.splat().toString();
 
 					marineDatasetURI = request.queryParams("dsuri");
 //					fusekiPort = request.queryParams("fuseki");
 					// limit=request.queryParams("limit");
 					 System.out.println(marineDatasetURI);
+					 System.out.println( request.raw().getRequestURL().toString() + "---" + request.raw().getQueryString()+"----");
 
 				return lqbquerying.LqbQueryingForDimAndMeasures(request.queryParams("dsuri"));
 			});
@@ -108,7 +111,7 @@ public class OgiWebService {
 //			fusekiPort = request.queryParams("fuseki");
 			// limit=request.queryParams("limit");
 
-				return lqbquerying.LqbQuerying(SparqlQuery);
+				return lqbquerying.LqbDirectQuerying(SparqlQuery);
 			});
 
 	}

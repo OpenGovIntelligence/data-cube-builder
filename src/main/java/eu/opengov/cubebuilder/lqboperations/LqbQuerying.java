@@ -20,7 +20,6 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-//TODO: Fuseki server location in config.prop file (http://localhost:port?/ds/query)
 public class LqbQuerying {
 
 	PropertyReader pr=new PropertyReader();
@@ -268,7 +267,7 @@ System.out.print(marineDatasetURI);
 	/*
 	 * (4) Send Sparql Query over Linked Cubes
 	 */
-	public JSONArray LqbQuerying(String sparqlQuery)
+	public JSONArray LqbDirectQuerying(String sparqlQuery)
 			throws IOException {
 
 		String queryCommand = sparqlQuery;
@@ -281,7 +280,49 @@ System.out.print(marineDatasetURI);
 		return generateJSON(results);
 
 	}
+	
+	/*
+	 * Aggregation queries
+	 */
+	public JSONArray LqbAggregation(String sparqlQuery)
+			throws IOException {
+		
+		/**
+	PREFIX OGI:  <http://ogi.eu/#> 
+		PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> 
+		PREFIX qb:  <http://purl.org/linked-data/cube#> 
+		PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
+		SELECT  
+
+		?station_id
+		(count(?Water_level) AS ?Observations_Count)
+		(sum(xsd:float(?Water_level))/count(?Water_level) AS ?Average_Water_Level)
+		(sum(xsd:float(?Water_level_LAT))/count(?Water_level_LAT) AS ?Average_Water_Level_LAT)
+		(sum(xsd:float(?Water_level_OD_Malin))/count(?Water_level_OD_Malin) AS ?Average_Water_Level_OD_Malin)
+
+		WHERE {
+
+		?observation a qb:Observation.
+		?observation OGI:water_Level ?Water_level.
+		?observation OGI:water_Level_LAT ?Water_level_LAT.
+		?observation OGI:water_Level_OD_Malin ?Water_level_OD_Malin.
+		?observation OGI:station_id ?station_id.
+
+		}
+		GROUP BY (?station_id) 
+		
+		*/
+		
+		String queryCommand = sparqlQuery;
+		String fusekiPort=pr.getPropValues("fusekiPort");
+		System.out.println("Fuseki Request Thread started!");
+		System.out.println("query:" + queryCommand);
+
+		ResultSet results = queryServerWithDefaultGraph(fusekiPort + "/ds/query", queryCommand, "SELECT", "");
+		return generateJSON(results);
+
+	}
 	public JSONArray LqbExecuteQuery(String sparqlQuery)
 			throws IOException {
 

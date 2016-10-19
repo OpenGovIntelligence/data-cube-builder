@@ -44,52 +44,41 @@
 ## OGI Desktop UI 
 
 1- Run OGI UI:
-
-	$nano {base.dir}/ogi/pom.xml
-	
-	change: 
-	<mainClass>eu.opengov.cubebuilder.webservice.OgiWebService</mainClass>		
-	
-	to: 
-	<mainClass>eu.opengov.cubebuilder.desktop.OgiFront</mainClass>	
 	
 	$cd {base.dir}/ogi
 	
-	$mvn exec:java
+	$mvn exec:java -Dexec.args="--run:desktop"
 
 ## OGI Command Line UI 
 
 2- Run OGI CMD:
 	
-	$nano {base.dir}/ogi/pom.xml
-	
-	change: 
-	<mainClass>eu.opengov.cubebuilder.webservice.OgiWebService</mainClass>		
-	
-	to: 
-	<mainClass>eu.opengov.cubebuilder.cmd.OgiCommandLine</mainClass>	
-	
 	$cd {base.dir}/ogi
 	
-	$mvn exec:java
+	$mvn exec:java -Dexec.args="--run:cmd -csv:/../../??.csv -schema:?? -format:?? -qb:/../../??.ttl -qbN:??"
 	
-	Usage: OGI EU [options]  
+	- Usage: OGI EU [options]
 	  Options:
-	    --csvPath, -csv
+	    --csvFilePath, -csv
 	       CSV input file Location and name
-	    --cubePath, -cube
-	       Cube output file Location and name
 	    --dimOrMeasures, -l
-	       Not Available at this stage
+	       Customized Dim and Measures are Not Available at this stage
 	    --help, -help, -h
 	       Help
 	       Default: false
 	    --marineDatasetName, -schema
 	       Data Set Schema Currently Supporting (IWaveBNetwork30Min, IMI_EATL_WAVE,
 	       IrishNationalTideGaugeNetwork and IWBNetwork)
+	    --qbFileName, -qbN
+	       Cube output file Location and name
+	    --qbPath, -qb
+	       Cube output file Location and name
+	    --run, -r
+	       Which main class to Run!
 	    --serialization, -format
-	       Output Cube RDF serialization format (turtle or ntriples)
+	       Output Cube RDF serlization format (turtle or ntriples)
 	       Default: turtle
+
 
 ## OGI Web Service API
 
@@ -97,7 +86,7 @@
 	
 	$cd {base.dir}/ogi
 	
-	$sudo screen -S cubebuilder mvn exec:java
+	$mvn exec:java -Dexec.args="--run:webservice"
 	
 ## Available gates:
 
@@ -134,19 +123,19 @@
 	
 ### Build Linked Cube
 	
-	A- Using Command Line UI (review!)
+	A- Using Command Line UI
 		
-		$mvn exec:java -Dexec.args="-csv:src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -cube:src/main/resources/output/IWBNetwork.ttl"
+		$mvn exec:java -Dexec.args="-run:cmd -csv:src/main/resources/data/IWBNetwork.csv -schema:IWBNetwork -format:turtle -qb:src/main/resources/output/ -qbN:IWBNetwork.ttl"
 	
 	B- Using Web Service API
 	
-		$mvn exec:java
+		$mvn exec:java -Dexec.args="-run:webservice"
 	
 	From web browser:
 	
-	> http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&cube=src/main/resources/output/IWBNetwork.ttl&fuseki=8080
+	> http://localhost:4567/cubeBuilderAPI/cubeBuilderArgs?csv=src/main/resources/data/IWBNetwork.csv&schema=IWBNetwork&serialization=turtle&qbPath=src/main/resources/output/&qbName=IWBNetwork.ttl
 	 
-### Load Linked Cube to fuseki server
+### Load Linked Cube to Running fuseki server from cmd
 	
 	$cd {fuseki.dir}
 	
