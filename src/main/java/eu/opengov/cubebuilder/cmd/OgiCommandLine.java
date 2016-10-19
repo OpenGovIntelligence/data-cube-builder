@@ -52,9 +52,9 @@ public class OgiCommandLine {
 
 		OgiCommandLine cmd = new OgiCommandLine();
 		tarqlformulator = new TarqlFormulator();
-		webservice = new OgiWebService();
-		ogifront = new OgiFront();
-		commandline = new OgiCommandLine();
+//		webservice = new OgiWebService();
+//		ogifront = new OgiFront();
+//		commandline = new OgiCommandLine();
 
 		Jcomm = new JCommander(cmd, args);
 		Jcomm.setProgramName("OGI EU");
