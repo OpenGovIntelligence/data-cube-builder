@@ -144,8 +144,6 @@
 	$./s-put http://localhost:8080/ds/data default IWBNetwork.ttl
 
 
-
-
 #### in case java 8 is not installed 
 http://www.tecmint.com/install-java-jdk-jre-in-linux/
 

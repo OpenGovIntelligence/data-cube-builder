@@ -387,8 +387,9 @@ System.out.print(outputStream.toString());
 			JSONObject jtempwrite = new JSONObject();
 			for (String key : finalJsonKeys) {
 				JSONObject jtempreadLevel2 = jtempreadLevel1.getJSONObject(key);
-				if (jtempreadLevel2.get("value").equals("NaN")) {
-					jtempwrite.accumulate(key, "0.0");
+				if (jtempreadLevel2.get("value").equals("NaN")|jtempreadLevel2.get("value").equals("-999")) {
+//					jtempwrite.accumulate(key, "0.0");
+					System.out.println("NaN or -999 detected!");
 				} else {
 //					jtempwrite.accumulate(key, removePrefix(jtempreadLevel2
 //							.get("value").toString()));

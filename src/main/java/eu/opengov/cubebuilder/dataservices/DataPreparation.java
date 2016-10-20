@@ -7,7 +7,7 @@ package eu.opengov.cubebuilder.dataservices;
 public class DataPreparation {
 	
 	
-	/** find NaN values inside the CSV and replace it with 0.0*/
+	/** find NaN and -999 values inside the CSV and replace it with 0.0 // remove the reading not to miss with the data*/
 
 	void removeNaNFromCSV (String datasetSourceFileCSV){
 		
