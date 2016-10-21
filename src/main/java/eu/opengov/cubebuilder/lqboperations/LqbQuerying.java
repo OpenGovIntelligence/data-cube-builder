@@ -36,7 +36,7 @@ public class LqbQuerying {
 				+ "PREFIX OGI:  <http://ogi.eu/#> \n"
 				+ "PREFIX dct:      <http://purl.org/dc/terms/> \n"
 				+ "PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#> \n"
-				+ "SELECT ?dataset ?title  ?label ?comment   ?description ?publisher ?issued ?label \n"
+				+ "SELECT DISTINCT ?dataset ?title  ?label ?comment   ?description ?publisher ?issued ?label \n"
 				+ "WHERE \n"
 				+ "{\n"
 				+ "?dataset a qb:DataSet.\n"
