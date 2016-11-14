@@ -2,13 +2,13 @@
 
 ## Cloning OGI tools
 
-	$git clone https://gitlab.insight-centre.org/egov/ogi-tools.git ogi
+	$git clone https://gitlab.insight-centre.org/egov/ogi-tools.git ogi-cubebuilder
 
 	//You may need to install git -> $sudo apt-get install git
 	
 	$sudo chmod 777 -R ogi
 	
-	$cd ogi/
+	$cd ogi-cubebuilder/
 	
 	$git checkout test
 	
@@ -29,17 +29,25 @@
 	
 	$curl http://localhost:8080
 	
-	$cd ogi/src/main/resources/
+	$cd ogi-cubebuilder/src/main/resources/
 	
 	$nano config.properties (add fuseki port of your choice)
 	
 ## Download tarql service as library
 
-	$cd {base.dir}/ogi/src/main/resources/lib/
+	$cd {base.dir}/ogi-cubebuilder/src/main/resources/lib/
 
 	$wget --no-check-certificate 'https://github.com/opencube-toolkit/tarql-component/raw/master/lib/extensions/tarql-1.0a.jar' -O tarql-1.0a.jar
 
 	$wget --no-check-certificate 'https://github.com/opencube-toolkit/tarql-component/raw/master/lib/extensions/tarql-1.0a-javadoc.jar' -O tarql-1.0a-javadoc.jar
+	
+	$cd {base.dir}/ogi-cubebuilder/ 
+
+	$mvn install:install-file -Dfile=src/main/resources/lib/tarql-1.0a.jar -DgroupId=org.deri.tarql -DartifactId=tarql -Dversion=1.0a -Dpackaging=jar
+	
+	$mvn install:install-file -Dfile=src/main/resources/lib/tarql-1.0a-javadoc.jar -DgroupId=org.deri.tarql -DartifactId=tarql-doc -Dversion=1.0a -Dpackaging=jar
+	
+	
 	 
 ## OGI Desktop UI 
 
@@ -53,7 +61,7 @@
 
 2- Run OGI CMD:
 	
-	$cd {base.dir}/ogi
+	$cd {base.dir}/ogi-cubebuilder
 	
 	$mvn exec:java -Dexec.args="--run:cmd -csv:/../../??.csv -schema:?? -format:?? -qb:/../../??.ttl -qbN:??"
 	
@@ -84,7 +92,7 @@
 
 3- Run OGI Web Service API:
 	
-	$cd {base.dir}/ogi
+	$cd {base.dir}/ogi-cubebuilder
 	
 	$mvn exec:java -Dexec.args="--run:webservice"
 	
@@ -111,15 +119,15 @@
 
 ## Download example csv file
 	
-	$cd {base.dir}/ogi/src/main/resources/
+	$cd {base.dir}/ogi-cubebuilder/src/main/resources/
 	
 	$mkdir data output
 	
-	$cd {base.dir}/ogi/src/main/resources/data
+	$cd {base.dir}/ogi-cubebuilder/src/main/resources/data
 	
 	$wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=0B-DxlQVxO6pnNkZwY3k2ZE5NNFE' -O IWBNetwork.csv
 
-	$cd {base.dir}/ogi/
+	$cd {base.dir}/ogi-cubebuilder/
 	
 ### Build Linked Cube
 	
