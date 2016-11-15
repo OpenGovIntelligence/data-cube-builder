@@ -12,7 +12,7 @@
 	
 	$git checkout test
 	
-	$mvn clean install
+	
 
 ## Download and Run Fuseki Server
 	
@@ -31,7 +31,7 @@
 	
 	$cd ogi-cubebuilder/src/main/resources/
 	
-	$nano config.properties (add fuseki port of your choice)
+	$nano config.properties (add fuseki port of your choice) // to be deleted when json cube API works
 	
 ## Download tarql service as library
 
@@ -48,6 +48,25 @@
 	$mvn install:install-file -Dfile=src/main/resources/lib/tarql-1.0a-javadoc.jar -DgroupId=org.deri.tarql -DartifactId=tarql-doc -Dversion=1.0a -Dpackaging=jar
 	
 	
+	$mvn clean install
+	
+## Clone, Configure, build and run jsonCubeAPI service
+
+	$cd {base.dir}/
+
+	$clone .............................. ogi-api
+	
+	$cd ogi-api/resources/
+	
+	$nano config.prop (Set fuseki/SPARQL server URL, ex: http://localhost:8080/ds/query) 
+
+	$cd ogi-api/
+
+	$mvn package
+	
+	add to tomcat server, or run using jetty server
+	
+
 	 
 ## OGI Desktop UI 
 

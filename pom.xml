@@ -13,7 +13,7 @@
 	<url>http://maven.apache.org</url>
 	<build>
 
-
+		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -46,6 +46,10 @@
 			<url>http://maven.restlet.org</url>
 		</repository>
 	</repositories>
+	<!-- json api staff -->
+	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.eclipse.rdf4j</groupId> 
+		<artifactId>rdf4j-bom</artifactId> <version>2.0.1</version> <type>pom</type> 
+		<scope>import</scope> </dependency> </dependencies> </dependencyManagement> -->
 	<dependencies>
 		<dependency>
 			<groupId>com.beust</groupId>
@@ -83,7 +87,9 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.3.2</version>
 		</dependency>
+		<!--
 		<dependency>
+		  
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.2.6</version>
@@ -98,6 +104,7 @@
 			<artifactId>httpcore</artifactId>
 			<version>4.2.5</version>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
@@ -163,11 +170,9 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
-		</dependency>
+		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId> 
+			<version>3.1.0</version> </dependency> -->
+
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-http</artifactId>
@@ -235,11 +240,8 @@
 		<!-- <dependency> <groupId>com.hp.hpl.jena</groupId> <artifactId>jena</artifactId> 
 			<version>2.6.4</version> <exclusions> <exclusion> <groupId>org.slf4j</groupId> 
 			<artifactId>slf4j-log4j12</artifactId> </exclusion> </exclusions> </dependency> -->
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20160810</version>
-		</dependency>
+		<!-- <dependency> <groupId>org.json</groupId> <artifactId>json</artifactId> 
+			<version>20160810</version> </dependency> -->
 		<!-- system scope depricated <dependency> <groupId>org.deri.tarql</groupId> 
 			<artifactId>tarql</artifactId> <scope>system</scope> <version>1.0a</version> 
 			<systemPath>${project.basedir}/src/main/resources/lib/tarql-1.0a.jar</systemPath> 
@@ -293,6 +295,52 @@
 			<version>2.12.0</version>
 		</dependency>
 
+		<!-- json api staff -->
+
+		<!-- <dependency> <groupId>asm</groupId> <artifactId>asm</artifactId> <version>3.3.1</version> 
+			</dependency> <dependency> <groupId>com.sun.jersey</groupId> <artifactId>jersey-bundle</artifactId> 
+			<version>1.19</version> </dependency> <dependency> <groupId>org.json</groupId> 
+			<artifactId>json</artifactId> <version>20140107</version> </dependency> <dependency> 
+			<groupId>com.sun.jersey</groupId> <artifactId>jersey-server</artifactId> 
+			<version>1.19</version> </dependency> <dependency> <groupId>com.sun.jersey</groupId> 
+			<artifactId>jersey-core</artifactId> <version>1.19</version> </dependency> 
+			<dependency> <groupId>org.eclipse.rdf4j</groupId> <artifactId>rdf4j-runtime</artifactId> 
+			</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.7</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>JSON-QB-REST-API</groupId>
+			<artifactId>JSON-QB-REST-API</artifactId>
+			<version>0.0.1-SNAPSHOT-jar-with-dependencies</version>
+		</dependency>
+		 -->
+		<!-- 
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.rdf4j</groupId>
+			<artifactId>rdf4j-runtime</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4</version>
+		</dependency>
+ -->
 	</dependencies>
 
 </project>
