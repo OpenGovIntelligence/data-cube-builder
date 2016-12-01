@@ -105,7 +105,7 @@ public class OgiWebService {
 
 			marineDatasetURI = request.queryParams("dsuri");
 			// fusekiPort = request.queryParams("fuseki");
-				limit = request.queryParams("limit");
+			limit = request.queryParams("limit");
 
 				return lqbquerying.LqbQueryingForLqbData(marineDatasetURI,
 						limit);
@@ -130,20 +130,27 @@ public class OgiWebService {
 
 	public static String run() {
 
+		String success="{\"success\": true,\"payload\": {}}";
+		String failure="{\"success\": false,\"payload\": {},\"error\": {\"code\": 123,\"message\": \"An error occurred!\"}}";
+
 		try {
 			if (serialization.equalsIgnoreCase("turtle")) {
 				tarqlformulator.tarqlAsLibraryExecution(csvFilePath, qbPath,
 						qbFileName, dimOrMeasures, marineDatasetName,
 						serialization);
-				return "Success: Cube Created check distination folder!";
+//				return "Success: Cube Created check distination folder!";
+				return success;
+
 			} else {
 				tarqlformulator.tarqlAsLibraryExecution(csvFilePath, qbPath,
 						qbFileName, dimOrMeasures, marineDatasetName,
 						serialization);
-				return "Success: Cube Created check distination folder!";
+//				return "Success: Cube Created check distination folder!";
+				return success;
 			}
 		} catch (Exception ex) {
-			return "Error: " + ex.getMessage();
+//			return "Error: " + ex.getMessage();
+			return failure;
 		}
 
 	}

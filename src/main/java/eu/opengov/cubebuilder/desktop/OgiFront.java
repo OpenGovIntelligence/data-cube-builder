@@ -54,12 +54,14 @@ public class OgiFront extends JFrame {
 	private JRadioButton rdbtnNewRadioButton_3;
 	private JRadioButton rdbtnNewRadioButton_4;
 	private JRadioButton rdbtnNewRadioButton_6;
+	private JRadioButton rdbtnRpbymunicipality;
 	private JLabel lblNewLabel_2;
 	private JRadioButton rdbtnNewRadioButton_5;
 	private JTextField textField_4;
 	private String marineDatasetName;
 	private String serialization;
 	private JTextField textField_3;
+	private JRadioButton rdbtnEEOBY;
 
 	/**
 	 * Launch the application.
@@ -128,6 +130,14 @@ public class OgiFront extends JFrame {
 				}
 				if (rdbtnNewRadioButton_6.isSelected()) {
 					marineDatasetName = rdbtnNewRadioButton_6.getText();
+
+				}
+				if (rdbtnRpbymunicipality.isSelected()) {
+					marineDatasetName = rdbtnRpbymunicipality.getText();
+
+				}
+				if (rdbtnEEOBY.isSelected()) {
+					marineDatasetName = rdbtnEEOBY.getText();
 
 				}
 				if (rdbtnNewRadioButton_5.isSelected()) {
@@ -214,7 +224,7 @@ public class OgiFront extends JFrame {
 		contentPane.add(lblNewLabel);
 
 		lblNumberOfCo = new JLabel("Dimensions (separated by \",\")");
-		lblNumberOfCo.setBounds(96, 237, 225, 15);
+		lblNumberOfCo.setBounds(84, 363, 225, 15);
 		contentPane.add(lblNumberOfCo);
 
 		JLabel lblDataSetLocation = new JLabel("Data Set Location");
@@ -222,17 +232,17 @@ public class OgiFront extends JFrame {
 		contentPane.add(lblDataSetLocation);
 
 		textField = new JTextField();
-		textField.setBounds(236, 264, 195, 25);
+		textField.setBounds(227, 379, 195, 25);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		lblMeasuresmeasuremetricmeasuremetric = new JLabel(
 				"Measures(measure1;metric,measure2;metric)");
-		lblMeasuresmeasuremetricmeasuremetric.setBounds(96, 298, 344, 20);
+		lblMeasuresmeasuremetricmeasuremetric.setBounds(83, 404, 344, 20);
 		contentPane.add(lblMeasuresmeasuremetricmeasuremetric);
 
 		textField_2 = new JTextField();
-		textField_2.setBounds(236, 330, 195, 25);
+		textField_2.setBounds(227, 426, 195, 25);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 
@@ -278,8 +288,16 @@ public class OgiFront extends JFrame {
 		rdbtnNewRadioButton_5 = new JRadioButton("Other, upload your schema");
 		rdbtnNewRadioButton_5
 				.setToolTipText("http://erddap.marine.ie/erddap/info/index.html?page=1&itemsPerPage=1000");
-		rdbtnNewRadioButton_5.setBounds(22, 206, 218, 23);
+		rdbtnNewRadioButton_5.setBounds(18, 340, 218, 23);
 		contentPane.add(rdbtnNewRadioButton_5);
+		
+		rdbtnRpbymunicipality = new JRadioButton("RPBYmunicipality");
+		rdbtnRpbymunicipality.setBounds(22, 202, 149, 23);
+		contentPane.add(rdbtnRpbymunicipality);
+		
+		rdbtnEEOBY = new JRadioButton("EEOBY");
+		rdbtnEEOBY.setBounds(22, 231, 149, 23);
+		contentPane.add(rdbtnEEOBY);
 
 		ButtonGroup bG = new ButtonGroup();
 		bG.add(rdbtnNewRadioButton_2);
@@ -287,13 +305,16 @@ public class OgiFront extends JFrame {
 		bG.add(rdbtnNewRadioButton_4);
 		bG.add(rdbtnNewRadioButton_5);
 		bG.add(rdbtnNewRadioButton_6);
+		bG.add(rdbtnRpbymunicipality);
+		bG.add(rdbtnEEOBY);
+		
 
 		lblNewLabel_2 = new JLabel("Choose data schema");
 		lblNewLabel_2.setBounds(13, 70, 210, 15);
 		contentPane.add(lblNewLabel_2);
 
 		textField_4 = new JTextField();
-		textField_4.setBounds(246, 210, 185, 19);
+		textField_4.setBounds(242, 344, 185, 19);
 		contentPane.add(textField_4);
 		textField_4.setColumns(10);
 
@@ -305,6 +326,8 @@ public class OgiFront extends JFrame {
 		textField_3.setBounds(155, 504, 114, 19);
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
-
+		
+		
+	
 	}
 }
