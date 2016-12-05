@@ -45,7 +45,7 @@
 
 	$mvn install:install-file -Dfile=src/main/resources/lib/tarql-1.0a.jar -DgroupId=org.deri.tarql -DartifactId=tarql -Dversion=1.0a -Dpackaging=jar
 	
-	$mvn install:install-file -Dfile=src/main/resources/lib/tarql-1.0a-javadoc.jar -DgroupId=org.deri.tarql -DartifactId=tarql-doc -Dversion=1.0a -Dpackaging=jar
+	$mvn install:install-file -Dfile=src/main/resources/lib/tarql-1.0a-javadoc.jar -DgroupId=org.deri.tarql -DartifactId=tarqldoc -Dversion=1.0a -Dpackaging=jar
 	
 	
 	$mvn clean install
