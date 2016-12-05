@@ -62,6 +62,9 @@ public class OgiFront extends JFrame {
 	private String serialization;
 	private JTextField textField_3;
 	private JRadioButton rdbtnEEOBY;
+	private JRadioButton rdbtnIta;
+	private JRadioButton rdbtnAEmonthly;
+	private JRadioButton FDIEY;
 
 	/**
 	 * Launch the application.
@@ -140,6 +143,20 @@ public class OgiFront extends JFrame {
 					marineDatasetName = rdbtnEEOBY.getText();
 
 				}
+			
+				if (rdbtnIta.isSelected()) {
+					marineDatasetName = rdbtnIta.getText();
+
+				}
+				if (rdbtnAEmonthly.isSelected()) {
+					marineDatasetName = rdbtnAEmonthly.getText();
+
+				}
+				if (FDIEY.isSelected()) {
+					marineDatasetName = FDIEY.getText();
+
+				}
+				
 				if (rdbtnNewRadioButton_5.isSelected()) {
 					marineDatasetName = "other";
 
@@ -210,7 +227,7 @@ public class OgiFront extends JFrame {
 		contentPane.add(btnExit_1);
 
 		textField_1 = new JTextField();
-		textField_1.setBounds(153, 33, 274, 25);
+		textField_1.setBounds(153, 12, 274, 25);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		textField_1.setText(workingDir + "/src/main/resources/data/");
@@ -228,7 +245,7 @@ public class OgiFront extends JFrame {
 		contentPane.add(lblNumberOfCo);
 
 		JLabel lblDataSetLocation = new JLabel("Data Set Location");
-		lblDataSetLocation.setBounds(10, 38, 136, 15);
+		lblDataSetLocation.setBounds(10, 17, 136, 15);
 		contentPane.add(lblDataSetLocation);
 
 		textField = new JTextField();
@@ -266,38 +283,53 @@ public class OgiFront extends JFrame {
 				"IrishNationalTideGaugeNetwork");
 		rdbtnNewRadioButton_2
 				.setToolTipText("http://erddap.marine.ie/erddap/tabledap/IrishNationalTideGaugeNetwork.html");
-		rdbtnNewRadioButton_2.setBounds(22, 120, 264, 23);
+		rdbtnNewRadioButton_2.setBounds(22, 99, 264, 23);
 		contentPane.add(rdbtnNewRadioButton_2);
 
 		rdbtnNewRadioButton_3 = new JRadioButton("IWBNetwork");
 		rdbtnNewRadioButton_3
 				.setToolTipText("http://erddap.marine.ie/erddap/tabledap/IWBNetwork.html");
-		rdbtnNewRadioButton_3.setBounds(22, 93, 264, 23);
+		rdbtnNewRadioButton_3.setBounds(22, 72, 264, 23);
 		contentPane.add(rdbtnNewRadioButton_3);
 
 		rdbtnNewRadioButton_4 = new JRadioButton("IMI_EATL_WAVE");
 		rdbtnNewRadioButton_4
 				.setToolTipText("http://erddap.marine.ie/erddap/griddap/IMI_EATL_WAVE.html");
-		rdbtnNewRadioButton_4.setBounds(22, 147, 264, 23);
+		rdbtnNewRadioButton_4.setBounds(22, 126, 264, 23);
 		contentPane.add(rdbtnNewRadioButton_4);
 
 		rdbtnNewRadioButton_6 = new JRadioButton("IWaveBNetwork30Min");
-		rdbtnNewRadioButton_6.setBounds(21, 175, 195, 23);
+		rdbtnNewRadioButton_6.setBounds(21, 154, 195, 23);
 		contentPane.add(rdbtnNewRadioButton_6);
 
 		rdbtnNewRadioButton_5 = new JRadioButton("Other, upload your schema");
 		rdbtnNewRadioButton_5
 				.setToolTipText("http://erddap.marine.ie/erddap/info/index.html?page=1&itemsPerPage=1000");
-		rdbtnNewRadioButton_5.setBounds(18, 340, 218, 23);
+		rdbtnNewRadioButton_5.setBounds(29, 332, 218, 23);
 		contentPane.add(rdbtnNewRadioButton_5);
 		
 		rdbtnRpbymunicipality = new JRadioButton("RPBYmunicipality");
-		rdbtnRpbymunicipality.setBounds(22, 202, 149, 23);
+		rdbtnRpbymunicipality.setBounds(22, 181, 149, 23);
 		contentPane.add(rdbtnRpbymunicipality);
 		
 		rdbtnEEOBY = new JRadioButton("EEOBY");
-		rdbtnEEOBY.setBounds(22, 231, 149, 23);
+		rdbtnEEOBY.setBounds(22, 210, 149, 23);
 		contentPane.add(rdbtnEEOBY);
+		
+		
+		
+		FDIEY = new JRadioButton("FDIEY");
+		FDIEY.setBounds(22, 237, 149, 23);
+		contentPane.add(FDIEY);
+		
+		rdbtnIta = new JRadioButton("ITA");
+		rdbtnIta.setBounds(22, 264, 149, 23);
+		contentPane.add(rdbtnIta);
+		
+		rdbtnAEmonthly = new JRadioButton("AEmonthly");
+		rdbtnAEmonthly.setBounds(22, 292, 149, 23);
+		contentPane.add(rdbtnAEmonthly);
+		
 
 		ButtonGroup bG = new ButtonGroup();
 		bG.add(rdbtnNewRadioButton_2);
@@ -307,14 +339,17 @@ public class OgiFront extends JFrame {
 		bG.add(rdbtnNewRadioButton_6);
 		bG.add(rdbtnRpbymunicipality);
 		bG.add(rdbtnEEOBY);
+		bG.add(FDIEY);
+		bG.add(rdbtnIta);
+		bG.add(rdbtnAEmonthly);
 		
 
 		lblNewLabel_2 = new JLabel("Choose data schema");
-		lblNewLabel_2.setBounds(13, 70, 210, 15);
+		lblNewLabel_2.setBounds(13, 49, 210, 15);
 		contentPane.add(lblNewLabel_2);
 
 		textField_4 = new JTextField();
-		textField_4.setBounds(242, 344, 185, 19);
+		textField_4.setBounds(253, 336, 185, 19);
 		contentPane.add(textField_4);
 		textField_4.setColumns(10);
 
@@ -326,7 +361,7 @@ public class OgiFront extends JFrame {
 		textField_3.setBounds(155, 504, 114, 19);
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
-		
+	
 		
 	
 	}

@@ -91,7 +91,7 @@ public class LqbQuerying {
 	public JSONArray LqbQueryingForLqbData(String marineDatasetURI,
 			 String limit) throws IOException {
 
-		String LqbQueryingForLqbData_queryCommand = "embty";
+		String LqbQueryingForLqbData_queryCommand = "empty";
 System.out.print(marineDatasetURI);
 		if (marineDatasetURI.equalsIgnoreCase("http://ogi.eu/#IWBNetwork_ds")) {
 
