@@ -175,3 +175,6 @@
 #### in case java 8 is not installed 
 http://www.tecmint.com/install-java-jdk-jre-in-linux/
 
+#### incase mvn 3.3.9 not installed
+https://javedmandary.blogspot.ie/2016/09/install-maven-339-on-ubuntu.html
+

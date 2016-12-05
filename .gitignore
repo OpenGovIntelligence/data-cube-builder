@@ -62,3 +62,7 @@ src/main/resources/*.txt
 *.bk
 src/main/resources/libs.txt
 src/main/resources/queries.txt
+
+lib/
+output/
+data/

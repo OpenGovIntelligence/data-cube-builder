@@ -38,7 +38,7 @@
 
 		</plugins>
 	</build>
-
+ 
 	<repositories>
 		<repository>
 			<id>maven-restlet</id>
@@ -258,17 +258,21 @@
 			<scope>system</scope> <version>1.0a</version> <systemPath>${project.basedir}/src/main/resources/lib/tarql-1.0a-jar-with-dependencies.jar</systemPath> 
 			</dependency> -->
 		<!-- using install-file plugin as system scope depreicated -->
+		
 		<dependency>
 			<groupId>org.deri.tarql</groupId>
 			<artifactId>tarql</artifactId>
 			<version>1.0a</version>
 		</dependency>
+		
 		<!-- using install-file plugin as system scope depreicated -->
+		
 		<dependency>
 			<groupId>org.deri.tarql</groupId>
 			<artifactId>tarql-doc</artifactId>
 			<version>1.0a</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.openrdf</groupId>
 			<artifactId>openrdf-model</artifactId>

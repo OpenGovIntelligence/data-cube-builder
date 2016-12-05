@@ -1,6 +1,9 @@
 package eu.opengov.cubebuilder.webservice;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
+
+
 import eu.opengov.cubebuilder.lqboperations.LqbQuerying;
 import eu.opengov.cubebuilder.tarqlservices.TarqlFormulator;
 
@@ -46,7 +49,7 @@ public class OgiWebService {
 		/*
 		 * (0) Building Linked Cubes
 		 */
-		get("cubeBuilderAPI/cubeBuilderArgs", "application/json", (request,
+		post("cubeBuilderAPI/cubeBuilderArgs", "application/json", (request,
 				response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
 			response.header("Content-Type", "application/json");
