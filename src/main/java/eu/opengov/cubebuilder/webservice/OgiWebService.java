@@ -1,8 +1,15 @@
 package eu.opengov.cubebuilder.webservice;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
+import static spark.debug.DebugScreen.*;
+import spark.*;
+import spark.staticfiles.StaticFiles;
 
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+import java.io.*;
+import java.nio.file.*;
 
 import eu.opengov.cubebuilder.lqboperations.LqbQuerying;
 import eu.opengov.cubebuilder.tarqlservices.TarqlFormulator;
@@ -14,12 +21,14 @@ import eu.opengov.cubebuilder.tarqlservices.TarqlFormulator;
 
 public class OgiWebService {
 	static String csvFilePath;
-	static String marineDatasetName;
+	static String schema;
 	static String marineDatasetURI;
 	static String serialization;
 	static String qbPath;
 	static String qbFileName;
-	static String dimOrMeasures;
+	static String dims="";
+	static String measures="";
+	static String dataset="";
 	static TarqlFormulator tarqlformulator;
 	static LqbQuerying lqbquerying;
 	static String SparqlQuery;
@@ -28,10 +37,17 @@ public class OgiWebService {
 //	static ImplRESTapi implRESTapi;
 
 	public static void main(String[] args) {
+       enableDebugScreen();
 
+		
 		tarqlformulator = new TarqlFormulator();
 		lqbquerying = new LqbQuerying();
 //		implRESTapi = new ImplRESTapi();
+		
+		File uploadDir = new File("upload");
+        uploadDir.mkdir(); // create the upload directory if it doesn't exist
+
+        staticFiles.externalLocation("upload");
 
 		get("/", "application/json", (request, response) -> {
 
@@ -49,18 +65,50 @@ public class OgiWebService {
 		/*
 		 * (0) Building Linked Cubes
 		 */
+		/**get 
+		get("cubeBuilderAPI/cubeBuilderArgs", "application/json", (request,
+				response) -> {
+			response.header("Access-Control-Allow-Origin", "*");
+			response.header("Content-Type", "application/json");
+			String path= new File("").getAbsolutePath().substring(0, new File("").getAbsolutePath().length()-16);
+			csvFilePath = path+request.queryParams("csv");
+			if (request.queryParams("schema").contains("/")){
+				schema = path+request.queryParams("schema");
+			}
+			else{
+				schema = request.queryParams("schema");	
+			}
+			serialization = request.queryParams("serialization");
+			qbPath = path+request.queryParams("qbPath");
+			qbFileName = request.queryParams("qbName");
+			// fusekiPort = request.queryParams("fuseki");
+
+			System.out.println(csvFilePath+"\n"+schema+"\n"+serialization+"\n"+qbPath+"\n"+qbFileName);
+				return run();
+			});
+		*/
+		//post just incase a post request is used to call 
 		post("cubeBuilderAPI/cubeBuilderArgs", "application/json", (request,
 				response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
 			response.header("Content-Type", "application/json");
-
-			csvFilePath = request.queryParams("csv");
-			marineDatasetName = request.queryParams("schema");
+			String path= new File("").getAbsolutePath().substring(0, new File("").getAbsolutePath().length()-16);
+			csvFilePath = path+request.queryParams("csv");
+			if (request.queryParams("schema").contains("/")){
+				schema = path+request.queryParams("schema");
+			}
+			else{
+				schema = request.queryParams("schema");	
+			}
 			serialization = request.queryParams("serialization");
-			qbPath = request.queryParams("qbPath");
+			qbPath = path+request.queryParams("qbPath");
 			qbFileName = request.queryParams("qbName");
+			dims=request.queryParams("dims");
+			measures=request.queryParams("measures");
+			dataset=request.queryParams("dataset");
 			// fusekiPort = request.queryParams("fuseki");
 
+			System.out.println(csvFilePath+"\n"+schema+"\n"+serialization+"\n"+qbPath+"\n"+qbFileName+"\n"+dims+"\n"+measures+"\n"+dataset);
 				return run();
 			});
 
@@ -100,7 +148,7 @@ public class OgiWebService {
 			});
 		/*
 		 * (3) Retrieve Data of certain Linked Cube
-		 */
+		 */ 
 		get("cubeQueryingAPI/listdataofLqb", "application/json", (request,
 				response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
@@ -128,6 +176,29 @@ public class OgiWebService {
 
 				return lqbquerying.LqbDirectQuerying(SparqlQuery);
 			});
+		
+		
+		/*
+		 * (5) FILE UPLOAD for loose coupling
+		 * 
+		 * */
+		
+		
+		 post("/uploadCSV", (req, res) -> {
+
+	            Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
+
+	            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+
+	            try (InputStream input = req.raw().getPart("file").getInputStream()) { // getPart needs to use same "name" as input field in form
+	                Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+	            }
+
+	            logInfo(req, tempFile);
+	            return "<h1>You uploaded this image:<h1><img src='" + tempFile.getFileName() + "'>";
+
+	        });
+
 
 	}
 
@@ -139,14 +210,14 @@ public class OgiWebService {
 		try {
 			if (serialization.equalsIgnoreCase("turtle")) {
 				tarqlformulator.tarqlAsLibraryExecution(csvFilePath, qbPath,
-						qbFileName, dimOrMeasures, marineDatasetName,
+						qbFileName, dims, measures,dataset, schema,
 						serialization);
 //				return "Success: Cube Created check distination folder!";
 				return success;
 
 			} else {
 				tarqlformulator.tarqlAsLibraryExecution(csvFilePath, qbPath,
-						qbFileName, dimOrMeasures, marineDatasetName,
+						qbFileName, dims, measures,dataset, schema,
 						serialization);
 //				return "Success: Cube Created check distination folder!";
 				return success;
@@ -157,4 +228,21 @@ public class OgiWebService {
 		}
 
 	}
+	
+	
+	 // methods used for logging
+    private static void logInfo(Request req, Path tempFile) throws IOException, ServletException {
+        System.out.println("Uploaded file '" + getFileName(req.raw().getPart("uploaded_file")) + "' saved as '" + tempFile.toAbsolutePath() + "'");
+    }
+
+    private static String getFileName(Part part) {
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                return cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
+
+	
 }

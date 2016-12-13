@@ -85,13 +85,13 @@ public class OgiCommandLine {
 				try {
 
 					if (serialization.equalsIgnoreCase("turtle"))
-						tarqlformulator.tarqlAsLibraryExecution(csvFilePath,
-								qbPath, qbFileName, dimOrMeasures,
-								marineDatasetName, serialization);
+						tarqlformulator.tarqlAsLibraryExecution( csvFilePath,  qbPath,
+								 qbFileName,  "dims",  "measures",  "dataset",  "schema",
+								 serialization);
 					else
-						tarqlformulator.tarqlAsLibraryExecution(csvFilePath,
-								qbPath, qbFileName, dimOrMeasures,
-								marineDatasetName, serialization);
+						tarqlformulator.tarqlAsLibraryExecution( csvFilePath,  qbPath,
+								 qbFileName,  "dims",  "measures",  "dataset",  "schema",
+								 serialization);
 				} catch (Exception ex) {
 					Jcomm.usage();
 					System.out.println("Error:" + ex.getMessage());

@@ -185,9 +185,9 @@ public class OgiFront extends JFrame {
 						+ serialization);
 
 				try {
-					tarqlformulator.tarqlAsLibraryExecution(csvFilePath,
-							qbPath, qbFileName, "dimOrMeasures",
-							marineDatasetName, serialization);
+					tarqlformulator.tarqlAsLibraryExecution(csvFilePath, qbPath,
+							qbFileName, "dims", "Smeasures", "dataset","schema",
+							serialization);
 				} catch (IOException e1) {
 					
 					System.out.println(e1.getMessage());

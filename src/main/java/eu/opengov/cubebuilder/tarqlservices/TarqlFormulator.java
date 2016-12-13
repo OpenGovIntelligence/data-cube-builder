@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -51,7 +52,7 @@ public class TarqlFormulator {
 	 * @author moh.adelrezk@gmail.com
 	 */
 
-	void prefixFormulation(String marineDatasetName) {
+	void prefixFormulation(String schema) {
 		try {
 
 			/**
@@ -77,13 +78,13 @@ public class TarqlFormulator {
 	 *
 	 * @author moh.adelrezk@gmail.com
 	 */
-	void dataSetFormulation(String marineDatasetName) {
+	void dataSetFormulation(String schema) {
 		try {
 			/**
 			 * String dataSetTarqlString, is temporary storing the retrieved
 			 * property value "Dataset"
 			 **/
-			String dataSetTarqlString = pr.getPropValues(marineDatasetName
+			String dataSetTarqlString = pr.getPropValues(schema
 					+ "_Dataset");
 			/**
 			 * Adding String prefixTarqlString value to the String qbSchema
@@ -102,13 +103,13 @@ public class TarqlFormulator {
 	 *
 	 * @author moh.adelrezk@gmail.com
 	 */
-	void dataStructureFormulation(String marineDatasetName) {
+	void dataStructureFormulation(String schema) {
 		try {
 			/**
 			 * String dataStructureTarqlString, is temporary storing the
 			 * retrieved property value "Data_Structure_Definitions"
 			 **/
-			String dataStructureTarqlString = pr.getPropValues(marineDatasetName
+			String dataStructureTarqlString = pr.getPropValues(schema
 					+ "_Data_Structure_Definitions");
 			/**
 			 * Adding String dataStructureTarqlString value to the String
@@ -128,13 +129,13 @@ public class TarqlFormulator {
 	 *
 	 * @author moh.adelrezk@gmail.com
 	 */
-	void dimensionsFormulation(String marineDatasetName) {
+	void dimensionsFormulation(String schema) {
 		try {
 			/**
 			 * String dimensionsTarqlString, is temporary storing the retrieved
 			 * property value "Dimensions"
 			 **/
-			String dimensionsTarqlString = pr.getPropValues(marineDatasetName
+			String dimensionsTarqlString = pr.getPropValues(schema
 					+ "_Dimensions");
 			/**
 			 * Adding String dimensionsTarqlString value to the String qbSchema
@@ -153,13 +154,13 @@ public class TarqlFormulator {
 	 *
 	 * @author moh.adelrezk@gmail.com
 	 */
-	void measuresFormulation(String marineDatasetName) {
+	void measuresFormulation(String schema) {
 		try {
 			/**
 			 * String measuresTarqlString, is temporary storing the retrieved
 			 * property value "Measures"
 			 **/
-			String measuresTarqlString = pr.getPropValues(marineDatasetName
+			String measuresTarqlString = pr.getPropValues(schema
 					+ "_Measures");
 			/**
 			 * Adding String measuresTarqlString value to the String qbSchema
@@ -178,13 +179,13 @@ public class TarqlFormulator {
 	 *
 	 * @author moh.adelrezk@gmail.com
 	 */
-	void slicesFormulation(String marineDatasetName) {// not supported yet
+	void slicesFormulation(String schema) {// not supported yet
 		try {
 			/**
 			 * String slicesTarqlString, is temporary storing the retrieved
 			 * property value "Slices"
 			 **/
-			String slicesTarqlString = pr.getPropValues(marineDatasetName
+			String slicesTarqlString = pr.getPropValues(schema
 					+ "_Slices");
 			/**
 			 * Adding String slicesTarqlString value to the String qbSchema
@@ -203,12 +204,12 @@ public class TarqlFormulator {
 	 *
 	 * @author moh.adelrezk@gmail.com
 	 */
-	void qbSchemaCreation(String marineDatasetName) {
-		prefixFormulation(marineDatasetName);
-		dataSetFormulation(marineDatasetName);
-		dataStructureFormulation(marineDatasetName);
-		dimensionsFormulation(marineDatasetName);
-		measuresFormulation(marineDatasetName);
+	void qbSchemaCreation(String schema) {
+		prefixFormulation(schema);
+		dataSetFormulation(schema);
+		dataStructureFormulation(schema);
+		dimensionsFormulation(schema);
+		measuresFormulation(schema);
 		// slicesFormulation(marineDatasetName); //not supported yet
 	}
 
@@ -246,7 +247,7 @@ public class TarqlFormulator {
 	 * 
 	 * @author moh.adelrezk@gmail.com
 	 */
-	void mergingSchemaFileWithObservationFile(String qbPath, String qbFileName) {
+	void mergingSchemaFileWithObservationFile_pilot(String qbPath, String qbFileName) {
 		/**
 		 * String MergedFilePath, the final corresponding dataset's RDF Cube
 		 * path and file name "example: {base.dir}/output/datasetname.ttl"
@@ -258,6 +259,73 @@ public class TarqlFormulator {
 		 * "example: {base.dir}/output/datasetname.ttl.schema"
 		 */
 		String schemaFilePath = qbPath + qbFileName + ".schema";
+		/**
+		 * String ObservationFilePath, the corresponding dataset's RDF Cube
+		 * observations path and file name
+		 * "example: {base.dir}/output/datasetname.ttl.observations"
+		 */
+		String ObservationFilePath = qbPath + qbFileName + ".observations";
+		// ".nt" and ".ttl" should revisit and make it non static
+
+		/**
+		 * Merging steps
+		 */
+		BufferedWriter merged = null;
+		BufferedReader schema = null;
+		BufferedReader observations = null;
+		try {
+			merged = new BufferedWriter(new FileWriter(MergedFilePath));
+			schema = new BufferedReader(new FileReader(schemaFilePath));
+			observations = new BufferedReader(new FileReader(
+					ObservationFilePath));
+			String line = null;
+
+			while ((line = schema.readLine()) != null) {
+				merged.write(line);
+				merged.write("\n");
+			}
+			while ((line = observations.readLine()) != null) {
+				merged.write(line);
+				merged.write("\n");
+			}
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+			if (merged != null)
+				try {
+					merged.close();
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				}
+			if (schema != null)
+				try {
+					schema.close();
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				}
+
+		}
+		if (observations != null)
+			try {
+				observations.close();
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
+	}
+	
+	void mergingSchemaFileWithObservationFile_costume(String schemaPath, String qbPath, String qbFileName) {
+		/**
+		 * String MergedFilePath, the final corresponding dataset's RDF Cube
+		 * path and file name "example: {base.dir}/output/datasetname.ttl"
+		 */
+		String MergedFilePath = qbPath + qbFileName;
+		/**
+		 * String schemaFilePath, the corresponding dataset's RDF Cube schema
+		 * path and file name
+		 * "example: {base.dir}/output/datasetname.ttl.schema"
+		 */
+		String schemaFilePath = schemaPath;
 		/**
 		 * String ObservationFilePath, the corresponding dataset's RDF Cube
 		 * observations path and file name
@@ -373,11 +441,10 @@ public class TarqlFormulator {
 	 * */
 
 	public void tarqlAsLibraryExecution(String csvFilePath, String qbPath,
-			String qbFileName, String dimOrMeasures, String marineDatasetName,
+			String qbFileName, String dims, String measures, String dataset, String schema,
 			String serialization) throws IOException {
 
-		
-		
+
 		/**
 		 * String workingDir, used to relatively locate tarql and run tarql
 		 * queries
@@ -424,10 +491,80 @@ public class TarqlFormulator {
 		/*
 		 * Tarql execution stages
 		 */
-
-		TarqlQuery tq = new TarqlParser(new StringReader(
-				pr.getPropValues(marineDatasetName + "_Query")), null).getResult();
-
+		TarqlQuery tq=new TarqlQuery();
+		/**
+		 * swiching between pilot pre-stored tarql construct queries and costume tarql construct queries
+		 * 
+		 * */
+		if(schema.contains("/")){
+			System.out
+			.println("User uploaded costume schema - now using provided dims, measures and dataset for building tarql construct!");
+			/**
+			 * if schema is provided by user (costume)
+			 * 
+			 * */
+			String costume_tarql_construct_p1=
+					"PREFIX OGI: http://ogi.eu/#	\n"
+					+ "PREFIX qb: http://purl.org/linked-data/cube#	\n"
+					+ "PREFIX rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#	\n"
+					+ "CONSTRUCT{	\n"
+					+ "?observation a qb:Observation;	\n";
+			String costume_tarql_construct_p2_customizable="";
+			if (dims != null){
+				 String dims_array[] = dims.split(";");
+				 
+				for (String dim : dims_array)
+				{
+						costume_tarql_construct_p2_customizable+=dim;
+						costume_tarql_construct_p2_customizable+=";";
+						costume_tarql_construct_p2_customizable+="\n";
+					}
+					
+			}
+						
+			
+			if (measures != null){
+				 String measures_array[] = measures.split(";");
+					for (String measure : measures_array ){
+						costume_tarql_construct_p2_customizable+=measure;
+						costume_tarql_construct_p2_customizable+=";";
+						costume_tarql_construct_p2_customizable+="\n";
+					}
+			}
+			if (dataset != null){
+				 String dataset_array[] = dataset.split(";");
+					for (String dataset_s : dataset_array ){
+						costume_tarql_construct_p2_customizable+=dataset_s;
+						costume_tarql_construct_p2_customizable+=";";
+						costume_tarql_construct_p2_customizable+="\n";
+					}
+			}
+				
+			String costume_tarql_construct_p3=
+					".	\n"
+					+ "}	\n"
+					+ "WHERE {	\n"
+					+ "BIND (uri(CONCAT('http://ogi.eu/#observations',StrUUID())) AS ?observation).	\n"
+					+ "}	\n";
+			
+			String costume_tarql_construct = costume_tarql_construct_p1 + costume_tarql_construct_p2_customizable + costume_tarql_construct_p3;
+							
+			tq = new TarqlParser(new StringReader(costume_tarql_construct), null).getResult();
+		
+		}else{
+			/**
+			 * if schema is pre-stored (pilot)
+			 * 
+			 * */
+			
+			
+			String pilot_tarql_construct= pr.getPropValues(schema + "_Query");
+			tq = new TarqlParser(new StringReader(pilot_tarql_construct), null).getResult();
+			
+		}
+		
+		
+		
 		TarqlQueryExecution ex = TarqlQueryExecutionFactory.create(tq,
 				csvFilePath, options);
 		// TarqlQueryExecution ex = TarqlQueryExecutionFactory.
@@ -453,7 +590,7 @@ public class TarqlFormulator {
 
 			}
 			System.out.println("Waiting For Observation Capture!");
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 
 			/**
 			 * Logging will be added
@@ -467,23 +604,40 @@ public class TarqlFormulator {
 		 * creating the corresponding qbschema String
 		 * */
 		System.out.println("Creating Cube Schema!");
-		qbSchemaCreation(marineDatasetName);
 		/**
-		 * creating the corresponding .schema file
+		 * if schema is provided by user (costume)
+		 * 
 		 * */
-		qbSchemaFileCreation(qbPath, qbFileName);
-		/**
-		 * releasing/flushing String qbSchema, to be used again in the same UI
-		 * session
-		 * */
-		qbSchema = "";
-		/**
-		 * Creating the corresponding RDF Cube file, by merging .schema file and
-		 * .observation file
-		 * */
-		System.out.println("Creating Full Cube!");
-		mergingSchemaFileWithObservationFile(qbPath, qbFileName);
-
+		if (schema.contains("/")){
+			
+			System.out.println("Creating Full Cube using provided costume schema file!");
+			mergingSchemaFileWithObservationFile_costume(schema, qbPath, qbFileName);
+			
+		}else{
+			/**
+			 * if schema is pre-stored (pilot)
+			 * 
+			 * */
+		
+			qbSchemaCreation(schema);
+		
+			/**
+			 * creating the corresponding .schema file
+			 * */
+			qbSchemaFileCreation(qbPath, qbFileName);
+			/**
+			 * releasing/flushing String qbSchema, to be used again in the same UI
+			 * session
+			 * */
+			qbSchema = "";
+			/**
+			 * Creating the corresponding RDF Cube file, by merging .schema file and
+			 * .observation file
+			 * */
+			
+			System.out.println("Creating Full Cube using pilot pre-stored schema file!");
+			mergingSchemaFileWithObservationFile_pilot(qbPath, qbFileName);
+		}
 	}
 
 	
@@ -572,7 +726,7 @@ public class TarqlFormulator {
 		 * .observation file
 		 * */
 		System.out.println("Creating Full Cube!");
-		mergingSchemaFileWithObservationFile(qbPath, qbFileName);
+		mergingSchemaFileWithObservationFile_pilot(qbPath, qbFileName);
 
 	}
 }
