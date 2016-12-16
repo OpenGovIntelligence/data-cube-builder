@@ -3,13 +3,14 @@ package eu.opengov.cubebuilder.webservice;
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.*;
 import spark.*;
-import spark.staticfiles.StaticFiles;
+
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 import java.io.*;
 import java.nio.file.*;
+
 
 import eu.opengov.cubebuilder.lqboperations.LqbQuerying;
 import eu.opengov.cubebuilder.tarqlservices.TarqlFormulator;
@@ -184,13 +185,21 @@ public class OgiWebService {
 		 * */
 		
 		
-		 post("/uploadCSV", (req, res) -> {
+		 get("/upload", (req, res) ->
+         "<form method='post' enctype='multipart/form-data'>" // note the enctype
+       + "    <input type='file' name='uploaded_file' accept='.png'>" // make sure to call getPart using the same "name" in the post
+       + "    <button>Upload picture</button>"
+       + "</form>"
+);
+
+		
+		 post("/upload", "multipart/form-data",(req, res) -> {
 
 	            Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
 
-	            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+	            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/upload"));
 
-	            try (InputStream input = req.raw().getPart("file").getInputStream()) { // getPart needs to use same "name" as input field in form
+	            try (InputStream input = req.raw().getPart("uploaded_file").getInputStream()) { // getPart needs to use same "name" as input field in form
 	                Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
 	            }
 
@@ -199,8 +208,7 @@ public class OgiWebService {
 
 	        });
 
-
-	}
+	    }
 
 	public static String run() {
 
